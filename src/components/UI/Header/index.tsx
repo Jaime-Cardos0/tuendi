@@ -1,8 +1,7 @@
-import { Flex, IconButton, HStack } from "@chakra-ui/react";
-import { RiNotification2Line, RiSunLine } from "react-icons/ri"
+import { Flex, HStack } from "@chakra-ui/react";
 import Image from "next/image";
 import logo from "../../../../public/Assets/images/Logo.png"
-import { InputSearch } from "./inputSearch";
+import { InputSearch } from "./InputSearch";
 import { AvatarComponent } from "./AvatarComponent";
 import { HeaderIconsComponent } from "./HeaderIconsComponent";
 

@@ -1,17 +1,16 @@
-import { Link, Text } from "@chakra-ui/react";
-import { IconType } from "react-icons";
-import { RiDashboardLine } from "react-icons/ri";
+import { Icon, Link, LinkProps, Text } from "@chakra-ui/react";
+import { ElementType } from "react";
 
-interface NavLinkProps{
-    name: string,
-    children: React.ReactNode,
+interface NavLinkProps extends LinkProps{
+    children: string,
+    icon: any,
 }
 
-export function NavLink({name, children}: NavLinkProps){
+export function NavLink({icon, children, ...rest}: NavLinkProps){
     return(
-        <Link display="flex" alignItems="center" gap={2} color={"text.muted"}>
-            {children}
-            <Text as={"span"} fontFamily={"mono"} fontWeight={"medium"} textAlign={"end"}>{name}</Text>
+        <Link display="flex" alignItems="center" gap={2} color={"text.muted"} {...rest}>
+            {icon}
+            <Text as={"span"} fontFamily={"mono"} fontWeight={"medium"} textAlign={"end"}>{children}</Text>
         </Link>
     );
 }

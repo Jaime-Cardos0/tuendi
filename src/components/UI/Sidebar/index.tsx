@@ -1,37 +1,30 @@
-import { Box, Link, Stack, Text } from "@chakra-ui/react";
-import { BiHelpCircle, BiSupport } from "react-icons/bi";
+import { Box, Stack } from "@chakra-ui/react";
 import { FaRoute } from "react-icons/fa";
-import { RiCircleLine, RiDashboardLine, RiLineChartLine, RiNotificationLine, RiUser2Line, RiUser3Line } from "react-icons/ri";
+import { RiDashboardLine } from "react-icons/ri";
 import { NavSection } from "./NavSection";
+import { NavLink } from "./NavLink";
+import { ConfigurationIcon, DeliveryManIcon, HelpIcon, LineChartIcon, NotificationIcon, SupportIcon, UserIcon } from "@/components/Icons/icons";
 
 export function Sidebar(){
     return(
         <Box as="aside" w={48} position={"fixed"} top={24} left={8}>
             <Stack spacing={12} align={"flex-start"}>
 
-                <NavSection title="main admin"/>
+                <NavSection title="main admin">
+                    <NavLink icon={<RiDashboardLine size={20}/>}>Dashboard</NavLink>
+                    <NavLink icon={<FaRoute size={20}/>}>Entrega</NavLink>
+                    <NavLink icon={<DeliveryManIcon strokeWidth={3} fontSize={20}/>}>Entregador</NavLink>
+                    <NavLink icon={<UserIcon strokeWidth={2} fontSize={20}/>}>Usuário</NavLink>
+                    <NavLink icon={<LineChartIcon strokeWidth={2} fontSize={20}/>}>Finanças</NavLink>
+                    <NavLink icon={<SupportIcon strokeWidth={2} fontSize={20}/>}>Suporte</NavLink>
+                </NavSection>
 
-                <Box>
-                    <Text as={"h4"} fontSize={"sxs"} fontWeight={"hairline"} color={"text.muted"} letterSpacing={"widest"}>SUPPORT ADMIN</Text>
-                    <Stack spacing={4} mt={6}>
+                <NavSection title="support admin">
+                    <NavLink icon={<HelpIcon strokeWidth={2} fontSize={20}/>}>Ajuda</NavLink>
+                    <NavLink icon={<NotificationIcon hasNotified={true} strokeWidth={2} fontSize={20}/>}>Notificações</NavLink>
+                    <NavLink icon={<ConfigurationIcon strokeWidth={2} fontSize={20}/>}>Definições</NavLink>
+                </NavSection>
 
-                        <Link display="flex" alignItems="center" gap={2} color={"text.muted"}>
-                            <BiHelpCircle size={"20px"}/>
-                            <Text as={"span"} fontFamily={"mono"} fontWeight={"medium"} textAlign={"end"}>Ajuda</Text>
-                        </Link>
-                        
-                        <Link display="flex" alignItems="center" gap={2} color={"text.muted"}>
-                            <RiNotificationLine size={"20px"}/>
-                            <Text as={"span"} fontFamily={"mono"} fontWeight={"medium"} textAlign={"end"}>Notificações</Text>
-                        </Link>
-
-                        <Link display="flex" alignItems="center" gap={2} color={"text.muted"}>
-                            <RiCircleLine size={"20px"}/>
-                            <Text as={"span"} fontFamily={"mono"} fontWeight={"medium"} textAlign={"end"}>Definições</Text>
-                        </Link>
-                        
-                    </Stack>
-                </Box>
             </Stack>
         </Box>
     );

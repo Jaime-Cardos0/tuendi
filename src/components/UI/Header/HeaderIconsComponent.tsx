@@ -1,5 +1,6 @@
+import { NotificationIcon } from "@/components/Icons/icons";
 import { IconButton } from "@chakra-ui/react";
-import { RiSunLine, RiNotification2Line } from "react-icons/ri";
+import { RiSunLine } from "react-icons/ri";
 
 export function HeaderIconsComponent(){
     return(
@@ -17,7 +18,7 @@ export function HeaderIconsComponent(){
                 aria-label="Switch light/dark mode"
                 fontSize={"xl"}
                 w={"auto"}
-                icon={<RiNotification2Line />}
+                icon={<NotificationIcon strokeWidth={2}/>}
                 variant={"ghost"}
                 color={"text.secondary"}
             />

@@ -47,6 +47,7 @@ export const theme = extendTheme({
   letterSpacings:{
     tight: "-0.02em",
     normal: "0",
+    spaced: "0.02em",
     wide: "0.05em"
   },
 

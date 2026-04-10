@@ -7,7 +7,7 @@ import { ConfigurationIcon, DeliveryManIcon, HelpIcon, LineChartIcon, Notificati
 
 export function Sidebar(){
     return(
-        <Box as="aside" w={48} position={"fixed"} top={24} left={8}>
+        <Box as="aside" bg={"bg.default"} w={48} position={"fixed"} top={24} left={8}>
             <Stack spacing={12} align={"flex-start"}>
 
                 <NavSection title="main admin">

@@ -15,6 +15,7 @@ export function InputSearch(){
             bgColor={"grayDark.700"}
             rounded={"xl"}
             fontSize={"sm"}
+            fontFamily={"mono"}
             _focus={{bg: "grayDark.600"}}
             color={"text.secondary"}
             name="search" 

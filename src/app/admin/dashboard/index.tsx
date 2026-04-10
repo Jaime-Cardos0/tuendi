@@ -2,8 +2,8 @@
 import { Box, Flex, Grid, GridItem, Heading, IconButton, Stack, Text } from "@chakra-ui/react";
 import { RiFilter3Line, RiRectangleLine } from "react-icons/ri";
 import Chart from "react-apexcharts";
-import { ResumeComponent } from "../DataResume";
-import { TableContainer } from "../Table";
+import { ResumeComponent } from "../../../components/UI/DataResume";
+import { TableContainer } from "../../../components/UI/Table";
 
 const state = {
     options: {

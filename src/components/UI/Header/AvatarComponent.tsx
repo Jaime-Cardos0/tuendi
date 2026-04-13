@@ -1,5 +1,6 @@
 import { Flex, Avatar, AvatarBadge, HStack, IconButton, Text } from "@chakra-ui/react";
 import { RiArrowDownSLine } from "react-icons/ri";
+import { FloatingMenu } from "../FloatingMenu";
 
 export function AvatarComponent(){
     return(
@@ -11,7 +12,7 @@ export function AvatarComponent(){
                 src={"C:/Users/Jaime Cardoso/Documents/Projects/tuendi/public/Avatar.png"} 
                 size={"sm"} 
                 fontWeight={"bold"} 
-                letterSpacing={"wide"} 
+                letterSpacing={"normal"} 
                 color={"text.primary"}
             >
 
@@ -20,15 +21,17 @@ export function AvatarComponent(){
             </Avatar>
             
             <HStack spacing={1}>
-                <Text as={"span"} w={"110px"} color={"text.secondary"} fontSize={"sm"}fontWeight={"medium"} letterSpacing={"wide"}>Jaime Cardoso</Text>
+                <Text as={"span"} isTruncated maxW={"110px"} color={"text.primary"} fontSize={"sm"} fontWeight={"medium"} letterSpacing={"normal"} fontFamily={"heading"}>Jaime Cardoso</Text>
 
-                <IconButton
+                {/* <IconButton
                     aria-label="Arrow pointing down" 
                     fontSize={"xl"}
                     icon={<RiArrowDownSLine/>}
                     variant={"ghost"}
                     color={"text.secondary"}
-                />
+                /> */}
+
+                <FloatingMenu menuIcon={<RiArrowDownSLine/>}/>
             </HStack>
         </Flex>
     );

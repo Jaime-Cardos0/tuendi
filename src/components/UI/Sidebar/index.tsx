@@ -8,7 +8,7 @@ import { ConfigurationIcon, DeliveryManIcon, HelpIcon, LineChartIcon, Notificati
 export function Sidebar(){
     return(
         <Box as="aside" bg={"bg.default"} w={48} position={"fixed"} top={24} left={8}>
-            <Stack spacing={12} align={"flex-start"}>
+            <Stack spacing={8} align={"flex-start"}>
 
                 <NavSection title="main admin">
                     <NavLink icon={<RiDashboardLine size={20}/>}>Dashboard</NavLink>
@@ -21,7 +21,7 @@ export function Sidebar(){
 
                 <NavSection title="support admin">
                     <NavLink icon={<HelpIcon strokeWidth={2} fontSize={20}/>}>Ajuda</NavLink>
-                    <NavLink icon={<NotificationIcon hasNotified={true} strokeWidth={2} fontSize={20}/>}>Notificações</NavLink>
+                    <NavLink icon={<NotificationIcon hasnotified={true} strokeWidth={2} fontSize={20}/>}>Notificações</NavLink>
                     <NavLink icon={<ConfigurationIcon strokeWidth={2} fontSize={20}/>}>Definições</NavLink>
                 </NavSection>
 

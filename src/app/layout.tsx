@@ -5,17 +5,17 @@ import { theme } from "@/styles/theme";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-poppins",
+  variable: "--poppins",
   subsets: ["devanagari"],
 });
 
 const outfit = Outfit({
-  variable: "--font-outfit",
+  variable: "--outfit",
   subsets: ["latin"],
 });
 
 const dm_sans = DM_Sans({
-  variable: "--font-dm_sans",
+  variable: "--dm_sans",
   subsets: ["latin"],
 });
 
@@ -31,8 +31,8 @@ export default function RootLayout({
 }>) {
   return (
     <ChakraProvider theme={theme}>
-      <html lang="pt" className={`${poppins.variable} ${dm_sans.variable} ${outfit.variable}`}>
-        <body>{children}</body>
+      <html lang="pt" className={`${poppins.variable} ${dm_sans.variable} ${outfit.variable}}`}>
+        <body className={`${poppins.variable} ${dm_sans.variable} ${outfit.variable}}`}>{children}</body>
       </html>
     </ChakraProvider>
   );

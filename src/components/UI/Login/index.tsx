@@ -37,6 +37,7 @@ export function Login(){
                     name="email" 
                     type="email" 
                     placeholder={"E-mail"} 
+                    fontFamily={"mono"}
                 />
 
                 <Input 
@@ -50,6 +51,7 @@ export function Login(){
                     name="senha" 
                     type="password" 
                     placeholder={"Palavra-passe"}
+                    fontFamily={"mono"}
                 />
                 
                 </Stack>
@@ -60,6 +62,7 @@ export function Login(){
                     bg={"brand.500"}
                     color={"brand.50"}
                     _hover={{bg: "brand.600"}}
+                    fontFamily={"mono"}
                 >Entrar</Button>
           
             </Flex>

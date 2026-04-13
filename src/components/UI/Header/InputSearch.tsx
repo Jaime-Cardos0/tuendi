@@ -12,16 +12,17 @@ export function InputSearch(){
             <Input
             variant={"unstyled"}
             w={"280px"}
-            bgColor={"grayDark.700"}
+            bgColor={"grayDark.600"}
             rounded={"xl"}
             fontSize={"sm"}
-            fontFamily={"mono"}
-            _focus={{bg: "grayDark.600"}}
+            fontFamily={"body"}
+            letterSpacing={"tight"}
+            _focus={{bg: "grayDark.500"}}
             color={"text.secondary"}
             name="search" 
             type="search" 
             placeholder={"Pesquisar..."}
-            _placeholder={{color: "text.secondary", fontSize: "xs"}}
+            _placeholder={{color: "text.secondary", fontSize: "sm"}}
             px={6}
             pl={10}
             py={3}

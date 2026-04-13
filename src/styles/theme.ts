@@ -10,9 +10,8 @@ export const theme = extendTheme({
   config,
 
   fonts: {
-    heading: "var(--font-poppins), monospace",
-    body: "var(--font-dm_sans), sans-serif",
-    mono: "var(--font-outfit), sans-serif",
+    heading: "var(--dm_sans)",
+    body: "var(--outfit)",
   },
 
   fontSizes:{
@@ -68,6 +67,7 @@ export const theme = extendTheme({
     blueAccent: {
       500: "#3B82F6",
       600: "#2563EB",
+      900: "#4318FF",
     },
 
     grayDark: {
@@ -150,5 +150,21 @@ export const theme = extendTheme({
         },
       },
     },
+
+    Menu: {
+      baseStyle: {
+        list: {
+          bg: "grayDark.800",
+          borderColor: "grayDark.600",
+          fontFamily: "body"
+        },
+
+        item: {
+          bg: "grayDark.800",
+          _hover: "grayDark.500",
+          _focus: "grayDark.500",
+        }
+      }
+    }
   },
 });

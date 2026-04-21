@@ -11,18 +11,18 @@ export function Sidebar(){
             <Stack spacing={8} align={"flex-start"}>
 
                 <NavSection title="main admin">
-                    <NavLink icon={<RiDashboardLine size={20}/>}>Dashboard</NavLink>
-                    <NavLink icon={<FaRoute size={20}/>}>Entrega</NavLink>
-                    <NavLink icon={<DeliveryManIcon strokeWidth={3} fontSize={20}/>}>Entregador</NavLink>
-                    <NavLink icon={<UserIcon strokeWidth={2} fontSize={20}/>}>Usuário</NavLink>
-                    <NavLink icon={<LineChartIcon strokeWidth={2} fontSize={20}/>}>Finanças</NavLink>
-                    <NavLink icon={<SupportIcon strokeWidth={2} fontSize={20}/>}>Suporte</NavLink>
+                    <NavLink href="/admin/dashboard" icon={<RiDashboardLine size={20}/>}>Dashboard</NavLink>
+                    <NavLink href="/admin/deliveries" icon={<FaRoute size={20}/>}>Entrega</NavLink>
+                    <NavLink href="/admin/riders" icon={<DeliveryManIcon strokeWidth={3} fontSize={20}/>}>Entregador</NavLink>
+                    <NavLink href="/admin/users" icon={<UserIcon strokeWidth={2} fontSize={20}/>}>Usuário</NavLink>
+                    <NavLink href="/admin/earnings" icon={<LineChartIcon strokeWidth={2} fontSize={20}/>}>Ganhos</NavLink>
+                    <NavLink href="#" icon={<SupportIcon strokeWidth={2} fontSize={20}/>}>Suporte</NavLink>
                 </NavSection>
 
                 <NavSection title="support admin">
-                    <NavLink icon={<HelpIcon strokeWidth={2} fontSize={20}/>}>Ajuda</NavLink>
-                    <NavLink icon={<NotificationIcon hasnotified={true} strokeWidth={2} fontSize={20}/>}>Notificações</NavLink>
-                    <NavLink icon={<ConfigurationIcon strokeWidth={2} fontSize={20}/>}>Definições</NavLink>
+                    <NavLink href="#" icon={<HelpIcon strokeWidth={2} fontSize={20}/>}>Ajuda</NavLink>
+                    <NavLink href="#" icon={<NotificationIcon strokeWidth={2} fontSize={20}/>}>Notificações</NavLink>
+                    <NavLink href="#" icon={<ConfigurationIcon strokeWidth={2} fontSize={20}/>}>Definições</NavLink>
                 </NavSection>
 
             </Stack>

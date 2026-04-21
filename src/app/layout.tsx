@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins, Outfit, DM_Sans } from "next/font/google";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "@/styles/theme";
+import { makeServer } from "@/services/miragejs/server";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -23,6 +24,10 @@ export const metadata: Metadata = {
   title: "Tuendi",
   description: "Baza | Delivery App",
 };
+
+if(process.env.NODE_ENV === "development"){
+  makeServer();
+}
 
 export default function RootLayout({
   children,

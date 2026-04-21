@@ -3,33 +3,121 @@ import { Box, Flex, Grid, GridItem, Heading, IconButton, Stack, Text } from "@ch
 import { RiFilter3Line, RiRectangleLine } from "react-icons/ri";
 import Chart from "react-apexcharts";
 import { ResumeComponent } from "../../../components/UI/DataResume";
-import { TableContainer } from "../../../components/UI/Table";
+import { TableDashboard } from "./Table";
 import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
 import { BarChartIcon, ClockIcon } from "@/components/Icons/icons";
 import { gradients } from "@/styles/gradients";
 import { DashboardCard } from "./DashboardCard";
+import { TopRatedList } from "./TopRatedList";
+import { theme } from "@/styles/theme";
+import { head } from "framer-motion/client";
+import { useEffect } from "react";
 
 const state = {
     options: {
         chart: {
             id: "basic-bar",
-            troke:{
-                curve: "smooth"
+            stroke:{
+                curve: "smooth", 
+                colors: theme.colors.brand[500],
+                lineCap: "round",
+            },
+            toolbar: {
+                show: false,
+            },
+            zoom: {
+                enabled: false,
             }
         },
+
+        grid: {
+            show: false,
+        },
+        dataLabels: {
+            enabled: false
+        },
+        // tooltip: {
+        //     enabled: false,
+        // },
+        yaxis: {
+            show: false,
+        },
         xaxis: {
-            categories: [1991, 1999, 2000, 2006, 2008, 2010, 2012, 2015, 2020]
+            categories: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dec"],
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                color: theme.colors.grayDark[700]
+            }
         }
     },
     series: [
         {
             name: "series-1",
-            data: [30, 40, 35, 60, 74, 22, 43, 90, 15]
+            data: [30, 40, 35, 60, 74, 22, 43, 90, 15, 67, 55, 43]
         }
     ]
 }
 
+const areaState = {
+    options: {
+        chart: {
+            id: "basic-area",
+            width: "100%",
+            height: "100%",
+            stroke:{
+                curve: "smooth", 
+                colors: theme.colors.brand[500],
+                lineCap: "round",
+            },
+            toolbar: {
+                show: false,
+            },
+            zoom: {
+                enabled: false,
+            }
+        },
+
+        grid: {
+            show: false,
+        },
+        dataLabels: {
+            enabled: false
+        },
+        // tooltip: {
+        //     enabled: false,
+        // },
+        yaxis: {
+            show: false,
+        },
+        xaxis: {
+            categories: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dec"],
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                color: theme.colors.grayDark[700]
+            }
+        }
+    },
+    series: [
+        {
+            name: "series-1",
+            data: [30, 40, 35, 60, 74, 22, 43, 90, 15, 67, 55, 43]
+        }
+    ]
+}
+
+
 export function MainDashboard(){
+
+    useEffect(() => {
+        fetch("http://localhost:3000/api/users")
+        .then(response => response.json())
+        .then(data => console.log("mirage data: ", data))
+    },[])
+
     return(
         <Box as="main" w={"100%"} display={"flex"} flexDirection={"column"} gap={12} ml={52} mt={20}>
             
@@ -53,7 +141,7 @@ export function MainDashboard(){
                 <GridItem>
 
                     <DashboardCard title="Fatura" value={682}>
-                        <Chart options={state.options} series={state.series} type="area" height={"140px"}/>
+                        <Chart options={areaState.options} series={areaState.series} type="area" height={"140px"}/>
                     </DashboardCard>
 
                 </GridItem>
@@ -61,30 +149,30 @@ export function MainDashboard(){
                 <GridItem>
 
                     <DashboardCard title="Entregas" value={900}>
-                        <Chart options={state.options} series={state.series} type="area" height={"140px"}/>
+                        <Chart options={areaState.options} series={areaState.series} type="area" height={"140px"}/>
                     </DashboardCard>
 
                 </GridItem>
 
                 <GridItem>
 
-                    <DashboardCard title="Melhores Avaliados" value={900}>
-                        <RiRectangleLine size={160}/>
+                    <DashboardCard title="Melhores Avaliados">
+                        <TopRatedList data={[{id:1, name: "Carlos Santos", role: "Driver 16h", score: 50}, {id:2, name: "Aldemaro Miguel", role: "Driver 1h", score: -2}]}/>
                     </DashboardCard>
 
                 </GridItem>
 
                 <GridItem>
 
-                    <DashboardCard title="Parceiros Ativos" value={900}>
-                        <RiRectangleLine size={160}/>
+                    <DashboardCard title="Melhores Avaliados">
+                        <TopRatedList data={[{id:1, name: "Courtney Henry", role: "15 orders", score: 50}, {id:2, name: "Alissar Bell", role: "13 orders", score: 45}]}/>
                     </DashboardCard>
 
                 </GridItem>
 
             </Grid>
 
-            <TableContainer/>
+            <TableDashboard/>
         </Box>
     );
 }

@@ -1,7 +1,6 @@
 import { FloatingMenu } from "@/components/UI/FloatingMenu";
-import { Box, Flex, Heading, HStack, IconButton, Menu, MenuButton, MenuItem, MenuList, Stack, Text } from "@chakra-ui/react";
-import { title } from "process";
-import { RiFilter3Line, RiRectangleLine } from "react-icons/ri";
+import { Box, Flex, Heading, MenuItem, Stack, Text } from "@chakra-ui/react";
+import { RiFilter3Line } from "react-icons/ri";
 
 interface DashboardCardProps {
     title: string,
@@ -14,16 +13,21 @@ export function DashboardCard( {title, children, value} : DashboardCardProps){
 
         <Flex h={"100%"} direction={"column"} gap={5} rounded={"2xl"} p={6} bg={"bg.card"} align={"center"}>
             
-            <Flex w={"100%"} h={"fit-content"} justify={"space-between"} align={"flex-start"}>
+            <Flex w={"100%"} h={"fit-content"} justify={"space-between"}>
                 
                 <Stack flex={1}>
 
                     <Heading size={"sm"} color={"text.secondary"} lineHeight={"relaxed"} letterSpacing={"wide"} fontWeight={"light"}>{title}</Heading>
                     
-                    <Text as={"span"} fontWeight={"semibold"} lineHeight={"1"} fontFamily={"body"} letterSpacing={"tight"} textAlign={"center"} fontSize={"4xl"}>{value} KZ</Text>
+                    <Text as={"span"} fontWeight={"semibold"} lineHeight={"1"} fontFamily={"body"} letterSpacing={"tight"} fontSize={"4xl"}>{value}</Text>
                 </Stack>
 
-                <FloatingMenu menuIcon={<RiFilter3Line/>}/>
+                <FloatingMenu placement="bottom" menuIcon={<RiFilter3Line/>}>
+                    <MenuItem>Diário</MenuItem>
+                    <MenuItem>Semanal</MenuItem>
+                    <MenuItem>Mensal</MenuItem>
+                    <MenuItem>Anual</MenuItem>
+                </FloatingMenu>
 
             </Flex>
 
@@ -31,6 +35,5 @@ export function DashboardCard( {title, children, value} : DashboardCardProps){
                     {children}
                 </Box>
         </Flex> 
-        // </>
     );
 }

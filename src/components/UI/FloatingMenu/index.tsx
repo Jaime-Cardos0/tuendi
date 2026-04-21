@@ -1,19 +1,19 @@
-import { Menu, MenuButton, IconButton, MenuList, MenuItem } from "@chakra-ui/react";
-import { ReactElement } from "react";
+import { Menu, MenuButton, IconButton, MenuList, PlacementWithLogical } from "@chakra-ui/react";
+import { ReactElement, ReactNode } from "react";
 
 interface FloatingMenuProps {
     menuIcon: ReactElement,
+    children: ReactNode,
+    placement?: PlacementWithLogical,
 }
 
-export function FloatingMenu({menuIcon}:FloatingMenuProps){
+export function FloatingMenu({menuIcon, children, placement = "right-end"}:FloatingMenuProps){
     return(
-        <Menu isLazy={true} placement="right-end">
+        <Menu isLazy={true} placement={placement}>
             <MenuButton as={IconButton} aria-label="options" icon={menuIcon} h={7} fontSize={"xl"} variant={"ghost"}>
             </MenuButton>
                 <MenuList>
-                    <MenuItem>New Tab</MenuItem>
-                    <MenuItem>other</MenuItem>
-                    <MenuItem>New T1ab</MenuItem>
+                    {children}
                 </MenuList>
         </Menu>
     );

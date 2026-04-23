@@ -1,18 +1,23 @@
 import { createServer, Server } from "miragejs";
 
 import {
-  UserModel,
-  PedidoModel,
-  PagamentoModel,
-  ChatModel,
-  MensagemModel,
+  userModel,
+  orderModel,
+  paymentModel,
+  riderModel,
+  transactionModel,
+  locationModel,
+  walletModel,
 } from "./models";
 
 import {
-  UserFactory,
-  PedidoFactory,
-  PagamentoFactory,
-  MensagemFactory,
+  userFactory,
+  orderFactory,
+  paymentFactory,
+  riderFactory,
+  transactionFactory,
+  locationFactory,
+  walletFactory,
 } from "./factories";
 
 import { seeds } from "./seeds";
@@ -20,18 +25,23 @@ import { seeds } from "./seeds";
 export function makeServer(): Server {
   return createServer({
     models: {
-      user: UserModel,
-      pedido: PedidoModel,
-      pagamento: PagamentoModel,
-      chat: ChatModel,
-      mensagem: MensagemModel,
+      user: userModel,
+      order: orderModel,
+      payment: paymentModel,
+      rider: riderModel,
+      transaction: transactionModel,
+      location: locationModel,
+      wallet: walletModel,
     },
 
     factories: {
-      user: UserFactory,
-      pedido: PedidoFactory,
-      pagamento: PagamentoFactory,
-      mensagem: MensagemFactory,
+      user: userFactory,
+      order: orderFactory,
+      payment: paymentFactory,
+      rider: riderFactory,
+      transaction: transactionFactory,
+      location: locationFactory,
+      wallet: walletFactory,
     },
 
     seeds,
@@ -40,9 +50,12 @@ export function makeServer(): Server {
       this.namespace = "api";
 
       this.get("/users");
-      this.get("/pedidos");
-      this.get("/pagamentos");
-      this.get("/mensagens");
+      this.get("/orders");
+      this.get("/payments");
+      this.get("/riders");
+      this.get("/transactions");
+      this.get("/locations");
+      this.get("/wallets");
     },
   });
 }

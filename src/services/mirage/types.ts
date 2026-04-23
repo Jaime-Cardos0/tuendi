@@ -13,6 +13,7 @@ export interface IUser {
   email: string;
   telefone: string;
   firebaseUid: string;
+  createdAt: string;
   role: Role;
 }
 

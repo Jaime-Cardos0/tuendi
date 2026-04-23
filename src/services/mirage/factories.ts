@@ -1,8 +1,8 @@
 import { Factory } from "miragejs";
 import { faker } from "@faker-js/faker";
 
-export const UserFactory = Factory.extend({
-  nome() {
+export const userFactory = Factory.extend({
+  name() {
     return faker.person.fullName();
   },
 
@@ -10,7 +10,7 @@ export const UserFactory = Factory.extend({
     return faker.internet.email();
   },
 
-  telefone() {
+  telephone() {
     return faker.phone.number();
   },
 
@@ -24,18 +24,22 @@ export const UserFactory = Factory.extend({
       "MOTOQUEIRO",
     ]);
   },
+
+  createdAt(){
+    return faker.date.recent({days: 10});
+  }
 });
 
-export const PedidoFactory = Factory.extend({
-  origem() {
+export const orderFactory = Factory.extend({
+  origin() {
     return faker.location.streetAddress();
   },
 
-  destino() {
+  destination() {
     return faker.location.streetAddress();
   },
 
-  preco() {
+  price() {
     return faker.number.int({ min: 10, max: 100 });
   },
 
@@ -46,18 +50,57 @@ export const PedidoFactory = Factory.extend({
       "ENTREGUE",
     ]);
   },
+
+  description(){
+    return faker.lorem.paragraph();
+  }
 });
 
-export const PagamentoFactory = Factory.extend({
+export const paymentFactory = Factory.extend({
   metodo: "CARTEIRA",
 
-  valor() {
+  createdAt(){
+    return faker.number.int({min: 1, max: 24});
+  },
+
+  value() {
     return faker.number.int({ min: 10, max: 100 });
   },
 });
 
-export const MensagemFactory = Factory.extend({
-  mensagem() {
-    return faker.lorem.sentence();
+export const riderFactory = Factory.extend({
+  createdAt(){
+    return faker.date.recent({days: 10});
+  }
+});
+
+export const transactionFactory = Factory.extend({
+  value() {
+    return faker.number.int({ min: 10, max: 100 });
   },
+
+  description(){
+    return faker.lorem.paragraph();
+  },
+
+  createdAt(){
+    return faker.number.int({min: 1, max: 24});
+  },
+
+});
+
+export const locationFactory = Factory.extend({
+  latitude(){
+    return faker.location.latitude({precision: 3});
+  },
+  
+  longitude(){
+    return faker.location.longitude({precision: 3});
+  }
+});
+
+export const walletFactory = Factory.extend({
+  balance(){
+    return faker.number.int({min: 50, max: 2000})
+  }
 });

@@ -1,16 +1,13 @@
 "use client"
-import { Box, Flex, Grid, GridItem, Heading, IconButton, Stack, Text } from "@chakra-ui/react";
-import { RiFilter3Line, RiRectangleLine } from "react-icons/ri";
+import { Box, Flex, Grid, GridItem} from "@chakra-ui/react";
 import Chart from "react-apexcharts";
-import { ResumeComponent } from "../../../components/UI/DataResume";
 import { TableDashboard } from "./Table";
 import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
-import { BarChartIcon, ClockIcon } from "@/components/Icons/icons";
+import { BarChartIcon, ClockIcon, LineChartPurple, LineChartWhite } from "@/components/Icons/icons";
 import { gradients } from "@/styles/gradients";
 import { DashboardCard } from "./DashboardCard";
 import { TopRatedList } from "./TopRatedList";
 import { theme } from "@/styles/theme";
-import { head } from "framer-motion/client";
 import { useEffect } from "react";
 
 const state = {
@@ -114,9 +111,9 @@ export function MainDashboard(){
 
     useEffect(() => {
         fetch("http://localhost:3000/api/users")
-        .then(response => response.json())
-        .then(data => console.log("mirage data: ", data))
-    },[])
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+    }, []);
 
     return(
         <Box as="main" w={"100%"} display={"flex"} flexDirection={"column"} gap={12} ml={52} mt={20}>
@@ -124,8 +121,8 @@ export function MainDashboard(){
             <Flex w={"100%"} justify={"space-between"} h={"fit-content"} gap={4}>
                 <ResumeCard icon={<BarChartIcon/>} title="Entregas" value={682}/>
                 <ResumeCard icon={<ClockIcon boxSize={"56px"} rounded={"full"} bgImage={gradients.primary} p={"14px"}/>} title="Bazando" value={682}/>
-                <ResumeCard title="Receita" value={682} pathColor="#2563EB"/>
-                <ResumeCard title="Fatura" value={682} bgVariant="gradient" pathColor="#EEF2FF"/>
+                <ResumeCard icon={<LineChartPurple/>} title="Receita" value={682} />
+                <ResumeCard icon={<LineChartWhite/>} title="Fatura" value={682} bgVariant="gradient" />
             </Flex>
 
             <Grid templateColumns={"repeat(3, 1fr)"} gap={8} templateRows={"repeat(2, minmax(300px, 360px))"}>

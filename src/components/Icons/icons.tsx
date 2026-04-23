@@ -135,3 +135,32 @@ export function BarChartIcon(props: IconProps){
 
     );
 }
+
+export function LineChartWhite(props: IconProps){
+    return(
+        <Icon width="64" height="46" viewBox="0 0 82 44" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+            <path d="M2.00024 41.5004C2.00024 41.5004 8.27999 -6.00502 24.0002 16.0004C39.7205 38.0057 46.0002 36.995 52.0002 20.0004C59.417 -1.00715 86.7583 17.0809 89.5002 2.00035" stroke="url(#paint0_linear_2001_217)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+            <defs>
+            <linearGradient id="paint0_linear_2001_217" x1="-1.49977" y1="46.5003" x2="70.578" y2="-16.914" gradientUnits="userSpaceOnUse">
+            <stop stopColor="white"/>
+            <stop offset="1" stopColor="white" stopOpacity="0"/>
+            </linearGradient>
+            </defs>
+        </Icon>
+    );
+}
+
+export function LineChartPurple(props: IconProps){
+    return(
+        <Icon width="64" height="46" viewBox="0 0 52 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+            <path d="M1.50037 29.2043C1.50037 29.2043 7.64621 30.9951 13.7919 29.2043C28.1147 25.0307 23.5004 -1.49979 34.5004 5.50021C47.6788 13.8865 58.1566 13.439 60.0004 1.50021" stroke="url(#paint0_linear_2001_213)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+            <defs>
+            <linearGradient id="paint0_linear_2001_213" x1="-35.4996" y1="37.5002" x2="48.0601" y2="-13.3658" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#0F60FF"/>
+            <stop offset="1" stopColor="#4F2CFF" stopOpacity="0"/>
+            </linearGradient>
+            </defs>
+        </Icon>
+
+    );
+}

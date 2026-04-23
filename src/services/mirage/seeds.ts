@@ -3,34 +3,27 @@ import { Server } from "miragejs";
 export function seeds(server: Server) {
   const users = server.createList("user", 10);
 
-  users.slice(0, 5).forEach((user) => {
-    server.create("motoqueiro", { user });
-  });
-
-  const pedidos = server.createList("pedido", 10, {
-    cliente: users[0],
-    motoqueiro: users[1],
-  });
-
-  pedidos.forEach((pedido) => {
-    server.create("pagamento", { pedido });
-  });
+  const riders = users.slice(0, 5).map((user) => server.create("rider", { user }));
 
   users.forEach((user) => {
-    server.create("carteira", {
-      user,
-      saldo: Math.floor(Math.random() * 1000),
-    });
+    server.create("wallet", { user, balance: 1000 });
   });
 
-  pedidos.forEach((pedido) => {
-    const chat = server.create("chat", { pedido });
-
-    for (let i = 0; i < 3; i++) {
-      server.create("mensagem", {
-        chat,
-        sender: users[Math.floor(Math.random() * users.length)],
-      });
-    }
+  riders.forEach((rider) => {
+    const client = users[Math.floor(Math.random() * users.length)];
+    const order = server.create("order", { client, rider });
+    server.create("payment", { order });
   });
+
+  const orders = server.createList("order", 10, {
+    client: users[0],
+    rider: users[1],
+  });
+
+  orders.forEach((order) => {
+    server.create("payment", { order });
+  });
+
+  server.db.dump();
+
 }

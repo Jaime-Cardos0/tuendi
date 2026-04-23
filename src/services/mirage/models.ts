@@ -1,34 +1,30 @@
-import {
-  Model,
-  belongsTo,
-  hasMany,
-} from "miragejs";
+// models.ts
+import { Model, belongsTo, hasMany } from "miragejs";
 
-export const UserModel = Model.extend({
-  pedidos: hasMany("pedido"),
-  transacoes: hasMany("transacao"),
-  mensagens: hasMany("mensagens"),
+export const userModel = Model.extend({
+  rider: hasMany("rider"),
+  orders: hasMany("order"),
+  wallet: belongsTo("wallet"),
 });
 
-export const MotoqueiroModel = Model.extend({
+export const riderModel = Model.extend({
+  user: belongsTo("user"),
+  orders: hasMany("order"),
+});
+
+export const orderModel = Model.extend({
+  client: belongsTo("user"),
+  rider: belongsTo("rider"),
+  payment: belongsTo("payment"),
+});
+
+export const paymentModel = Model.extend({
+  order: belongsTo("order"),
+});
+
+export const walletModel = Model.extend({
   user: belongsTo("user"),
 });
 
-export const PedidoModel = Model.extend({
-  cliente: belongsTo("user"),
-  motoqueiro: belongsTo("user"),
-});
-
-export const PagamentoModel = Model.extend({
-  pedido: belongsTo(),
-});
-
-export const ChatModel = Model.extend({
-  pedido: belongsTo(),
-  mensagens: hasMany(),
-});
-
-export const MensagemModel = Model.extend({
-  chat: belongsTo(),
-  sender: belongsTo("user"),
-});
+export const transactionModel = Model.extend({});
+export const locationModel = Model.extend({});

@@ -2,7 +2,7 @@
 
 import Link, { LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
-import { cloneElement, isValidElement, ReactNode } from "react";
+import { cloneElement, isValidElement, ReactElement, ReactNode } from "react";
 
 interface ActiveLinkProps extends LinkProps{
     children: ReactNode,
@@ -23,9 +23,9 @@ export function ActiveLink({children, ...rest}: ActiveLinkProps){
     }
 
     return(
-        <Link {...rest}>
+        <Link {...rest} suppressHydrationWarning>
             {isValidElement(children)
-                ? cloneElement(children, {
+                ? cloneElement(children as ReactElement, {
                     color: isActive ? "text.primary" : "text.muted",
                 })
                 : children}

@@ -1,11 +1,12 @@
 "use client"
 import { Box, Flex } from "@chakra-ui/react";
-import { TableContainer } from "../../../components/UI/Table";
 import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
 import { BarChartIcon, ClockIcon } from "@/components/Icons/icons";
 import { gradients } from "@/styles/gradients";
+import { UsersTable } from "./Table";
 
 export function MainUser(){
+    
     return(
         <Box as="main" w={"100%"} display={"flex"} flexDirection={"column"} gap={12} ml={52} mt={20}>
             
@@ -16,7 +17,7 @@ export function MainUser(){
                 <ResumeCard title="Fatura" value={682} bgVariant="gradient"/>
             </Flex>
 
-            <TableContainer/>
+            <UsersTable/>
         </Box>
     );
 }

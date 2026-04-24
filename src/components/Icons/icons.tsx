@@ -1,7 +1,75 @@
 import { Icon, IconProps } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 interface NotificationIconProps extends IconProps{
     hasnotified?: boolean,
+}
+
+type BarChartProps = {
+  data: number[];
+  max?: number;
+  width?: number;
+  height?: number;
+};
+
+export default function BarChart({
+  data,
+  max,
+  width = 64,
+  height = 46,
+}: BarChartProps) {
+  const [animatedData, setAnimatedData] = useState(data.map(() => 0));
+
+  const maxValue = max ?? Math.max(...data);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setAnimatedData(data);
+    }, 100);
+
+    return () => clearTimeout(timeout);
+  }, [data]);
+
+  const barWidth = width / data.length;
+
+  return (
+    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+      
+      {data.map((value, i) => {
+        const x = i * barWidth;
+        const barHeight = (value / maxValue) * height;
+        const animatedHeight = (animatedData[i] / maxValue) * height;
+
+        return (
+          <g key={i}>
+            {/* fundo */}
+            <rect
+              x={x}
+              y={0}
+              width={barWidth * 0.6}
+              height={height}
+              fill="#353B4A"
+              rx="2"
+            />
+
+            {/* valor */}
+            <rect
+              x={x}
+              y={height - animatedHeight}
+              width={barWidth * 0.6}
+              height={animatedHeight}
+              fill="#0F60FF"
+              rx="2"
+              style={{
+                transition: "all 0.8s ease",
+                transitionDelay: `${i * 0.1}s`,
+              }}
+            />
+          </g>
+        );
+      })}
+    </svg>
+  );
 }
 
 export function UserIcon(props: IconProps){

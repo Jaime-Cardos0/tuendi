@@ -3,6 +3,7 @@ import { TableComponent } from "./Table";
 import { TableHeader } from "./TableHeader";
 import { BsThreeDots } from "react-icons/bs";
 import { RiCircleFill } from "react-icons/ri";
+import { Pagination } from "./Pagination";
 
 const users = [
     {id: 1, name: "Jaime", email: "jaime@gmail.com"},
@@ -32,8 +33,9 @@ export function TableContainer(){
     return(
         <Box p={8} display={"flex"} gap={8} flexDirection={"column"} mb={8} bg={"grayDark.700"} border={"2px"} borderColor={"grayDark.500"} rounded={"xl"}>
             
-            <TableHeader/>
-            <TableComponent data={users} columns={columns}/>      
+            <TableHeader title="demonstracao"/>
+            <TableComponent data={users} columns={columns}/>   
+            <Pagination/>   
         </Box>
     );
 }

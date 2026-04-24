@@ -56,6 +56,12 @@ export function makeServer(): Server {
       this.get("/transactions");
       this.get("/locations");
       this.get("/wallets");
+      
+      this.patch("/riders/:id", (schema, request) => {
+        const id = request.params.id;
+        const attrs = JSON.parse(request.requestBody);
+        return (schema as any).riders.find(id).update(attrs);
+      });
     },
   });
 }

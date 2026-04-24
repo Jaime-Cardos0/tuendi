@@ -1,9 +1,9 @@
 "use client"
 import { Box, Flex, Grid, GridItem} from "@chakra-ui/react";
 import Chart from "react-apexcharts";
-import { TableDashboard } from "./Table";
+import { DashboardTable } from "./Table";
 import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
-import { BarChartIcon, ClockIcon, LineChartPurple, LineChartWhite } from "@/components/Icons/icons";
+import BarChart, { BarChartIcon, ClockIcon, LineChartPurple, LineChartWhite } from "@/components/Icons/icons";
 import { gradients } from "@/styles/gradients";
 import { DashboardCard } from "./DashboardCard";
 import { TopRatedList } from "./TopRatedList";
@@ -109,17 +109,11 @@ const areaState = {
 
 export function MainDashboard(){
 
-    useEffect(() => {
-        fetch("http://localhost:3000/api/users")
-        .then((response) => response.json())
-        .then((data) => console.log(data));
-    }, []);
-
     return(
         <Box as="main" w={"100%"} display={"flex"} flexDirection={"column"} gap={12} ml={52} mt={20}>
             
             <Flex w={"100%"} justify={"space-between"} h={"fit-content"} gap={4}>
-                <ResumeCard icon={<BarChartIcon/>} title="Entregas" value={682}/>
+                <ResumeCard icon={<BarChart data={[8, 10, 7, 14]} max={20} />} title="Entregas" value={682}/>
                 <ResumeCard icon={<ClockIcon boxSize={"56px"} rounded={"full"} bgImage={gradients.primary} p={"14px"}/>} title="Bazando" value={682}/>
                 <ResumeCard icon={<LineChartPurple/>} title="Receita" value={682} />
                 <ResumeCard icon={<LineChartWhite/>} title="Fatura" value={682} bgVariant="gradient" />
@@ -169,7 +163,7 @@ export function MainDashboard(){
 
             </Grid>
 
-            <TableDashboard/>
+            <DashboardTable/>
         </Box>
     );
 }

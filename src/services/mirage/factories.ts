@@ -11,22 +11,26 @@ export const userFactory = Factory.extend({
   },
 
   telephone() {
-    return faker.phone.number();
+    return faker.phone.number({ style: 'national'});
   },
 
   firebaseUid() {
-    return faker.string.uuid();
+    return faker.internet.jwtAlgorithm();
   },
 
   role() {
     return faker.helpers.arrayElement([
-      "CLIENT",
-      "MOTOQUEIRO",
+      "CLIENTE",
+      "ENTREGADOR",
     ]);
   },
 
   createdAt(){
-    return faker.date.recent({days: 10});
+    return new Intl.DateTimeFormat("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }).format(faker.date.recent({ days: 10 }));
   }
 });
 
@@ -69,9 +73,32 @@ export const paymentFactory = Factory.extend({
 });
 
 export const riderFactory = Factory.extend({
-  createdAt(){
-    return faker.date.recent({days: 10});
-  }
+  firstName() { return faker.person.firstName(); },
+  lastName() { return faker.person.lastName(); },
+  email() { return faker.internet.email(); },
+  birthDate() { return faker.date.birthdate({ min: 18, max: 50, mode: "age" }).toISOString(); },
+  profilePhoto() { return faker.image.avatar(); },
+
+  biNumber() { return faker.string.alphanumeric(9).toUpperCase(); },
+  biFront() { return faker.image.url(); },
+  biBack() { return faker.image.url(); },
+
+  licenseNumber() { return faker.string.alphanumeric(8).toUpperCase(); },
+  licenseFront() { return faker.image.url(); },
+  licenseBack() { return faker.image.url(); },
+
+  vehiclePhoto() { return faker.image.url(); },
+  vehiclePlatePhoto() { return faker.image.url(); },
+  vehicleBrand() { return faker.helpers.arrayElement(["Honda", "Yamaha", "Suzuki", "Bajaj"]); },
+  vehicleModel() { return faker.vehicle.model(); },
+  vehicleColor() { return faker.color.human(); },
+  vehiclePlate() { return faker.string.alphanumeric(6).toUpperCase(); },
+
+  status() {
+    return faker.helpers.arrayElement(["PENDENTE", "APROVADO", "RECUSADO", "REVISAO"]);
+  },
+
+  createdAt() { return faker.date.recent({ days: 30 }).toISOString(); },
 });
 
 export const transactionFactory = Factory.extend({

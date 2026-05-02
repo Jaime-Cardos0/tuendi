@@ -16,7 +16,7 @@ interface ResumeCardProps {
 
 export function ResumeCard({title, value="0", bgVariant = "primary", icon, pathColor}: ResumeCardProps){
     return(
-        <Flex w={"100%"} h={"96px"} minWidth={"240px"} maxW={"270px"} gap={12} rounded={"2xl"} px={6} py={2} backgroundImage={bgVariants[bgVariant]} justify={"space-between"} align={"center"}>
+        <Flex w={"100%"} h={"96px"} minWidth={"240px"} maxW={"270px"} gap={10} rounded={"2xl"} px={6} py={2} backgroundImage={bgVariants[bgVariant]} justify={"space-between"} align={"center"}>
 
             <Stack align={"flex-start"} spacing={1}>
 

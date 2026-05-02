@@ -2,9 +2,9 @@ import { Header } from "@/components/UI/Header";
 import { Sidebar } from "@/components/UI/Sidebar";
 import { Flex } from "@chakra-ui/react";
 import { Metadata } from "next";
-import { MainDeliver } from ".";
+import { MainDelivery } from ".";
 
-export const metadata: Metadata = { title: "Baza | Entregas" }
+export const metadata: Metadata = { title: "Baza | Pedidos" }
 
 export default function DeliverPage(){
     return(
@@ -13,7 +13,7 @@ export default function DeliverPage(){
 
             <Flex w={"100%"} maxW={"1440px"} my={6} mx={"auto"} px={8}>
                 <Sidebar/>
-                <MainDeliver/>
+                <MainDelivery/>
             </Flex>
         </Flex>
     );

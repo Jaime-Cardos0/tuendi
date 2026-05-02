@@ -1,133 +1,133 @@
+// src/services/mirage/factories.ts
 import { Factory } from "miragejs";
 import { faker } from "@faker-js/faker";
 
 export const userFactory = Factory.extend({
-  name() {
-    return faker.person.fullName();
-  },
-
-  email() {
-    return faker.internet.email();
-  },
-
-  telephone() {
-    return faker.phone.number({ style: 'national'});
-  },
-
-  firebaseUid() {
-    return faker.internet.jwtAlgorithm();
-  },
-
-  role() {
-    return faker.helpers.arrayElement([
-      "CLIENTE",
-      "ENTREGADOR",
-    ]);
-  },
-
-  createdAt(){
-    return new Intl.DateTimeFormat("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    }).format(faker.date.recent({ days: 10 }));
-  }
-});
-
-export const orderFactory = Factory.extend({
-  origin() {
-    return faker.location.streetAddress();
-  },
-
-  destination() {
-    return faker.location.streetAddress();
-  },
-
-  price() {
-    return faker.number.int({ min: 10, max: 100 });
-  },
-
-  status() {
-    return faker.helpers.arrayElement([
-      "PENDENTE",
-      "ACEITO",
-      "ENTREGUE",
-    ]);
-  },
-
-  description(){
-    return faker.lorem.paragraph();
-  }
-});
-
-export const paymentFactory = Factory.extend({
-  metodo: "CARTEIRA",
-
-  createdAt(){
-    return faker.number.int({min: 1, max: 24});
-  },
-
-  value() {
-    return faker.number.int({ min: 10, max: 100 });
-  },
-});
-
-export const riderFactory = Factory.extend({
-  firstName() { return faker.person.firstName(); },
-  lastName() { return faker.person.lastName(); },
+  firebaseUid() { return faker.string.uuid(); },
+  nome() { return faker.person.firstName(); },
+  sobrenome() { return faker.person.lastName(); },
   email() { return faker.internet.email(); },
-  birthDate() { return faker.date.birthdate({ min: 18, max: 50, mode: "age" }).toISOString(); },
-  profilePhoto() { return faker.image.avatar(); },
+  telefone() { return faker.phone.number(); },
+  telefoneVerificado() { return faker.datatype.boolean(); },
+  numeroDocumento() { return faker.string.alphanumeric(9).toUpperCase(); },
+  tipoDocumento() { return "BI"; },
+  fotoPerfil() { return faker.image.avatar(); },
+  dataNascimento() { return faker.date.birthdate({ min: 18, max: 60, mode: "age" }).toISOString(); },
+  role() { return "cliente"; },
+  status() { return "activo"; },
+  criadoEm() { return faker.date.recent({ days: 60 }).toISOString(); },
+  atualizadoEm() { return faker.date.recent({ days: 10 }).toISOString(); },
+});
 
-  biNumber() { return faker.string.alphanumeric(9).toUpperCase(); },
-  biFront() { return faker.image.url(); },
-  biBack() { return faker.image.url(); },
-
-  licenseNumber() { return faker.string.alphanumeric(8).toUpperCase(); },
-  licenseFront() { return faker.image.url(); },
-  licenseBack() { return faker.image.url(); },
-
-  vehiclePhoto() { return faker.image.url(); },
-  vehiclePlatePhoto() { return faker.image.url(); },
-  vehicleBrand() { return faker.helpers.arrayElement(["Honda", "Yamaha", "Suzuki", "Bajaj"]); },
-  vehicleModel() { return faker.vehicle.model(); },
-  vehicleColor() { return faker.color.human(); },
-  vehiclePlate() { return faker.string.alphanumeric(6).toUpperCase(); },
-
+export const motoqueiroFactory = Factory.extend({
+  classificacaoMedia() { return parseFloat(faker.number.float({ min: 3, max: 5, fractionDigits: 2 }).toFixed(2)); },
+  totalAvaliacoes() { return faker.number.int({ min: 0, max: 200 }); },
+  statusDisponibilidade() {
+    return faker.helpers.arrayElement(["online", "offline", "ocupado"]);
+  },
   status() {
-    return faker.helpers.arrayElement(["PENDENTE", "APROVADO", "RECUSADO", "REVISAO"]);
+    return faker.helpers.arrayElement(["pendente_aprovacao", "activo", "suspenso"]);
   },
-
-  createdAt() { return faker.date.recent({ days: 30 }).toISOString(); },
+  morada() { return faker.location.streetAddress(); },
+  aprovadoEm() { return faker.date.recent({ days: 30 }).toISOString(); },
+  motivoRejeicao() { return null; },
+  criadoEm() { return faker.date.recent({ days: 60 }).toISOString(); },
 });
 
-export const transactionFactory = Factory.extend({
-  value() {
-    return faker.number.int({ min: 10, max: 100 });
-  },
-
-  description(){
-    return faker.lorem.paragraph();
-  },
-
-  createdAt(){
-    return faker.number.int({min: 1, max: 24});
-  },
-
+export const veiculoFactory = Factory.extend({
+  marca() { return faker.helpers.arrayElement(["Honda", "Yamaha", "Suzuki", "Bajaj"]); },
+  modelo() { return faker.vehicle.model(); },
+  placa() { return faker.string.alphanumeric(6).toUpperCase(); },
+  corPrincipal() { return faker.color.human(); },
+  ano() { return faker.number.int({ min: 2010, max: 2024 }); },
+  ativo() { return true; },
+  criadoEm() { return faker.date.recent({ days: 60 }).toISOString(); },
 });
 
-export const locationFactory = Factory.extend({
-  latitude(){
-    return faker.location.latitude({precision: 3});
+export const uploadFactory = Factory.extend({
+  tipo() {
+    return faker.helpers.arrayElement([
+      "documento_bi_frente",
+      "documento_bi_verso",
+      "documento_carta_frente",
+      "documento_carta_verso",
+      "foto_veiculo",
+    ]);
   },
-  
-  longitude(){
-    return faker.location.longitude({precision: 3});
-  }
+  nomeOriginal() { return faker.system.fileName(); },
+  mimeType() { return "image/jpeg"; },
+  tamanho() { return faker.number.int({ min: 100000, max: 5000000 }); },
+  status() { return "pendente"; },
+  motivoRejeicao() { return null; },
+  url() { return faker.image.url(); },
+  criadoEm() { return faker.date.recent({ days: 30 }).toISOString(); },
 });
 
-export const walletFactory = Factory.extend({
-  balance(){
-    return faker.number.int({min: 50, max: 2000})
-  }
+export const pedidoFactory = Factory.extend({
+  numeroPedido() { return `PED-${faker.string.alphanumeric(8).toUpperCase()}`; },
+  status() {
+    return faker.helpers.arrayElement([
+      "pendente", "a_procurar_motoqueiro", "motoqueiro_atribuido",
+      "recolhido", "em_transito", "entregue", "cancelado",
+    ]);
+  },
+  origemEndereco() { return faker.location.streetAddress(); },
+  origemLatitude() { return parseFloat(faker.location.latitude().toString()); },
+  origemLongitude() { return parseFloat(faker.location.longitude().toString()); },
+  destinoEndereco() { return faker.location.streetAddress(); },
+  destinoLatitude() { return parseFloat(faker.location.latitude().toString()); },
+  destinoLongitude() { return parseFloat(faker.location.longitude().toString()); },
+  descricaoEncomenda() { return faker.commerce.productName(); },
+  fragil() { return faker.datatype.boolean(); },
+  valorEntrega() { return parseFloat(faker.number.float({ min: 500, max: 5000, fractionDigits: 2 }).toFixed(2)); },
+  distanciaKm() { return parseFloat(faker.number.float({ min: 1, max: 30, fractionDigits: 2 }).toFixed(2)); },
+  metodoPagamento() { return faker.helpers.arrayElement(["dinheiro", "stripe"]); },
+  motivoCancelamento() { return null; },
+  criadoEm() { return faker.date.recent({ days: 30 }).toISOString(); },
+  entregueEm() { return null; },
+  canceladoEm() { return null; },
+});
+
+export const avaliacaoFactory = Factory.extend({
+  notaCliente() { return faker.number.int({ min: 1, max: 5 }); },
+  comentarioCliente() { return faker.lorem.sentence(); },
+  notaMotoqueiro() { return faker.number.int({ min: 1, max: 5 }); },
+  comentarioMotoqueiro() { return faker.lorem.sentence(); },
+  criadoEm() { return faker.date.recent({ days: 30 }).toISOString(); },
+});
+
+export const carteiraFactory = Factory.extend({
+  saldo() { return parseFloat(faker.number.float({ min: 0, max: 50000, fractionDigits: 2 }).toFixed(2)); },
+  criadoEm() { return faker.date.recent({ days: 60 }).toISOString(); },
+});
+
+export const transacaoFactory = Factory.extend({
+  tipo() { return faker.helpers.arrayElement(["credito", "debito"]); },
+  valor() { return parseFloat(faker.number.float({ min: 100, max: 5000, fractionDigits: 2 }).toFixed(2)); },
+  descricao() { return faker.helpers.arrayElement(["Pagamento de entrega", "Recarga de carteira", "Comissão"]); },
+  saldoAnterior() { return parseFloat(faker.number.float({ min: 0, max: 50000, fractionDigits: 2 }).toFixed(2)); },
+  saldoAtual() { return parseFloat(faker.number.float({ min: 0, max: 50000, fractionDigits: 2 }).toFixed(2)); },
+  criadoEm() { return faker.date.recent({ days: 30 }).toISOString(); },
+});
+
+export const notificacaoFactory = Factory.extend({
+  tipo() {
+    return faker.helpers.arrayElement([
+      "pedido_criado", "pedido_aceite", "pedido_entregue", "pagamento", "sistema",
+    ]);
+  },
+  titulo() { return faker.lorem.words(3); },
+  mensagem() { return faker.lorem.sentence(); },
+  lida() { return faker.datatype.boolean(); },
+  criadoEm() { return faker.date.recent({ days: 7 }).toISOString(); },
+});
+
+export const suporteFactory = Factory.extend({
+  titulo() { return faker.lorem.words(5); },
+  descricao() { return faker.lorem.paragraph(); },
+  status() { return faker.helpers.arrayElement(["aberto", "em_analise", "resolvido"]); },
+  resposta() { return null; },
+  respondidoPor() { return null; },
+  criadoEm() { return faker.date.recent({ days: 30 }).toISOString(); },
+  resolvidoEm() { return null; },
 });

@@ -23,7 +23,7 @@ const dm_sans = DM_Sans({
 });
 
 // export const metadata: Metadata = {
-//   title: "Tuendi",
+//   title: "Baza",
 //   description: "Baza | Delivery App",
 // };
 
@@ -38,8 +38,8 @@ export default function RootLayout({
 }>) {
   return (
       <ChakraProvider theme={theme}>
-          <html lang="pt" className={`${poppins.variable} ${dm_sans.variable} ${outfit.variable}}`}>
-        <body className={`${poppins.variable} ${dm_sans.variable} ${outfit.variable}}`}>{children}</body>
+          <html lang="pt" className={`${poppins.variable} ${dm_sans.variable} ${outfit.variable}`}>
+            <body className={`${poppins.variable} ${dm_sans.variable} ${outfit.variable}`}>{children}</body>
           </html>
       </ChakraProvider>
   );

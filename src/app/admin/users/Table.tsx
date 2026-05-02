@@ -1,47 +1,318 @@
-import { Box, IconButton, Tag, TagLeftIcon, TagLabel } from "@chakra-ui/react";
+"use client";
+import {
+  Box, Tag, TagLeftIcon, TagLabel, IconButton,
+  Flex, Stack, Select, Input, InputGroup,
+  InputLeftElement, Avatar, Text, HStack,
+  useDisclosure, Modal, ModalOverlay, ModalContent,
+  ModalHeader, ModalBody, ModalFooter, Button,
+  Divider, SimpleGrid,
+} from "@chakra-ui/react";
 import { TableComponent } from "@/components/UI/Table/Table";
 import { TableHeader } from "@/components/UI/Table/TableHeader";
-import { BsThreeDots } from "react-icons/bs";
-import { RiCircleFill } from "react-icons/ri";
 import { Pagination } from "@/components/UI/Table/Pagination";
-import { useEffect, useState } from "react";
+import { BsThreeDots } from "react-icons/bs";
+import { RiCircleFill, RiSearchLine } from "react-icons/ri";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { api } from "@/services/api";
-import { IUser } from "@/services/mirage/types";
+import { IUser, Role, UserStatus } from "@/services/mirage/types";
 
+const statusColor: Record<UserStatus, string> = {
+  activo: "cyan",
+  suspenso: "red",
+};
 
+const statusLabel: Record<UserStatus, string> = {
+  activo: "Activo",
+  suspenso: "Suspenso",
+};
 
-export function UsersTable(){
+const roleLabel: Record<Role, string> = {
+  cliente: "Cliente",
+  motoqueiro: "Motoqueiro",
+  admin: "Admin",
+};
 
-    const [users, setUsers] = useState<IUser[]>([]);
+const roleColor: Record<Role, string> = {
+  cliente: "blue",
+  motoqueiro: "purple",
+  admin: "orange",
+};
 
-    useEffect(() => {
-            api.get("/users")
-            .then((response) => setUsers(response.data.users))
-            .catch((error) => console.error("Error fetching users:", error));
-        }, []);
+export function UsersTable() {
+  const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [users, setUsers] = useState<IUser[]>([]);
+  const [selected, setSelected] = useState<IUser | null>(null);
+  const [search, setSearch] = useState("");
+  const [roleFilter, setRoleFilter] = useState<Role | "TODOS">("TODOS");
+  const [statusFilter, setStatusFilter] = useState<UserStatus | "TODOS">("TODOS");
+  const [sortBy, setSortBy] = useState<"recentes" | "nome">("recentes");
 
-    const usersColumns = [
-        {header: "No", accessor: "id"},
-        {header: "ID", accessor: "firebaseUid"},
-        {header: "Data", accessor: "createdAt"},
-        {header: "Nome", accessor: "name"},
-        {header: "E-mail", accessor: "email"},
-        {header: "Telefone", accessor: "telephone"},
-        {header: "Tipo", accessor: "role"},
-        {header: "Status", render: (user: IUser) => (
-                                            <Tag colorScheme="cyan" size={"sm"}>
-                                                <TagLeftIcon as={RiCircleFill} size={2} color="cyan.500"/>
-                                                <TagLabel>Concluido</TagLabel>
-                                            </Tag>)},
-        {header: "", render: (user: IUser) => (<IconButton variant={"ghost"} aria-label="Ver menu" icon={<BsThreeDots/>}/>)}
-    ]
+  useEffect(() => {
+    api.get("/users")
+      .then((res) => setUsers(res.data))
+      .catch((err) => console.error(err));
+  }, []);
 
-    return(
-        <Box p={8} display={"flex"} gap={8} flexDirection={"column"} mb={8} bg={"grayDark.700"} border={"2px"} borderColor={"grayDark.500"} rounded={"xl"}>
-            
-            <TableHeader title="Usuários" />
-            <TableComponent data={users} columns={usersColumns}/>   
-            <Pagination/>   
-        </Box>
+  function openModal(user: IUser) {
+    setSelected(user);
+    onOpen();
+  }
+
+  async function updateStatus(id: string, status: UserStatus) {
+    await api.patch(`/users/${id}`, { status });
+    setUsers((prev) =>
+      prev.map((u) => (u.id === id ? { ...u, status } : u))
     );
+    onClose();
+  }
+
+  async function deleteUser(id: string) {
+    await api.delete(`/users/${id}`);
+    setUsers((prev) => prev.filter((u) => u.id !== id));
+    onClose();
+  }
+
+  const filtered = useMemo(() => {
+    let result = [...users];
+
+    if (roleFilter !== "TODOS")
+      result = result.filter((u) => u.role === roleFilter);
+
+    if (statusFilter !== "TODOS")
+      result = result.filter((u) => u.status === statusFilter);
+
+    if (search.trim()) {
+      const term = search.toLowerCase();
+      result = result.filter((u) =>
+        `${u.nome} ${u.sobrenome}`.toLowerCase().includes(term) ||
+        u.email.toLowerCase().includes(term) ||
+        u.telefone?.toLowerCase().includes(term)
+      );
+    }
+
+    if (sortBy === "nome") {
+      result.sort((a, b) => a.nome.localeCompare(b.nome));
+    } else {
+      result.sort((a, b) =>
+        new Date(b.criadoEm).getTime() - new Date(a.criadoEm).getTime()
+      );
+    }
+
+    return result;
+  }, [users, roleFilter, statusFilter, search, sortBy]);
+
+  const columns = [
+    {
+      header: "Nome",
+      render: (u: IUser) => (
+        <Flex align="center" gap={2}>
+          <Avatar size="sm" src={u.fotoPerfil} name={`${u.nome} ${u.sobrenome}`} />
+          <Text>{u.nome} {u.sobrenome}</Text>
+        </Flex>
+      ),
+    },
+    { header: "E-mail", render: (u: IUser) => <Text>{u.email}</Text> },
+    { header: "Telefone", render: (u: IUser) => <Text>{u.telefone}</Text> },
+    {
+      header: "Tipo",
+      render: (u: IUser) => (
+        <Tag colorScheme={roleColor[u.role]} size="sm">
+          <TagLabel>{roleLabel[u.role]}</TagLabel>
+        </Tag>
+      ),
+    },
+    {
+      header: "Membro desde",
+      render: (u: IUser) => (
+        <Text>{new Date(u.criadoEm).toLocaleDateString("pt-AO")}</Text>
+      ),
+    },
+    {
+      header: "Status",
+      render: (u: IUser) => (
+        <Tag colorScheme={statusColor[u.status]} size="sm">
+          <TagLeftIcon as={RiCircleFill} color={`${statusColor[u.status]}.500`} />
+          <TagLabel>{statusLabel[u.status]}</TagLabel>
+        </Tag>
+      ),
+    },
+    {
+      header: "",
+      render: (u: IUser) => (
+        <IconButton
+          variant="ghost"
+          aria-label="Ver detalhes"
+          icon={<BsThreeDots />}
+          onClick={() => openModal(u)}
+        />
+      ),
+    },
+  ];
+
+  return (
+    <>
+      <Box
+        p={8} display="flex" gap={8} flexDirection="column" mb={8}
+        bg="grayDark.700" border="2px" borderColor="grayDark.500" rounded="xl"
+      >
+        <Stack gap={4}>
+          <TableHeader title="Usuários" />
+
+          <Flex justify="space-between" align="center" gap={4} wrap="wrap">
+            <InputGroup maxW="280px" size="sm">
+              <InputLeftElement pointerEvents="none">
+                <RiSearchLine color="gray" />
+              </InputLeftElement>
+              <Input
+                placeholder="Pesquisar por nome, email ou telefone..."
+                rounded="md"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </InputGroup>
+
+            <Flex gap={3} wrap="wrap">
+              <Select
+                w="fit-content" size="sm" rounded="md"
+                value={roleFilter}
+                onChange={(e) => setRoleFilter(e.target.value as Role | "TODOS")}
+              >
+                <option value="TODOS">Todos os tipos</option>
+                <option value="cliente">Clientes</option>
+                <option value="motoqueiro">Motoqueiros</option>
+              </Select>
+
+              <Select
+                w="fit-content" size="sm" rounded="md"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value as UserStatus | "TODOS")}
+              >
+                <option value="TODOS">Todos os status</option>
+                <option value="activo">Activos</option>
+                <option value="suspenso">Suspensos</option>
+              </Select>
+
+              <Select
+                w="fit-content" size="sm" rounded="md"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+              >
+                <option value="recentes">Mais recentes</option>
+                <option value="nome">Nome A-Z</option>
+              </Select>
+            </Flex>
+          </Flex>
+        </Stack>
+
+        <TableComponent data={filtered} columns={columns} />
+        <Pagination />
+      </Box>
+
+      {/* Modal */}
+      {selected && (
+        <Modal isOpen={isOpen} onClose={onClose} size="lg">
+          <ModalOverlay />
+          <ModalContent bg="grayDark.700">
+
+            <ModalHeader display="flex" justifyContent="space-between" alignItems="center">
+              <HStack gap={3}>
+                <Text>{selected.nome} {selected.sobrenome}</Text>
+                <Tag colorScheme={statusColor[selected.status]} size="sm">
+                  <TagLeftIcon as={RiCircleFill} />
+                  <TagLabel>{statusLabel[selected.status]}</TagLabel>
+                </Tag>
+              </HStack>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => {
+                  onClose();
+                  router.push(`/admin/users/profile?id=${selected.id}`);
+                }}
+              >
+                Ver perfil
+              </Button>
+            </ModalHeader>
+
+            <ModalBody display="flex" flexDirection="column" gap={4}>
+
+              {/* Perfil */}
+              <Flex gap={4} align="center">
+                <Avatar
+                  size="xl"
+                  src={selected.fotoPerfil}
+                  name={`${selected.nome} ${selected.sobrenome}`}
+                />
+                <Box>
+                  <Tag colorScheme={roleColor[selected.role]} size="sm" mb={2}>
+                    <TagLabel>{roleLabel[selected.role]}</TagLabel>
+                  </Tag>
+                  <Text fontSize="sm" color="gray.400">E-mail</Text>
+                  <Text>{selected.email}</Text>
+                  <Text fontSize="sm" color="gray.400" mt={2}>Telefone</Text>
+                  <Text>{selected.telefone}</Text>
+                </Box>
+              </Flex>
+
+              <Divider />
+
+              {/* Informações */}
+              <SimpleGrid columns={2} gap={4}>
+                <Box>
+                  <Text fontSize="sm" color="gray.400">Data de nascimento</Text>
+                  <Text>{new Date(selected.dataNascimento).toLocaleDateString("pt-AO")}</Text>
+                </Box>
+                <Box>
+                  <Text fontSize="sm" color="gray.400">Membro desde</Text>
+                  <Text>{new Date(selected.criadoEm).toLocaleDateString("pt-AO")}</Text>
+                </Box>
+                <Box>
+                  <Text fontSize="sm" color="gray.400">Documento</Text>
+                  <Text>{selected.tipoDocumento}: {selected.numeroDocumento}</Text>
+                </Box>
+                <Box>
+                  <Text fontSize="sm" color="gray.400">Telefone verificado</Text>
+                  <Text>{selected.telefoneVerificado ? "Sim" : "Não"}</Text>
+                </Box>
+              </SimpleGrid>
+
+            </ModalBody>
+
+            <ModalFooter gap={3}>
+              <Button
+                colorScheme="red"
+                variant="ghost"
+                size="sm"
+                onClick={() => deleteUser(selected.id)}
+              >
+                Eliminar conta
+              </Button>
+              {selected.status === "activo" ? (
+                <Button
+                  colorScheme="red"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => updateStatus(selected.id, "suspenso")}
+                >
+                  Suspender
+                </Button>
+              ) : (
+                <Button
+                  colorScheme="cyan"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => updateStatus(selected.id, "activo")}
+                >
+                  Reactivar
+                </Button>
+              )}
+            </ModalFooter>
+
+          </ModalContent>
+        </Modal>
+      )}
+    </>
+  );
 }

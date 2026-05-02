@@ -113,7 +113,7 @@ export function MainDashboard(){
         <Box as="main" w={"100%"} display={"flex"} flexDirection={"column"} gap={12} ml={52} mt={20}>
             
             <Flex w={"100%"} justify={"space-between"} h={"fit-content"} gap={4}>
-                <ResumeCard icon={<BarChart data={[8, 10, 7, 14]} max={20} />} title="Entregas" value={682}/>
+                <ResumeCard icon={<BarChart data={[8, 10, 7, 14, 12]} max={15} />} title="Entregas" value={682}/>
                 <ResumeCard icon={<ClockIcon boxSize={"56px"} rounded={"full"} bgImage={gradients.primary} p={"14px"}/>} title="Bazando" value={682}/>
                 <ResumeCard icon={<LineChartPurple/>} title="Receita" value={682} />
                 <ResumeCard icon={<LineChartWhite/>} title="Fatura" value={682} bgVariant="gradient" />

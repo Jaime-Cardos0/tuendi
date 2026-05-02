@@ -7,12 +7,12 @@ import { ConfigurationIcon, DeliveryManIcon, HelpIcon, LineChartIcon, Notificati
 
 export function Sidebar(){
     return(
-        <Box as="aside" bg={"bg.default"} w={48} h={"100vh"} position={"fixed"} top={24} left={8}>
+        <Box as="aside" bg={"bg.default"} w={48} h={"100vh"} position={"fixed"} top={24} left={0} pl={8} zIndex={1000}>
             <Stack spacing={8} align={"flex-start"}>
 
                 <NavSection title="main admin">
                     <NavLink href="/admin/dashboard" icon={<RiDashboardLine size={20}/>}>Dashboard</NavLink>
-                    <NavLink href="/admin/deliveries" icon={<FaRoute size={20}/>}>Entrega</NavLink>
+                    <NavLink href="/admin/deliveries" icon={<FaRoute size={20}/>}>Pedido</NavLink>
                     <NavLink href="/admin/riders" icon={<DeliveryManIcon strokeWidth={3} fontSize={20}/>}>Entregador</NavLink>
                     <NavLink href="/admin/users" icon={<UserIcon strokeWidth={2} fontSize={20}/>}>Usuário</NavLink>
                     <NavLink href="/admin/earnings" icon={<LineChartIcon strokeWidth={2} fontSize={20}/>}>Ganhos</NavLink>

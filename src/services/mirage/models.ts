@@ -1,30 +1,55 @@
-// models.ts
+// src/services/mirage/models.ts
 import { Model, belongsTo, hasMany } from "miragejs";
 
 export const userModel = Model.extend({
-  rider: hasMany("rider"),
-  orders: hasMany("order"),
-  wallet: belongsTo("wallet"),
+  motoqueiro: hasMany("motoqueiro"),
+  pedidosComoCliente: hasMany("pedido", { inverse: "cliente" }),
+  carteira: belongsTo("carteira"),
+  uploads: hasMany("upload"),
+  notificacoes: hasMany("notificacao"),
+  suportes: hasMany("suporte"),
 });
 
-export const riderModel = Model.extend({
+export const motoqueiroModel = Model.extend({
   user: belongsTo("user"),
-  orders: hasMany("order"),
+  veiculo: belongsTo("veiculo"),
+  uploads: hasMany("upload"),
+  pedidos: hasMany("pedido"),
 });
 
-export const orderModel = Model.extend({
-  client: belongsTo("user"),
-  rider: belongsTo("rider"),
-  payment: belongsTo("payment"),
+export const veiculoModel = Model.extend({
+  motoqueiro: belongsTo("motoqueiro"),
 });
 
-export const paymentModel = Model.extend({
-  order: belongsTo("order"),
-});
-
-export const walletModel = Model.extend({
+export const uploadModel = Model.extend({
   user: belongsTo("user"),
 });
 
-export const transactionModel = Model.extend({});
-export const locationModel = Model.extend({});
+export const pedidoModel = Model.extend({
+  cliente: belongsTo("user"),
+  motoqueiro: belongsTo("motoqueiro"),
+  avaliacao: belongsTo("avaliacao"),
+  transacoes: hasMany("transacao"),
+});
+
+export const avaliacaoModel = Model.extend({
+  pedido: belongsTo("pedido"),
+});
+
+export const carteiraModel = Model.extend({
+  user: belongsTo("user"),
+  transacoes: hasMany("transacao"),
+});
+
+export const transacaoModel = Model.extend({
+  carteira: belongsTo("carteira"),
+  pedido: belongsTo("pedido"),
+});
+
+export const notificacaoModel = Model.extend({
+  user: belongsTo("user"),
+});
+
+export const suporteModel = Model.extend({
+  user: belongsTo("user"),
+});

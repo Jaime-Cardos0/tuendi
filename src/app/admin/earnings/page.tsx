@@ -4,7 +4,7 @@ import { Flex } from "@chakra-ui/react";
 import { Metadata } from "next";
 import { MainEarnings } from ".";
 
-export const metadata: Metadata = { title: "Baza | Usuarios" }
+export const metadata: Metadata = { title: "Baza | Ganhos" }
 
 export default function UserPage(){
     return(

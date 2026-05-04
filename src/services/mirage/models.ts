@@ -53,3 +53,7 @@ export const notificacaoModel = Model.extend({
 export const suporteModel = Model.extend({
   user: belongsTo("user"),
 });
+
+export const subscricaoModel = Model.extend({
+  motoqueiro: belongsTo("motoqueiro"),
+});

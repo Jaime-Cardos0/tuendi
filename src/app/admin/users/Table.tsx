@@ -12,10 +12,11 @@ import { TableHeader } from "@/components/UI/Table/TableHeader";
 import { Pagination } from "@/components/UI/Table/Pagination";
 import { BsThreeDots } from "react-icons/bs";
 import { RiCircleFill, RiSearchLine } from "react-icons/ri";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/services/api";
 import { IUser, Role, UserStatus } from "@/services/mirage/types";
+import { UsersContext } from "@/contexts/UsersContext";
 
 const statusColor: Record<UserStatus, string> = {
   activo: "cyan",
@@ -40,38 +41,18 @@ const roleColor: Record<Role, string> = {
 };
 
 export function UsersTable() {
+  const { users, updateStatus, deleteUser } = useContext(UsersContext);
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [users, setUsers] = useState<IUser[]>([]);
   const [selected, setSelected] = useState<IUser | null>(null);
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState<Role | "TODOS">("TODOS");
   const [statusFilter, setStatusFilter] = useState<UserStatus | "TODOS">("TODOS");
   const [sortBy, setSortBy] = useState<"recentes" | "nome">("recentes");
 
-  useEffect(() => {
-    api.get("/users")
-      .then((res) => setUsers(res.data))
-      .catch((err) => console.error(err));
-  }, []);
-
   function openModal(user: IUser) {
     setSelected(user);
     onOpen();
-  }
-
-  async function updateStatus(id: string, status: UserStatus) {
-    await api.patch(`/users/${id}`, { status });
-    setUsers((prev) =>
-      prev.map((u) => (u.id === id ? { ...u, status } : u))
-    );
-    onClose();
-  }
-
-  async function deleteUser(id: string) {
-    await api.delete(`/users/${id}`);
-    setUsers((prev) => prev.filter((u) => u.id !== id));
-    onClose();
   }
 
   const filtered = useMemo(() => {
@@ -285,7 +266,7 @@ export function UsersTable() {
                 colorScheme="red"
                 variant="ghost"
                 size="sm"
-                onClick={() => deleteUser(selected.id)}
+                onClick={() => { onClose(); return deleteUser(selected.id) }}
               >
                 Eliminar conta
               </Button>
@@ -294,7 +275,7 @@ export function UsersTable() {
                   colorScheme="red"
                   variant="outline"
                   size="sm"
-                  onClick={() => updateStatus(selected.id, "suspenso")}
+                  onClick={() => { onClose(); return updateStatus(selected.id, "suspenso") }}
                 >
                   Suspender
                 </Button>
@@ -303,7 +284,7 @@ export function UsersTable() {
                   colorScheme="cyan"
                   variant="outline"
                   size="sm"
-                  onClick={() => updateStatus(selected.id, "activo")}
+                  onClick={() => { onClose(); return updateStatus(selected.id, "activo") }}
                 >
                   Reactivar
                 </Button>

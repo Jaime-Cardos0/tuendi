@@ -13,7 +13,7 @@ export function MainDelivery() {
 
   useEffect(() => {
     api.get("/pedidos")
-      .then((res) => setPedidos(res.data))
+      .then((res) => {console.log('Esse aqui', res.data); return setPedidos(res.data)})
       .catch((err) => console.error(err));
   }, []);
 
@@ -31,12 +31,11 @@ export function MainDelivery() {
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
-          icon={<BarChart data={chartData} max={20} />}
+          icon={<BarChart data={chartData} max={chartData.length} />}
           title="Total de Pedidos"
           value={total}
         />
         <ResumeCard
-          icon={<ClockIcon boxSize="56px" rounded="full" bgImage={gradients.primary} p="14px" />}
           title="Em Trânsito"
           value={emTransito}
         />

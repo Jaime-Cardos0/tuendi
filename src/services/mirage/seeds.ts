@@ -37,11 +37,13 @@ export function seeds(server: Server) {
   });
 
   // Criar pedidos
-  clientes.forEach((cliente, i) => {
-    const motoqueiro = motoqueiros[i % motoqueiros.length];
-    const pedido = server.create("pedido", { cliente, motoqueiro });
-
-    server.create("avaliacao", { pedido });
+// para — cada cliente cria 3 pedidos
+  clientes.forEach((cliente) => {
+    Array.from({ length: 20 }).forEach(() => {
+      const motoqueiro = motoqueiros[Math.floor(Math.random() * motoqueiros.length)];
+      const pedido = server.create("pedido", { cliente, motoqueiro });
+      server.create("avaliacao", { pedido });
+    });
   });
 
   // Criar notificações
@@ -53,4 +55,8 @@ export function seeds(server: Server) {
   clientes.slice(0, 5).forEach((user) => {
     server.create("suporte", { user });
   });
+
+  motoqueiros.forEach((motoqueiro) => {
+  server.create("subscricao", { motoqueiro });
+});
 }

@@ -16,11 +16,10 @@ export function Sidebar(){
                     <NavLink href="/admin/riders" icon={<DeliveryManIcon strokeWidth={3} fontSize={20}/>}>Entregador</NavLink>
                     <NavLink href="/admin/users" icon={<UserIcon strokeWidth={2} fontSize={20}/>}>Usuário</NavLink>
                     <NavLink href="/admin/earnings" icon={<LineChartIcon strokeWidth={2} fontSize={20}/>}>Ganhos</NavLink>
-                    <NavLink href="#" icon={<SupportIcon strokeWidth={2} fontSize={20}/>}>Suporte</NavLink>
                 </NavSection>
 
                 <NavSection title="support admin">
-                    <NavLink href="#" icon={<HelpIcon strokeWidth={2} fontSize={20}/>}>Ajuda</NavLink>
+                    <NavLink href="#" icon={<HelpIcon strokeWidth={2} fontSize={20}/>}>Suporte</NavLink>
                     <NavLink href="#" icon={<NotificationIcon strokeWidth={2} fontSize={20}/>}>Notificações</NavLink>
                     <NavLink href="#" icon={<ConfigurationIcon strokeWidth={2} fontSize={20}/>}>Definições</NavLink>
                 </NavSection>

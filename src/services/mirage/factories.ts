@@ -81,9 +81,9 @@ export const pedidoFactory = Factory.extend({
   fragil() { return faker.datatype.boolean(); },
   valorEntrega() { return parseFloat(faker.number.float({ min: 500, max: 5000, fractionDigits: 2 }).toFixed(2)); },
   distanciaKm() { return parseFloat(faker.number.float({ min: 1, max: 30, fractionDigits: 2 }).toFixed(2)); },
-  metodoPagamento() { return faker.helpers.arrayElement(["dinheiro", "stripe"]); },
+  metodoPagamento() { return faker.helpers.arrayElement(["dinheiro", "stripe", "express"]); },
   motivoCancelamento() { return null; },
-  criadoEm() { return faker.date.recent({ days: 30 }).toISOString(); },
+  criadoEm() { return faker.date.recent({ days: 365 }).toISOString(); },
   entregueEm() { return null; },
   canceladoEm() { return null; },
 });
@@ -130,4 +130,25 @@ export const suporteFactory = Factory.extend({
   respondidoPor() { return null; },
   criadoEm() { return faker.date.recent({ days: 30 }).toISOString(); },
   resolvidoEm() { return null; },
+});
+
+export const subscricaoFactory = Factory.extend({
+  plano() {
+    return faker.helpers.arrayElement(["semanal", "mensal"]);
+  },
+  valor() {
+    return this.plano === "semanal" ? 2500 : 8000;
+  },
+  status() {
+    return faker.helpers.arrayElement(["activa", "expirada", "cancelada"]);
+  },
+  inicioEm() {
+    return faker.date.recent({ days: 30 }).toISOString();
+  },
+  expiraEm() {
+    return faker.date.soon({ days: 30 }).toISOString();
+  },
+  criadoEm() {
+    return faker.date.recent({ days: 30 }).toISOString();
+  },
 });

@@ -26,7 +26,6 @@ export function MainRider() {
           value={total}
         />
         <ResumeCard
-          icon={<ClockIcon boxSize="56px" rounded="full" bgImage={gradients.primary} p="14px" />}
           title="Pendentes"
           value={pendentes}
         />

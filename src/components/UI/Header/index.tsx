@@ -1,6 +1,6 @@
 import { Flex, HStack } from "@chakra-ui/react";
 import Image from "next/image";
-import logo from "../../../../public/Assets/images/Logo.png"
+import logo from "../../../../public/Assets/icons/BazaLogo.svg"
 import { InputSearch } from "./InputSearch";
 import { AvatarComponent } from "./AvatarComponent";
 import { HeaderIconsComponent } from "./HeaderIconsComponent";

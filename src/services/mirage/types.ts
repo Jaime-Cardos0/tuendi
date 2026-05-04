@@ -37,6 +37,22 @@ export type NotificacaoTipo =
   | "sistema";
 export type SuporteStatus = "aberto" | "em_analise" | "resolvido";
 
+export type PlanoTipo = "semanal" | "mensal";
+export type SubscricaoStatus = "activa" | "expirada" | "cancelada";
+
+export interface ISubscricao {
+  id: string;
+  motoqueiroId: string;
+  plano: PlanoTipo;
+  valor: number;
+  status: SubscricaoStatus;
+  inicioEm: string;
+  expiraEm: string;
+  criadoEm: string;
+  // montado
+  motoqueiro: IMotoqueiro;
+}
+
 export interface IUser {
   id: string;
   firebaseUid: string;
@@ -117,6 +133,7 @@ export interface IPedido {
   // montado
   cliente: IUser;
   motoqueiro: IMotoqueiro | null;
+  userDataMotoqueiro: IUser; // dados do user do motoqueiro para facilitar acesso sem precisar montar toda a relação
 }
 
 export interface IAvaliacao {

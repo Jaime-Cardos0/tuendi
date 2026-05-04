@@ -4,18 +4,11 @@ import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
 import BarChart, { ClockIcon } from "@/components/Icons/icons";
 import { gradients } from "@/styles/gradients";
 import { UsersTable } from "./Table";
-import { useEffect, useMemo, useState } from "react";
-import { api } from "@/services/api";
-import { IUser } from "@/services/mirage/types";
+import { useContext, useMemo } from "react";
+import { UsersContext } from "@/contexts/UsersContext";
 
 export function MainUser() {
-  const [users, setUsers] = useState<IUser[]>([]);
-
-  useEffect(() => {
-    api.get("/users")
-      .then((res) => setUsers(res.data))
-      .catch((err) => console.error(err));
-  }, []);
+  const {users} = useContext(UsersContext);
 
   const total     = users.length;
   const clientes  = useMemo(() => users.filter((u) => u.role === "cliente").length, [users]);
@@ -36,7 +29,6 @@ export function MainUser() {
           value={total}
         />
         <ResumeCard
-          icon={<ClockIcon boxSize="56px" rounded="full" bgImage={gradients.primary} p="14px" />}
           title="Clientes"
           value={clientes}
         />

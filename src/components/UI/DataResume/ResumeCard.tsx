@@ -24,9 +24,7 @@ export function ResumeCard({title, value="0", bgVariant = "primary", icon, pathC
                 
                 <Text as={"span"} letterSpacing={"wider"} fontFamily={"heading"} fontWeight={"bold"} fontSize={"2xl"}>{value}</Text>
             </Stack>
-            {icon ? icon : <svg viewBox="0 0 300 200">
-                <path d="M0, 150 C50, 100 100, 200 150, 150 C200, 100 250, 180 300, 120" fill="none" stroke={pathColor} strokeWidth={10} />
-            </svg> }
+            {icon}
             {/* <svg viewBox="0 0 300 200">
                 <path d="M0, 150 C50, 100 100, 200 150, 150 C200, 100 250, 180 300, 120" fill="none" stroke="#4facfe" strokeWidth={10} />
             </svg> */}

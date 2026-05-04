@@ -20,7 +20,6 @@ import { useContext, useMemo, useState } from "react";
 import { DisponibilidadeStatus, IMotoqueiro, MotoqueiroStatus } from "@/services/mirage/types";
 import { useRouter } from "next/navigation";
 import { RidersContext } from "@/contexts/RidersContext";
-import { headers } from "next/headers";
 
 const statusColor: Record<MotoqueiroStatus, string> = {
   pendente_aprovacao: "yellow",

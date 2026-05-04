@@ -44,6 +44,7 @@ interface Props {
 }
 
 export function DeliveriesTable({ pedidos, setPedidos }: Props) {
+  console.log('Pedidos na tabela', pedidos);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selected, setSelected] = useState<IPedido | null>(null);
   const [search, setSearch] = useState("");
@@ -114,8 +115,8 @@ export function DeliveriesTable({ pedidos, setPedidos }: Props) {
       render: (p: IPedido) =>
         p.motoqueiro ? (
           <Flex align="center" gap={2}>
-            <Avatar size="sm" src={p.motoqueiro.user.fotoPerfil} name={`${p.motoqueiro.user.nome} ${p.motoqueiro.user.sobrenome}`} />
-            <Text>{p.motoqueiro.user.nome} {p.motoqueiro.user.sobrenome}</Text>
+            <Avatar size="sm" src={p.userDataMotoqueiro.fotoPerfil} name={`${p.userDataMotoqueiro.nome} ${p.userDataMotoqueiro.sobrenome}`} />
+            <Text>{p.userDataMotoqueiro.nome} {p.userDataMotoqueiro.sobrenome}</Text>
           </Flex>
         ) : (
           <Text color="gray.500" fontSize="sm">Não atribuído</Text>
@@ -337,13 +338,13 @@ export function DeliveriesTable({ pedidos, setPedidos }: Props) {
                   <Flex align="center" gap={3}>
                     <Avatar
                       size="md"
-                      src={selected.motoqueiro.user.fotoPerfil}
-                      name={`${selected.motoqueiro.user.nome} ${selected.motoqueiro.user.sobrenome}`}
+                      src={selected.userDataMotoqueiro.fotoPerfil}
+                      name={`${selected.userDataMotoqueiro.nome} ${selected.userDataMotoqueiro.sobrenome}`}
                     />
                     <Box>
-                      <Text>{selected.motoqueiro.user.nome} {selected.motoqueiro.user.sobrenome}</Text>
-                      <Text fontSize="sm" color="gray.400">{selected.motoqueiro.user.email}</Text>
-                      <Text fontSize="sm" color="gray.400">{selected.motoqueiro.user.telefone}</Text>
+                      <Text>{selected.userDataMotoqueiro.nome} {selected.userDataMotoqueiro.sobrenome}</Text>
+                      <Text fontSize="sm" color="gray.400">{selected.userDataMotoqueiro.email}</Text>
+                      <Text fontSize="sm" color="gray.400">{selected.userDataMotoqueiro.telefone}</Text>
                       <HStack mt={1}>
                         <Text fontSize="xs" color="gray.400">
                           {selected.motoqueiro.classificacaoMedia} ⭐ · {selected.motoqueiro.totalAvaliacoes} avaliações

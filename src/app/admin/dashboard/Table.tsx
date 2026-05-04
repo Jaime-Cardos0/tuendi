@@ -1,49 +1,104 @@
-import { Box, IconButton, Tag, TagLeftIcon, TagLabel } from "@chakra-ui/react";
+"use client";
+import { Box, Flex, Avatar, Text, Tag, TagLeftIcon, TagLabel, IconButton } from "@chakra-ui/react";
 import { TableComponent } from "@/components/UI/Table/Table";
 import { TableHeader } from "@/components/UI/Table/TableHeader";
+import { Pagination } from "@/components/UI/Table/Pagination";
 import { BsThreeDots } from "react-icons/bs";
 import { RiCircleFill } from "react-icons/ri";
-import { Pagination } from "@/components/UI/Table/Pagination";
-import { useEffect } from "react";
-import { api } from "@/services/api";
+import { IPedido, PedidoStatus } from "@/services/mirage/types";
 
-const users = [
-    {id: 1, name: "Jaime", email: "jaime@gmail.com"},
-    {id: 2, name: "Dorivaldo", email: "Dorivaldo@gmail.com"},
-]
+const statusColor: Record<PedidoStatus, string> = {
+  pendente:              "gray",
+  a_procurar_motoqueiro: "yellow",
+  motoqueiro_atribuido:  "blue",
+  a_caminho_coleta:      "orange",
+  recolhido:             "purple",
+  em_transito:           "cyan",
+  entregue:              "green",
+  cancelado:             "red",
+};
 
-// interface usersProps {
-//     id: number,
-//     name: string,
-//     email: string,
-// }
+const statusLabel: Record<PedidoStatus, string> = {
+  pendente:              "Pendente",
+  a_procurar_motoqueiro: "A procurar",
+  motoqueiro_atribuido:  "Atribuído",
+  a_caminho_coleta:      "A caminho",
+  recolhido:             "Recolhido",
+  em_transito:           "Em trânsito",
+  entregue:              "Entregue",
+  cancelado:             "Cancelado",
+};
 
-export function DashboardTable(){
+interface Props {
+  pedidos: IPedido[];
+}
 
-    useEffect(() => {
-            api.get("http://localhost:3000/api/users")
-            .then((response) => console.log(response.data))
-        }, []);
+export function DashboardTable({ pedidos }: Props) {
+  const columns = [
+    {
+      header: "Nº Pedido",
+      render: (p: IPedido) => (
+        <Text fontFamily="mono" fontSize="sm">{p.numeroPedido}</Text>
+      ),
+    },
+    {
+      header: "Cliente",
+      render: (p: IPedido) => (
+        <Flex align="center" gap={2}>
+          <Avatar size="sm" src={p.cliente.fotoPerfil} name={`${p.cliente.nome} ${p.cliente.sobrenome}`} />
+          <Text>{p.cliente.nome} {p.cliente.sobrenome}</Text>
+        </Flex>
+      ),
+    },
+    {
+      header: "Destino",
+      render: (p: IPedido) => (
+        <Text fontSize="sm" noOfLines={1} maxW="180px">{p.destinoEndereco}</Text>
+      ),
+    },
+    {
+      header: "Valor",
+      render: (p: IPedido) => (
+        <Text>{p.valorEntrega.toLocaleString("pt-AO")} Kz</Text>
+      ),
+    },
+    {
+      header: "Motoqueiro",
+      render: (p: IPedido) =>
+        p.motoqueiro ? (
+          <Flex align="center" gap={2}>
+            <Avatar size="sm" src={p.userDataMotoqueiro.fotoPerfil} name={`${p.userDataMotoqueiro.nome} ${p.userDataMotoqueiro.sobrenome}`} />
+            <Text>{p.userDataMotoqueiro.nome} {p.userDataMotoqueiro.sobrenome}</Text>
+          </Flex>
+        ) : (
+          <Text color="gray.500" fontSize="sm">Não atribuído</Text>
+        ),
+    },
+    {
+      header: "Status",
+      render: (p: IPedido) => (
+        <Tag colorScheme={statusColor[p.status]} size="sm">
+          <TagLeftIcon as={RiCircleFill} color={`${statusColor[p.status]}.500`} />
+          <TagLabel>{statusLabel[p.status]}</TagLabel>
+        </Tag>
+      ),
+    },
+    {
+      header: "",
+      render: () => (
+        <IconButton variant="ghost" aria-label="Ver detalhes" icon={<BsThreeDots />} />
+      ),
+    },
+  ];
 
-    const columns = [
-        {header: "No", accessor: "name"},
-        {header: "ID", accessor: "id"},
-        {header: "E-mail", accessor: "email"},
-        // {header: "Status", render: (user: usersProps) => (
-        //                                     <Tag colorScheme="cyan" size={"sm"}>
-        //                                         <TagLeftIcon as={RiCircleFill} size={2} color="cyan.500" />
-        //                                         <TagLabel>Concluido</TagLabel>
-        //                                     </Tag>)},
-        // {header: "", render: (user: usersProps) => (<IconButton variant={"ghost"} aria-label="Ver menu" icon={<BsThreeDots/>}/>)}
-    ]
-
-    return(
-        <Box p={8} display={"flex"} gap={8} flexDirection={"column"} mb={8} bg={"grayDark.700"} border={"2px"} borderColor={"grayDark.500"} rounded={"xl"}>
-            
-            <TableHeader title="Usuários" />
-            <TableComponent data={users} columns={columns}/> 
-            {/* <hr/> */}
-            <Pagination/>     
-        </Box>
-    );
+  return (
+    <Box
+      p={8} display="flex" gap={8} flexDirection="column" mb={8}
+      bg="grayDark.700" border="2px" borderColor="grayDark.500" rounded="xl"
+    >
+      <TableHeader title="Últimas Entregas" />
+      <TableComponent data={pedidos} columns={columns} />
+      <Pagination />
+    </Box>
+  );
 }

@@ -1,14 +1,16 @@
 // src/services/mirage/server.ts
-import { createServer, Server, Response } from "miragejs";
+import { createServer, Server, Response, RestSerializer } from "miragejs";
 import {
   userModel, motoqueiroModel, veiculoModel, uploadModel,
   pedidoModel, avaliacaoModel, carteiraModel, transacaoModel,
   notificacaoModel, suporteModel,
+  subscricaoModel,
 } from "./models";
 import {
   userFactory, motoqueiroFactory, veiculoFactory, uploadFactory,
   pedidoFactory, avaliacaoFactory, carteiraFactory, transacaoFactory,
   notificacaoFactory, suporteFactory,
+  subscricaoFactory,
 } from "./factories";
 import { seeds } from "./seeds";
 
@@ -25,6 +27,7 @@ export function makeServer(): Server {
       transacao: transacaoModel,
       notificacao: notificacaoModel,
       suporte: suporteModel,
+      subscricao: subscricaoModel,
     },
 
     factories: {
@@ -38,6 +41,14 @@ export function makeServer(): Server {
       transacao: transacaoFactory,
       notificacao: notificacaoFactory,
       suporte: suporteFactory,
+      subscricao: subscricaoFactory,
+    },
+
+    serializers: {
+      application: RestSerializer.extend({
+        include: ["user"],
+        embed: true,
+      }),
     },
 
     seeds,
@@ -60,7 +71,8 @@ export function makeServer(): Server {
         const attrs = JSON.parse(request.requestBody);
         const user = schema.find("user", request.params.id);
         if (!user) return new Response(404, {}, { error: "User not found" });
-        return user.update(attrs);
+        user.update(attrs);
+        return user.attrs;
       });
 
       this.delete("/users/:id", (schema, request) => {
@@ -91,32 +103,42 @@ export function makeServer(): Server {
       this.patch("/motoqueiros/:id", (schema, request) => {
         const attrs = JSON.parse(request.requestBody);
         const m = schema.find("motoqueiro", request.params.id);
-        return m?.update(attrs);
+        if (!m) return new Response(404, {}, { error: "Motoqueiro not found" });
+        m.update(attrs);
+        return m.attrs;
       });
 
       // Pedidos — devolve dados montados
       this.get("/pedidos", (schema) => {
         return schema.all("pedido").models.map((p) => {
           const cliente = p.cliente?.attrs ?? {};
-          const motoqueiro = p.motoqueiro?.attrs ?? null;
-          return { ...p.attrs, cliente, motoqueiro };
+          const motoqueiro = p.motoqueiro?.attrs ?? {};
+          const userDataMotoqueiro = p.motoqueiro?.user?.attrs ?? {};
+          return { ...p.attrs, cliente, motoqueiro, userDataMotoqueiro };
         });
       });
 
       this.get("/pedidos/:id", (schema, request) => {
         const p = schema.find("pedido", request.params.id);
         if (!p) return null;
-        return { ...p.attrs, cliente: p.cliente?.attrs, motoqueiro: p.motoqueiro?.attrs };
+        return { ...p.attrs, cliente: p.cliente?.attrs, motoqueiro: p.motoqueiro?.attrs, userDataMotoqueiro: p.motoqueiro?.user?.attrs };
       });
 
       this.patch("/pedidos/:id", (schema, request) => {
         const attrs = JSON.parse(request.requestBody);
-        return schema.find("pedido", request.params.id)?.update(attrs);
+        const pedido = schema.find("pedido", request.params.id);
+        if (!pedido) return new Response(404, {}, { error: "Pedido not found" });
+        pedido.update(attrs);
+        return pedido.attrs;
       });
 
       // Carteiras
       this.get("/carteiras", (schema) => schema.all("carteira").models.map((c) => c.attrs));
-      this.get("/carteiras/:id", (schema, request) => schema.find("carteira", request.params.id)?.attrs);
+      this.get("/carteiras/:id", (schema, request) => {
+        const carteira = schema.find("carteira", request.params.id);
+        if (!carteira) return new Response(404, {}, { error: "Carteira not found" });
+        return carteira.attrs;
+      });
 
       // Transacoes
       this.get("/transacoes", (schema) => schema.all("transacao").models.map((t) => t.attrs));
@@ -128,15 +150,29 @@ export function makeServer(): Server {
       this.get("/notificacoes", (schema) => schema.all("notificacao").models.map((n) => n.attrs));
       this.patch("/notificacoes/:id", (schema, request) => {
         const attrs = JSON.parse(request.requestBody);
-        return schema.find("notificacao", request.params.id)?.update(attrs);
+        const notificacao = schema.find("notificacao", request.params.id);
+        if (!notificacao) return new Response(404, {}, { error: "Notificação not found" });
+        notificacao.update(attrs);
+        return notificacao.attrs;
       });
 
       // Suportes
       this.get("/suportes", (schema) => schema.all("suporte").models.map((s) => s.attrs));
       this.patch("/suportes/:id", (schema, request) => {
         const attrs = JSON.parse(request.requestBody);
-        return schema.find("suporte", request.params.id)?.update(attrs);
+        const suporte = schema.find("suporte", request.params.id);
+        if (!suporte) return new Response(404, {}, { error: "Suporte not found" });
+        suporte.update(attrs);
+        return suporte.attrs;
       });
+
+      this.get("/subscricoes", (schema) => {
+        return schema.all("subscricao").models.map((s) => {
+        const motoqueiro = s.motoqueiro?.attrs ?? {};
+        const user = s.motoqueiro?.user?.attrs ?? {};
+        return { ...s.attrs, motoqueiro: { ...motoqueiro, user } };
+      });
+    });
     },
   });
 }

@@ -40,8 +40,8 @@ export default function ViewMorePage() {
 
   useEffect(() => {
     if (!id) return;
-    api.get(`/motoqueiros/${id}`)        // ✅ rota correcta
-      .then((res) => setRider(res.data)) // ✅ array directo
+    api.get(`/motoqueiros/${id}`)        
+      .then((res) => setRider(res.data)) 
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, [id]);
@@ -117,10 +117,10 @@ export default function ViewMorePage() {
             </HStack>
           </Flex>
 
-          <Divider mb={8} />
+          {/* <Divider mb={8} /> */}
 
           {/* Tabs */}
-          <Tabs variant="soft-rounded" colorScheme="cyan">
+          <Tabs variant="line" colorScheme="cyan">
             <TabList mb={6} gap={2}>
               <Tab>Informações Gerais</Tab>
               <Tab>Documentos</Tab>

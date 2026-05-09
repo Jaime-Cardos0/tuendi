@@ -41,6 +41,8 @@ const roleColor: Record<Role, string> = {
 };
 
 export function UsersTable() {
+
+  const [page, setPage] = useState(1);
   const { users, updateStatus, deleteUser } = useContext(UsersContext);
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -188,7 +190,7 @@ export function UsersTable() {
         </Stack>
 
         <TableComponent data={filtered} columns={columns} />
-        <Pagination />
+        <Pagination currentPage={page} onPageChange={setPage} />
       </Box>
 
       {/* Modal */}

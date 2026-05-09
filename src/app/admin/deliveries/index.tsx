@@ -31,7 +31,7 @@ export function MainDelivery() {
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
-          icon={<BarChart data={chartData} max={chartData.length} />}
+          icon={<BarChart data={chartData ?? [0, 0, 0, 0]} max={chartData.length ?? 0} />}
           title="Total de Pedidos"
           value={total}
         />

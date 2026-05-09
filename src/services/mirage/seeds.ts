@@ -33,7 +33,7 @@ export function seeds(server: Server) {
   [...clientes, ...usersMoto].forEach((user) => {
     const carteira = server.create("carteira", { user });
 
-    server.createList("transacao", 3, { carteira });
+    server.createList("transacao", 60, { carteira });
   });
 
   // Criar pedidos
@@ -48,7 +48,7 @@ export function seeds(server: Server) {
 
   // Criar notificações
   [...clientes, ...usersMoto].forEach((user) => {
-    server.createList("notificacao", 2, { user });
+    server.createList("notificacao", 4, { user });
   });
 
   // Criar suportes

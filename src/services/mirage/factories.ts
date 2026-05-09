@@ -137,7 +137,7 @@ export const subscricaoFactory = Factory.extend({
     return faker.helpers.arrayElement(["semanal", "mensal"]);
   },
   valor() {
-    return this.plano === "semanal" ? 2500 : 8000;
+    return this.plano === "semanal" ? 6000 : 30000;
   },
   status() {
     return faker.helpers.arrayElement(["activa", "expirada", "cancelada"]);

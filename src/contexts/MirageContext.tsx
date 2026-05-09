@@ -1,5 +1,5 @@
 "use client";
-
+// nao esta sendo usado, pode apagar
 import { useEffect } from "react";
 import { makeServer } from "@/services/mirage/server"; // caminho para o seu arquivo do mirage
 

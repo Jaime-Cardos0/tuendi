@@ -20,7 +20,7 @@ export function UsersProvider({children}: UsersProviderProps){
     
     useEffect(() => {
         api.get("/users")
-          .then((res) => setUsers(res.data))
+          .then((res) => { console.log("response", res) ;setUsers(res.data)})
           .catch((err) => console.error(err));
     }, []);
 

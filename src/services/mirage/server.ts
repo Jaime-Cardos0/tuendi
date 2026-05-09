@@ -57,8 +57,18 @@ export function makeServer(): Server {
       this.namespace = "api";
 
       // Users
-      this.get("/users", (schema) => {
-        return schema.all("user").models.map((u) => u.attrs);
+      this.get("/users", (schema, request) => {
+        const { page, perPage }: { page?: string; perPage?: string } = request.queryParams;
+
+        const total = schema.all("user").length;
+        const pageNum = parseInt(page!) || 1;
+        const perPageNum = parseInt(perPage!) || 10;
+        const start = (pageNum - 1) * perPageNum;
+        const end = start + perPageNum;
+
+        const users = schema.all("user").models.map((u) => u.attrs).slice(start, end);
+
+        return new Response(200, { "x-total-count": String(total) }, users);
       });
 
       this.get("/users/:id", (schema, request) => {

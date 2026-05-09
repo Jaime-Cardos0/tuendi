@@ -14,14 +14,13 @@ export function MainRider() {
   const pendentes = useMemo(() => riders.filter(r => r.status === "pendente_aprovacao").length, [riders]);
   const activos = useMemo(() => riders.filter(r => r.status === "activo").length, [riders]);
   const suspensos = useMemo(() => riders.filter(r => r.status === "suspenso").length, [riders]);
-
   const chartData = useMemo(() => [total, pendentes, activos, suspensos], [total, pendentes, activos, suspensos]);
 
   return (
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
-          icon={<BarChart data={chartData} max={total} />}
+          icon={<BarChart data={chartData ?? [0, 0, 0, 0]} max={total ?? 0} />}
           title="Total de Riders"
           value={total}
         />

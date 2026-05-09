@@ -44,7 +44,7 @@ interface Props {
 }
 
 export function DeliveriesTable({ pedidos, setPedidos }: Props) {
-  console.log('Pedidos na tabela', pedidos);
+  
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selected, setSelected] = useState<IPedido | null>(null);
   const [search, setSearch] = useState("");

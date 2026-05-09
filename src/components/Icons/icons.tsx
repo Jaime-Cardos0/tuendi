@@ -48,7 +48,7 @@ export default function BarChart({
               x={x}
               y={0}
               width={barWidth * 0.6}
-              height={height}
+              height={height ?? 0}
               fill="#353B4A"
               rx="2"
             />
@@ -56,7 +56,7 @@ export default function BarChart({
             {/* valor */}
             <rect
               x={x}
-              y={height - animatedHeight}
+              y={(height ?? 0) - animatedHeight}
               width={barWidth * 0.6}
               height={animatedHeight}
               fill="#0F60FF"

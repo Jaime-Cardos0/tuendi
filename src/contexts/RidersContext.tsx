@@ -1,6 +1,7 @@
 "use client";
 import { api } from "@/services/api";
 import { IMotoqueiro, MotoqueiroStatus } from "@/services/mirage/types";
+import { useQuery } from "@tanstack/react-query";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 interface RidersProviderProps {
@@ -16,6 +17,12 @@ export const RidersContext = createContext<RidersContextData>({} as RidersContex
 
 export function RidersProvider({ children }: RidersProviderProps) {
   const [riders, setRiders] = useState<IMotoqueiro[]>([]);
+
+  // const { isPending, data, error } = useQuery( {queryKey: ['ridersQuery'], queryFn: () => {
+  //   api.get("/motoqueiros")
+  //     .then((res) => setRiders(res.data))
+  //     .catch((err) => console.error(err));
+  // }});
 
   useEffect(() => {
     api.get("/motoqueiros")

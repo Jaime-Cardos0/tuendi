@@ -11,9 +11,9 @@ export function seeds(server: Server) {
 
   // Criar motoqueiros com user, veiculo e uploads associados
   const motoqueiros = usersMoto.map((user) => {
-    const motoqueiro = server.create("motoqueiro", { user });
+    const motoqueiro = server.create("motoqueiro", { user } as any);
 
-    server.create("veiculo", { motoqueiro });
+    server.create("veiculo", { motoqueiro } as any);
 
     const tiposUpload = [
       "documento_bi_frente",
@@ -24,7 +24,7 @@ export function seeds(server: Server) {
     ] as const;
 
     tiposUpload.forEach((tipo) => {
-      server.create("upload", { user, tipo });
+      server.create("upload", { user, tipo } as any);
     });
 
     return motoqueiro;
@@ -32,9 +32,9 @@ export function seeds(server: Server) {
 
   // Criar carteiras para todos os users
   [...clientes, ...usersMoto].forEach((user) => {
-    const carteira = server.create("carteira", { user });
+    const carteira = server.create("carteira", { user } as any);
 
-    server.createList("transacao", 60, { carteira });
+    server.createList("transacao", 60, { carteira } as any);
   });
 
   // Criar pedidos
@@ -42,19 +42,19 @@ export function seeds(server: Server) {
   clientes.forEach((cliente) => {
     Array.from({ length: 20 }).forEach(() => {
       const motoqueiro = motoqueiros[Math.floor(Math.random() * motoqueiros.length)];
-      const pedido = server.create("pedido", { cliente, motoqueiro });
+      const pedido = server.create("pedido", { cliente, motoqueiro } as any);
       server.create("avaliacao", { pedido });
     });
   });
 
   // Criar notificações
   [...clientes, ...usersMoto].forEach((user) => {
-    server.createList("notificacao", 4, { user });
+    server.createList("notificacao", 4, { user } as any);
   });
 
   // Criar suportes
   clientes.slice(0, 5).forEach((user) => {
-    server.create("suporte", { user });
+    server.create("suporte", { user } as any);
   });
 
   motoqueiros.forEach((motoqueiro) => {
@@ -63,6 +63,6 @@ export function seeds(server: Server) {
     motoqueiro,
     plano,
     valor: plano === "semanal" ? 6000 : 30000,
-  });
+  } as any);
 });
 }

@@ -1,5 +1,6 @@
 // src/services/mirage/seeds.ts
 import { Server } from "miragejs";
+import { faker } from "@faker-js/faker";
 
 export function seeds(server: Server) {
   // Criar clientes
@@ -57,6 +58,11 @@ export function seeds(server: Server) {
   });
 
   motoqueiros.forEach((motoqueiro) => {
-  server.create("subscricao", { motoqueiro });
+  const plano = faker.helpers.arrayElement(["semanal", "mensal"] as const);
+  server.create("subscricao", {
+    motoqueiro,
+    plano,
+    valor: plano === "semanal" ? 6000 : 30000,
+  });
 });
 }

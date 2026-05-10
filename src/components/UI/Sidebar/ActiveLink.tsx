@@ -25,7 +25,7 @@ export function ActiveLink({children, ...rest}: ActiveLinkProps){
     return(
         <Link {...rest} suppressHydrationWarning>
             {isValidElement(children)
-                ? cloneElement(children as ReactElement, {
+                ? cloneElement(children as ReactElement<any>, {
                     color: isActive ? "text.primary" : "text.muted",
                 })
                 : children}

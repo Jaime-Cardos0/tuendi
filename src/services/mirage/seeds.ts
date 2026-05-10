@@ -4,10 +4,10 @@ import { faker } from "@faker-js/faker";
 
 export function seeds(server: Server) {
   // Criar clientes
-  const clientes = server.createList("user", 150, { role: "cliente" });
+  const clientes = server.createList("user", 150, { role: "cliente"} as any);
 
   // Criar users que serão motoqueiros
-  const usersMoto = server.createList("user", 100, { role: "motoqueiro" });
+  const usersMoto = server.createList("user", 100, { role: "motoqueiro"} as any);
 
   // Criar motoqueiros com user, veiculo e uploads associados
   const motoqueiros = usersMoto.map((user) => {

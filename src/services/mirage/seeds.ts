@@ -43,7 +43,7 @@ export function seeds(server: Server) {
     Array.from({ length: 20 }).forEach(() => {
       const motoqueiro = motoqueiros[Math.floor(Math.random() * motoqueiros.length)];
       const pedido = server.create("pedido", { cliente, motoqueiro } as any);
-      server.create("avaliacao", { pedido });
+      server.create("avaliacao", { pedido } as any);
     });
   });
 

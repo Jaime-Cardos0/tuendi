@@ -1,3 +1,5 @@
+"use client"
+
 import { api } from "@/services/api";
 import { IUser, UserStatus } from "@/services/mirage/types";
 import { useMutation, UseMutationResult, useQuery } from "@tanstack/react-query";

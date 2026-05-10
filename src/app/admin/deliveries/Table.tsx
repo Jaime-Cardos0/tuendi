@@ -12,9 +12,10 @@ import { TableHeader } from "@/components/UI/Table/TableHeader";
 import { Pagination } from "@/components/UI/Table/Pagination";
 import { BsThreeDots } from "react-icons/bs";
 import { RiCircleFill, RiSearchLine } from "react-icons/ri";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { api } from "@/services/api";
 import { IPedido, PedidoStatus } from "@/services/mirage/types";
+import { DeliveriesContext } from "@/contexts/DeliveriesContext";
 
 const statusColor: Record<PedidoStatus, string> = {
   pendente:                "gray",
@@ -43,7 +44,9 @@ interface Props {
   setPedidos: React.Dispatch<React.SetStateAction<IPedido[]>>;
 }
 
-export function DeliveriesTable({ pedidos, setPedidos }: Props) {
+export function DeliveriesTable() {
+
+  const { cancelarPedido, pedidos } = useContext(DeliveriesContext);
   
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selected, setSelected] = useState<IPedido | null>(null);
@@ -55,14 +58,6 @@ export function DeliveriesTable({ pedidos, setPedidos }: Props) {
   function openModal(pedido: IPedido) {
     setSelected(pedido);
     onOpen();
-  }
-
-  async function cancelarPedido(id: string) {
-    await api.patch(`/pedidos/${id}`, { status: "cancelado" });
-    setPedidos((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, status: "cancelado" } : p))
-    );
-    onClose();
   }
 
   const filtered = useMemo(() => {
@@ -365,7 +360,7 @@ export function DeliveriesTable({ pedidos, setPedidos }: Props) {
                   colorScheme="red"
                   variant="outline"
                   size="sm"
-                  onClick={() => cancelarPedido(selected.id)}
+                  onClick={() => {onClose(); return cancelarPedido(selected.id)}}
                 >
                   Cancelar pedido
                 </Button>

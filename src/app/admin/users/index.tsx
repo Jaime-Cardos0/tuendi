@@ -8,14 +8,7 @@ import { useContext, useMemo } from "react";
 import { UsersContext } from "@/contexts/UsersContext";
 
 export function MainUser() {
-  const {users} = useContext(UsersContext);
-
-  console.log("usuarios", users);
-
-  const total     = users.length;
-  const clientes  = useMemo(() => users.filter((u) => u.role === "cliente").length, [users]);
-  const motoqueiroCount = useMemo(() => users.filter((u) => u.role === "motoqueiro").length, [users]);
-  const suspensos = useMemo(() => users.filter((u) => u.status === "suspenso").length, [users]);
+  const {total, clientes, motoqueiroCount, suspensos} = useContext(UsersContext);
 
   const chartData = useMemo(
     () => [total, clientes, motoqueiroCount, suspensos],
@@ -26,7 +19,7 @@ export function MainUser() {
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
-          icon={<BarChart data={chartData ?? [0, 0, 0, 0]} max={total ?? 0} />}
+          icon={<BarChart data={chartData} max={total} />}
           title="Total de Usuários"
           value={total}
         />

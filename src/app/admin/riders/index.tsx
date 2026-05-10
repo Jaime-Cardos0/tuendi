@@ -8,13 +8,9 @@ import { RidersContext } from "@/contexts/RidersContext";
 import { useContext, useMemo } from "react";
 
 export function MainRider() {
-  const { riders } = useContext(RidersContext);
+  const {total, pendentes, ativos, suspensos} = useContext(RidersContext);
 
-  const total = riders.length;
-  const pendentes = useMemo(() => riders.filter(r => r.status === "pendente_aprovacao").length, [riders]);
-  const activos = useMemo(() => riders.filter(r => r.status === "activo").length, [riders]);
-  const suspensos = useMemo(() => riders.filter(r => r.status === "suspenso").length, [riders]);
-  const chartData = useMemo(() => [total, pendentes, activos, suspensos], [total, pendentes, activos, suspensos]);
+  const chartData = useMemo(() => [total, ativos, suspensos], [total, ativos, suspensos]);
 
   return (
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
@@ -28,7 +24,7 @@ export function MainRider() {
           title="Pendentes"
           value={pendentes}
         />
-        <ResumeCard title="Activos" value={activos} />
+        <ResumeCard title="Activos" value={ativos} />
         <ResumeCard title="Suspensos" value={suspensos} />
       </Flex>
 

@@ -6,6 +6,8 @@ import { Pagination } from "@/components/UI/Table/Pagination";
 import { BsThreeDots } from "react-icons/bs";
 import { RiCircleFill } from "react-icons/ri";
 import { IPedido, PedidoStatus } from "@/services/mirage/types";
+import { useContext } from "react";
+import { DashboardContext } from "@/contexts/DashboardContext";
 
 const statusColor: Record<PedidoStatus, string> = {
   pendente:              "gray",
@@ -29,11 +31,10 @@ const statusLabel: Record<PedidoStatus, string> = {
   cancelado:             "Cancelado",
 };
 
-interface Props {
-  pedidos: IPedido[];
-}
+export function DashboardTable() {
+  
+  const { pedidos } = useContext(DashboardContext);
 
-export function DashboardTable({ pedidos }: Props) {
   const columns = [
     {
       header: "Nº Pedido",

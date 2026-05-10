@@ -2,60 +2,14 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
 import { EarningsTable } from "./Table";
-import { useEffect, useMemo, useState } from "react";
-import { api } from "@/services/api";
-import { ISubscricao } from "@/services/mirage/types";
+import { useContext } from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
-
-function gerarReceitaMensal(subscricoes: ISubscricao[]) {
-  const meses = Array.from({ length: 12 }, (_, i) => ({
-    mes: i,
-    total: 0,
-  }));
-
-  subscricoes.forEach((s) => {
-    const mes = new Date(s.criadoEm).getMonth();
-    meses[mes].total += s.valor;
-  });
-
-  return meses.map((m) => m.total);
-}
+import { EarningsContext } from "@/contexts/EarningsContext";
 
 export function MainEarnings() {
-  const [subscricoes, setSubscricoes] = useState<ISubscricao[]>([]);
 
-  useEffect(() => {
-    api.get("/subscricoes")
-      .then((res) => setSubscricoes(res.data))
-      .catch((err) => console.error(err));
-  }, []);
-
-  const receitaTotal = useMemo(() =>
-    subscricoes.reduce((acc, s) => acc + s.valor, 0),
-    [subscricoes]
-  );
-
-  const receitaSemanal = useMemo(() =>
-    subscricoes
-      .filter((s) => s.plano === "semanal")
-      .reduce((acc, s) => acc + s.valor, 0),
-    [subscricoes]
-  );
-
-  const receitaMensal = useMemo(() =>
-    subscricoes
-      .filter((s) => s.plano === "mensal")
-      .reduce((acc, s) => acc + s.valor, 0),
-    [subscricoes]
-  );
-
-  const activasCount = useMemo(() =>
-    subscricoes.filter((s) => s.status === "activa").length,
-    [subscricoes]
-  );
-
-  const receitaPorMes = useMemo(() => gerarReceitaMensal(subscricoes), [subscricoes]);
+  const { subscricoes, receitaTotal, receitaSemanal, receitaMensal, activasCount, receitaPorMes } = useContext(EarningsContext);
 
   const chartOptions: ApexOptions = {
     chart: { type: "bar", toolbar: { show: false }, background: "transparent" },
@@ -119,7 +73,7 @@ export function MainEarnings() {
       </Box>
 
       {/* Tabela */}
-      <EarningsTable subscricoes={subscricoes} />
+      <EarningsTable />
     </Box>
   );
 }

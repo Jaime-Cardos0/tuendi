@@ -3,77 +3,21 @@ import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import Chart from "react-apexcharts";
 import { DashboardTable } from "./Table";
 import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
-import BarChart, { ClockIcon, LineChartPurple, LineChartWhite } from "@/components/Icons/icons";
-import { gradients } from "@/styles/gradients";
+import BarChart from "@/components/Icons/icons";
 import { DashboardCard } from "./DashboardCard";
 import { TopRatedList } from "./TopRatedList";
-import { theme } from "@/styles/theme";
-import { useEffect, useMemo, useState } from "react";
-import { api } from "@/services/api";
-import { IMotoqueiro, IPedido, IUser } from "@/services/mirage/types";
+import { useContext, useMemo } from "react";
+import { IPedido, IUser } from "@/services/mirage/types";
 import { ApexOptions } from "apexcharts";
-
-const MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-
-function receitaPorMes(pedidos: IPedido[]) {
-  const totais = Array(12).fill(0);
-  pedidos
-    .filter((p) => p.status === "entregue")
-    .forEach((p) => {
-      const mes = new Date(p.criadoEm).getMonth();
-      totais[mes] += p.valorEntrega;
-    });
-  return totais;
-}
-
-function entregasPorMes(pedidos: IPedido[]) {
-  const totais = Array(12).fill(0);
-  pedidos
-    .filter((p) => p.status === "entregue")
-    .forEach((p) => {
-      const mes = new Date(p.criadoEm).getMonth();
-      totais[mes] += 1;
-    });
-  return totais;
-}
-
-const baseChartOptions = (cor: string): ApexOptions => ({
-  chart: {
-    toolbar: { show: false },
-    zoom: { enabled: false },
-    background: "transparent",
-    width: "100%",
-  },
-  theme: { mode: "dark" },
-  grid: { show: false },
-  dataLabels: { enabled: false },
-  stroke: { curve: "smooth", width: 2 },
-  yaxis: { show: false },
-  xaxis: {
-    categories: MESES,
-    axisBorder: { show: false },
-    axisTicks: { show: false },
-    labels: { style: { colors: "#718096", fontSize: "11px" } },
-  },
-  colors: [cor],
-  tooltip: { theme: "dark" },
-});
+import { barOptions, areaOptions } from "./chartsConfig";
+import { DashboardContext } from "@/contexts/DashboardContext";
 
 export function MainDashboard() {
-  const [pedidos, setPedidos] = useState<IPedido[]>([]);
-  const [motoqueiros, setMotoqueiros] = useState<IMotoqueiro[]>([]);
-  const [clientes, setClientes] = useState<IUser[]>([]);
 
-  useEffect(() => {
-    api.get("/pedidos").then((res) => setPedidos(res.data)).catch(console.error);
-    api.get("/motoqueiros").then((res) => setMotoqueiros(res.data)).catch(console.error);
-    api.get("/users").then((res) =>
-      setClientes(res.data.filter((u: IUser) => u.role === "cliente"))
-    ).catch(console.error);
-  }, []);
+  const { receitaPorMes, entregasPorMes, pedidos, motoqueiros, clientes } = useContext(DashboardContext);
 
   // Cards
-  const totalEntregas   = useMemo(() => pedidos.filter((p) => p.status === "entregue").length, [pedidos]);
+  const totalPedidos   = useMemo(() => pedidos.filter((p) => p.status === "entregue").length, [pedidos]);
   const emAndamento     = useMemo(() => pedidos.filter((p) => p.status === "em_transito").length, [pedidos]);
   const receita         = useMemo(() => pedidos.filter((p) => p.status === "entregue").reduce((acc, p) => acc + p.valorEntrega, 0), [pedidos]);
   const fatura          = useMemo(() => pedidos.reduce((acc, p) => acc + p.valorEntrega, 0), [pedidos]);
@@ -126,33 +70,6 @@ export function MainDashboard() {
     [pedidos]
   );
 
-  const barOptions: ApexOptions = {
-    ...baseChartOptions(theme.colors.brand[500]),
-    chart: {
-      ...baseChartOptions(theme.colors.brand[500]).chart,
-      id: "receita-bar",
-      type: "bar",
-    },
-    plotOptions: { bar: { borderRadius: 4, columnWidth: "70%" } },
-    yaxis: {
-      show: true,
-      labels: {
-        style: { colors: "#718096" },
-        formatter: (v) => `${(v / 1000).toFixed(0)}k`,
-      },
-    },
-  };
-
-  const areaOptions: ApexOptions = {
-    ...baseChartOptions(theme.colors.brand[500]),
-    chart: {
-      ...baseChartOptions(theme.colors.brand[500]).chart,
-      id: "entregas-area",
-      type: "area",
-    },
-    fill: { type: "gradient", gradient: { shade: "dark", type: "vertical", opacityFrom: 0.4, opacityTo: 0 } },
-  };
-
   return (
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
 
@@ -161,7 +78,7 @@ export function MainDashboard() {
         <ResumeCard
           icon={<BarChart data={dadosEntregas} max={Math.max(...dadosEntregas, 1)} />}
           title="Entregas hoje"
-          value={totalEntregas}
+          value={totalPedidos}
         />
         <ResumeCard
           title="Em andamento"
@@ -242,7 +159,7 @@ export function MainDashboard() {
 
         {/* Gráfico de area — segunda linha */}
         <GridItem>
-          <DashboardCard title="Entregas" value={totalEntregas}>
+          <DashboardCard title="Entregas" value={totalPedidos}>
             <Chart
               options={areaOptions}
               series={[{ name: "Entregas", data: dadosEntregas }]}
@@ -269,7 +186,7 @@ export function MainDashboard() {
       </Grid>
 
       {/* Últimas entregas */}
-      <DashboardTable pedidos={ultimasEntregas} />
+      <DashboardTable />
 
     </Box>
   );

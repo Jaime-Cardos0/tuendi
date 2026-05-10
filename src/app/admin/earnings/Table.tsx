@@ -12,8 +12,9 @@ import { TableHeader } from "@/components/UI/Table/TableHeader";
 import { Pagination } from "@/components/UI/Table/Pagination";
 import { BsThreeDots } from "react-icons/bs";
 import { RiCircleFill, RiSearchLine } from "react-icons/ri";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { ISubscricao, PlanoTipo, SubscricaoStatus } from "@/services/mirage/types";
+import { EarningsContext } from "@/contexts/EarningsContext";
 
 const statusColor: Record<SubscricaoStatus, string> = {
   activa:    "cyan",
@@ -36,7 +37,9 @@ interface Props {
   subscricoes: ISubscricao[];
 }
 
-export function EarningsTable({ subscricoes }: Props) {
+export function EarningsTable() {
+
+  const { subscricoes } = useContext(EarningsContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selected, setSelected] = useState<ISubscricao | null>(null);
   const [search, setSearch] = useState("");

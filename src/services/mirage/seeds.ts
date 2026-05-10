@@ -3,10 +3,10 @@ import { Server } from "miragejs";
 
 export function seeds(server: Server) {
   // Criar clientes
-  const clientes = server.createList("user", 15, { role: "cliente" });
+  const clientes = server.createList("user", 150, { role: "cliente" });
 
   // Criar users que serão motoqueiros
-  const usersMoto = server.createList("user", 10, { role: "motoqueiro" });
+  const usersMoto = server.createList("user", 100, { role: "motoqueiro" });
 
   // Criar motoqueiros com user, veiculo e uploads associados
   const motoqueiros = usersMoto.map((user) => {

@@ -12,9 +12,8 @@ import { TableHeader } from "@/components/UI/Table/TableHeader";
 import { Pagination } from "@/components/UI/Table/Pagination";
 import { BsThreeDots } from "react-icons/bs";
 import { RiCircleFill, RiSearchLine } from "react-icons/ri";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { api } from "@/services/api";
 import { IUser, Role, UserStatus } from "@/services/mirage/types";
 import { UsersContext } from "@/contexts/UsersContext";
 
@@ -42,8 +41,7 @@ const roleColor: Record<Role, string> = {
 
 export function UsersTable() {
 
-  const [page, setPage] = useState(1);
-  const { users, updateStatus, deleteUser } = useContext(UsersContext);
+  const { users, updateStatus, deleteUser, setPage, total, page } = useContext(UsersContext);
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selected, setSelected] = useState<IUser | null>(null);
@@ -190,7 +188,7 @@ export function UsersTable() {
         </Stack>
 
         <TableComponent data={filtered} columns={columns} />
-        <Pagination currentPage={page} onPageChange={setPage} />
+        <Pagination totalCountRegister={total} registersPerPage={10} currentPage={page} onPageChange={setPage} />
       </Box>
 
       {/* Modal */}
@@ -277,7 +275,7 @@ export function UsersTable() {
                   colorScheme="red"
                   variant="outline"
                   size="sm"
-                  onClick={() => { onClose(); return updateStatus(selected.id, "suspenso") }}
+                  onClick={() => { onClose(); return updateStatus({id: selected.id, status: "suspenso"}) }}
                 >
                   Suspender
                 </Button>
@@ -286,7 +284,7 @@ export function UsersTable() {
                   colorScheme="cyan"
                   variant="outline"
                   size="sm"
-                  onClick={() => { onClose(); return updateStatus(selected.id, "activo") }}
+                  onClick={() => { onClose(); return updateStatus({id: selected.id, status: "activo"}) }}
                 >
                   Reactivar
                 </Button>

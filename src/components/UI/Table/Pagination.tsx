@@ -1,5 +1,7 @@
+import { UsersContext } from "@/contexts/UsersContext";
 import { theme } from "@/styles/theme";
 import { Box, Button, HStack, IconButton, Stack } from "@chakra-ui/react";
+import { useContext } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 interface PaginationProps{
@@ -10,8 +12,8 @@ interface PaginationProps{
 }
 
 export function Pagination({
-    totalCountRegister = 100,
-    registersPerPage = 10,
+    totalCountRegister = 0,
+    registersPerPage = 0,
     currentPage = 1,
     onPageChange
 }: PaginationProps){
@@ -21,7 +23,7 @@ export function Pagination({
         <HStack spacing={6} justify={"space-between"} align={"center"}>
 
             <Box>
-                <strong style={{fontSize: theme.fontSizes.sm}}>{`${ (currentPage) } - ${Math.min(Number.isInteger(currentPage / registersPerPage) ? currentPage * registersPerPage : registersPerPage, totalCountRegister ?? 0)} de ${totalCountRegister}`}</strong>
+                <strong style={{fontSize: theme.fontSizes.sm}}>{`${ (currentPage - 1) * registersPerPage + 1 } - ${Math.min(Number.isInteger(currentPage / registersPerPage) ? currentPage * registersPerPage : registersPerPage, totalCountRegister ?? 0)} de ${totalCountRegister}`}</strong>
             </Box>
             
             <HStack spacing={2}>
@@ -72,17 +74,7 @@ export function Pagination({
                 }
 
                 <IconButton aria-label="go forward" icon={<FaChevronRight />} onClick={() => onPageChange?.(currentPage + 1)} disabled={currentPage === totalPages}></IconButton>
-                {/* <Button size={"sm"} fontSize={"xs"} width={4} bg={"gray.700"} _hover={{bg: "gray.500"}}>1</Button>
-                <Button size={"sm"} fontSize={"xs"} width={4} color={"text.primary"} colorScheme="purple" disabled _disabled={{bg: "purple.500", cursor: "default"}} _hover={{bg: "purple.400"}}>1</Button>
-
-                <Button size={"sm"} fontSize={"xs"} width={4} bg={"gray.700"} _hover={{bg: "gray.500"}}>2</Button>
-                
-                <Button size={"sm"} fontSize={"xs"} width={4} bg={"gray.700"} _hover={{bg: "gray.500"}}>3</Button>
-
-                <Button size={"sm"} fontSize={"xs"} width={4} bg={"gray.700"} _hover={{bg: "gray.500"}}>4</Button>
-
-                <Button size={"sm"} fontSize={"xs"} width={4} bg={"gray.700"} _hover={{bg: "gray.500"}}>5</Button>*/}
-                </HStack>
+            </HStack>
         </HStack>
     );
 }

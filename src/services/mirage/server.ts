@@ -1,4 +1,3 @@
-// src/services/mirage/server.ts
 import { createServer, Server, Response, RestSerializer } from "miragejs";
 import {
   userModel, motoqueiroModel, veiculoModel, uploadModel,
@@ -61,6 +60,10 @@ export function makeServer(): Server {
         const { page, perPage }: { page?: string; perPage?: string } = request.queryParams;
 
         const total = schema.all("user").length;
+        const clientes  = schema.all("user").filter((u) => u.role === "cliente").length;
+        const motoqueiroCount = schema.all("user").filter((u) => u.role === "motoqueiro").length;
+        const suspensos = schema.all("user").filter((u) => u.status === "suspenso").length;
+
         const pageNum = parseInt(page!) || 1;
         const perPageNum = parseInt(perPage!) || 10;
         const start = (pageNum - 1) * perPageNum;
@@ -68,7 +71,7 @@ export function makeServer(): Server {
 
         const users = schema.all("user").models.map((u) => u.attrs).slice(start, end);
 
-        return new Response(200, { "x-total-count": String(total) }, users);
+        return new Response(200, { "x-total-count": JSON.stringify({total, clientes, motoqueiroCount, suspensos}) }, users);
       });
 
       this.get("/users/:id", (schema, request) => {
@@ -92,13 +95,27 @@ export function makeServer(): Server {
       });
 
       // Motoqueiros — devolve dados montados (opção A)
-      this.get("/motoqueiros", (schema) => {
-        return schema.all("motoqueiro").models.map((m) => {
+      this.get("/motoqueiros", (schema, request) => {
+
+        const total = schema.all("motoqueiro").length;
+        const pendentes = schema.all("motoqueiro").filter(r => r.status === "pendente_aprovacao").length;
+        const ativos = schema.all("motoqueiro").filter(r => r.status === "activo").length;
+        const suspensos = schema.all("motoqueiro").filter(r => r.status === "suspenso").length;
+
+        const { page, perPage }: { page?: string; perPage?: string } = request.queryParams;
+        const pageNum = parseInt(page!) || 1;
+        const perPageNum = parseInt(perPage!) || 10;
+        const start = (pageNum - 1) * perPageNum;
+        const end = start + perPageNum;
+
+        const motoqueiros = schema.all("motoqueiro").models.map((m) => {
           const user = m.user?.attrs ?? {};
           const veiculo = m.veiculo?.attrs ?? {};
           const uploads = m.uploads?.models.map((u) => u.attrs) ?? [];
           return { ...m.attrs, user, veiculo, uploads };
-        });
+        }).slice(start, end);
+
+        return new Response(200, { "x-total-count": JSON.stringify({total, pendentes, ativos, suspensos}) }, motoqueiros);
       });
 
       this.get("/motoqueiros/:id", (schema, request) => {
@@ -119,13 +136,27 @@ export function makeServer(): Server {
       });
 
       // Pedidos — devolve dados montados
-      this.get("/pedidos", (schema) => {
-        return schema.all("pedido").models.map((p) => {
+      this.get("/pedidos", (schema, request) => {
+
+        const total = schema.all("pedido").length;
+        const emTransito = schema.all("pedido").filter((p) => p.status === "em_transito").length;
+        const entregues  = schema.all("pedido").filter((p) => p.status === "entregue").length;
+        const cancelados = schema.all("pedido").filter((p) => p.status === "cancelado").length;
+
+        const { page, perPage }: { page?: string; perPage?: string } = request.queryParams;
+        const pageNum = parseInt(page!) || 1;
+        const perPageNum = parseInt(perPage!) || 10;
+        const start = (pageNum - 1) * perPageNum;
+        const end = start + perPageNum;
+
+        const pedidos = schema.all("pedido").models.map((p) => {
           const cliente = p.cliente?.attrs ?? {};
           const motoqueiro = p.motoqueiro?.attrs ?? {};
           const userDataMotoqueiro = p.motoqueiro?.user?.attrs ?? {};
           return { ...p.attrs, cliente, motoqueiro, userDataMotoqueiro };
-        });
+        }).slice(start, end);
+
+        return new Response(200, { "x-total-count": JSON.stringify({total, emTransito, entregues, cancelados}) }, pedidos);
       });
 
       this.get("/pedidos/:id", (schema, request) => {

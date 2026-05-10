@@ -1,15 +1,22 @@
 "use client";
-// nao esta sendo usado, pode apagar
-import { useEffect } from "react";
-import { makeServer } from "@/services/mirage/server"; // caminho para o seu arquivo do mirage
+
+import { useEffect, useState } from "react";
 
 export function MirageProvider({ children }: { children: React.ReactNode }) {
+  const [ready, setReady] = useState(false);
+
   useEffect(() => {
-    // O useEffect garante que isso rode apenas no navegador
     if (process.env.NODE_ENV === "development") {
-      makeServer();
+      import("@/services/mirage/server").then(({ makeServer }) => {
+        makeServer();
+        setReady(true);
+      });
+    } else {
+      setReady(true);
     }
   }, []);
+
+  if (!ready) return null;
 
   return <>{children}</>;
 }

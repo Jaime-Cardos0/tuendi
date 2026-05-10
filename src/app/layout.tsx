@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import type { Metadata } from "next";
 import { Poppins, Outfit, DM_Sans } from "next/font/google";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "@/styles/theme";
-import { makeServer } from "@/services/mirage/server";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { MirageProvider } from "@/contexts/MirageContext";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -23,27 +23,23 @@ const dm_sans = DM_Sans({
   subsets: ["latin"],
 });
 
-// export const metadata: Metadata = {
-//   title: "Baza",
-//   description: "Baza | Delivery App",
-// };
-
-if(process.env.NODE_ENV === "development"){
-  makeServer();
-}
+const queryClient = new QueryClient();
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-      <QueryClientProvider client={new QueryClient}>
-        <ChakraProvider theme={theme}>
-          <html lang="pt" className={`${poppins.variable} ${dm_sans.variable} ${outfit.variable}`}>
-            <body className={`${poppins.variable} ${dm_sans.variable} ${outfit.variable}`}>{children}</body>
-          </html>
-      </ChakraProvider>
-      </QueryClientProvider>
+    <html lang="pt" className={`${poppins.variable} ${dm_sans.variable} ${outfit.variable}`}>
+      <body className={`${poppins.variable} ${dm_sans.variable} ${outfit.variable}`}>
+        <MirageProvider>                            
+          <QueryClientProvider client={queryClient}>
+            <ChakraProvider theme={theme}>
+              {children}
+            </ChakraProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </MirageProvider>
+      </body>
+    </html>
   );
 }

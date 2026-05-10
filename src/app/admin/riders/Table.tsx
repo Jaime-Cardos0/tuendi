@@ -300,14 +300,14 @@ export function RidersTable() {
                 colorScheme="red"
                 variant="outline"
                 size="sm"
-                onClick={() => { onClose(); updateStatus(selected.id, "suspenso"); }}
+                onClick={() => { onClose(); updateStatus({ id: selected.id, status: "suspenso" }); }}
               >
                 Suspender
               </Button>
               <Button
                 colorScheme="cyan"
                 size="sm"
-                onClick={() => { onClose(); updateStatus(selected.id, "activo"); }}
+                onClick={() => { onClose(); updateStatus({ id: selected.id, status: "activo" }); }}
               >
                 Aprovar
               </Button>

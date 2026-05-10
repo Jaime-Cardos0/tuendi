@@ -4,23 +4,13 @@ import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
 import BarChart, { ClockIcon } from "@/components/Icons/icons";
 import { gradients } from "@/styles/gradients";
 import { DeliveriesTable } from "./Table";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { api } from "@/services/api";
 import { IPedido } from "@/services/mirage/types";
+import { DeliveriesContext } from "@/contexts/DeliveriesContext";
 
 export function MainDelivery() {
-  const [pedidos, setPedidos] = useState<IPedido[]>([]);
-
-  useEffect(() => {
-    api.get("/pedidos")
-      .then((res) => {console.log('Esse aqui', res.data); return setPedidos(res.data)})
-      .catch((err) => console.error(err));
-  }, []);
-
-  const total = pedidos.length;
-  const emTransito = useMemo(() => pedidos.filter((p) => p.status === "em_transito").length, [pedidos]);
-  const entregues  = useMemo(() => pedidos.filter((p) => p.status === "entregue").length, [pedidos]);
-  const cancelados = useMemo(() => pedidos.filter((p) => p.status === "cancelado").length, [pedidos]);
+  const { pedidos, total, emTransito, entregues, cancelados } = useContext(DeliveriesContext);
 
   const chartData = useMemo(
     () => [total, emTransito, entregues, cancelados],
@@ -43,7 +33,7 @@ export function MainDelivery() {
         <ResumeCard title="Cancelados" value={cancelados} bgVariant="gradient" />
       </Flex>
 
-      <DeliveriesTable pedidos={pedidos} setPedidos={setPedidos} />
+      <DeliveriesTable />
     </Box>
   );
 }

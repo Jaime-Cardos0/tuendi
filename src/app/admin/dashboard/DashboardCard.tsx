@@ -19,7 +19,7 @@ export function DashboardCard( {title, children, value} : DashboardCardProps){
 
                     <Heading size={"sm"} color={"text.secondary"} lineHeight={"relaxed"} letterSpacing={"wide"} fontWeight={"light"}>{title}</Heading>
                     
-                    <Text as={"span"} fontWeight={"semibold"} lineHeight={"1"} fontFamily={"body"} letterSpacing={"tight"} fontSize={"4xl"}>{value ? value.toLocaleString("pt-AO").concat(" Kz") : " "}</Text>
+                    <Text as={"span"} fontWeight={"semibold"} lineHeight={"1"} fontFamily={"body"} letterSpacing={"tight"} fontSize={"4xl"}>{ value ? value.toLocaleString("pt-AO").concat(" Kz") : " "}</Text>
                 </Stack>
 
                 <FloatingMenu placement="bottom" menuIcon={<RiFilter3Line/>}>

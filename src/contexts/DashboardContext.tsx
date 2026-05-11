@@ -25,35 +25,35 @@ interface DashboardProviderProps {
 export const DashboardContext = createContext<DashboardContextData>({} as DashboardContextData);
 
 export function DashboardProvider({ children }: DashboardProviderProps) {
-  const [pedidos, setPedidos] = useState<IPedido[]>([]);
-  const [motoqueiros, setMotoqueiros] = useState<IMotoqueiro[]>([]);
-  const [usuarios, setUsuarios] = useState<IUser[]>([]);
-  const [subscricoes, setSubscricoes] = useState<ISubscricao[]>([]);
-  const [loading, setLoading] = useState(true);
+  // const [pedidos, setPedidos] = useState<IPedido[]>([]);
+  // const [motoqueiros, setMotoqueiros] = useState<IMotoqueiro[]>([]);
+  // const [usuarios, setUsuarios] = useState<IUser[]>([]);
+  // const [subscricoes, setSubscricoes] = useState<ISubscricao[]>([]);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const [pedidosRes, motoqueirosRes, usuariosRes, subscricoesRes] = await Promise.all([
-          api.get("/pedidos"),
-          api.get("/motoqueiros"),
-          api.get("/users"),
-          api.get("/subscricoes"),
-        ]);
-        setPedidos(pedidosRes.data);
-        setMotoqueiros(motoqueirosRes.data);
-        setUsuarios(usuariosRes.data);
-        setSubscricoes(subscricoesRes.data);
-      } catch (err) {
-        console.error("Error fetching dashboard data:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const [pedidosRes, motoqueirosRes, usuariosRes, subscricoesRes] = await Promise.all([
+  //         api.get("/pedidos"),
+  //         api.get("/motoqueiros"),
+  //         api.get("/users"),
+  //         api.get("/subscricoes"),
+  //       ]);
+  //       setPedidos(pedidosRes.data);
+  //       setMotoqueiros(motoqueirosRes.data);
+  //       setUsuarios(usuariosRes.data);
+  //       setSubscricoes(subscricoesRes.data);
+  //     } catch (err) {
+  //       console.error("Error fetching dashboard data:", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const pedidosQuery = useQuery<IPedido[]>({ queryKey: ['pedidosQuery'], queryFn: async () => {
     const res = await api.get("/pedidos");
@@ -105,7 +105,7 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
   return (
     <DashboardContext.Provider
       value={{
-        pedidos: pedidosQuery.data || [],
+        pedidos: pedidosQuery.data ?? [],
         motoqueiros: motoqueirosQuery.data || [],
         clientes: usuariosQuery.data || [],
         totalPedidos: (pedidosQuery.data || []).length,

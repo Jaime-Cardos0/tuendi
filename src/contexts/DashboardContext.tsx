@@ -58,22 +58,22 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
   const pedidosQuery = useQuery<IPedido[]>({ queryKey: ['pedidosQuery'], queryFn: async () => {
     const res = await api.get("/pedidos");
     return res.data;
-  }});
+  }}) ?? { data: [], isFetching: false };
 
   const motoqueirosQuery = useQuery<IMotoqueiro[]>({ queryKey: ['motoqueirosQuery'], queryFn: async () => {
     const res = await api.get("/motoqueiros");
     return res.data;
-  }});
+  }}) ?? { data: [], isFetching: false };
 
   const usuariosQuery = useQuery<IUser[]>({ queryKey: ['usuariosQuery'], queryFn: async () => {
     const res = await api.get("/users");
     return res.data;
-  }});
+  }}) ?? { data: [], isFetching: false };
 
   const subscricoesQuery = useQuery<ISubscricao[]>({ queryKey: ['subscricoesQuery'], queryFn: async () => {
     const res = await api.get("/subscricoes");
     return res.data;
-  }});
+  }}) ?? { data: [], isFetching: false };
 
   const totalReceita = (subscricoesQuery.data || []).reduce((acc, s) => acc + s.valor, 0);
   const pedidosRecentes = [...(pedidosQuery.data || [])].sort((a, b) => 

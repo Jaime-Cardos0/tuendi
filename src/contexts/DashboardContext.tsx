@@ -58,25 +58,25 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
   const pedidosQuery = useQuery<IPedido[]>({ queryKey: ['pedidosQuery'], queryFn: async () => {
     const res = await api.get("/pedidos");
     return res.data;
-  }}) ?? { data: [], isFetching: false };
+  }});
 
   const motoqueirosQuery = useQuery<IMotoqueiro[]>({ queryKey: ['motoqueirosQuery'], queryFn: async () => {
     const res = await api.get("/motoqueiros");
     return res.data;
-  }}) ?? { data: [], isFetching: false };
+  }});
 
   const usuariosQuery = useQuery<IUser[]>({ queryKey: ['usuariosQuery'], queryFn: async () => {
     const res = await api.get("/users");
     return res.data;
-  }}) ?? { data: [], isFetching: false };
+  }});
 
   const subscricoesQuery = useQuery<ISubscricao[]>({ queryKey: ['subscricoesQuery'], queryFn: async () => {
     const res = await api.get("/subscricoes");
     return res.data;
-  }}) ?? { data: [], isFetching: false };
+  }});
 
-  const totalReceita = (subscricoesQuery.data || []).reduce((acc, s) => acc + s.valor, 0);
-  const pedidosRecentes = [...(pedidosQuery.data || [])].sort((a, b) => 
+  const totalReceita = (subscricoesQuery.data ?? []).reduce((acc, s) => acc + s.valor, 0);
+  const pedidosRecentes = [...(pedidosQuery.data ?? [])].sort((a, b) => 
     new Date(b.criadoEm).getTime() - new Date(a.criadoEm).getTime()
   ).slice(0, 10);
 
@@ -106,14 +106,14 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
     <DashboardContext.Provider
       value={{
         pedidos: pedidosQuery.data ?? [],
-        motoqueiros: motoqueirosQuery.data || [],
-        clientes: usuariosQuery.data || [],
-        totalPedidos: (pedidosQuery.data || []).length,
+        motoqueiros: motoqueirosQuery.data ?? [],
+        clientes: usuariosQuery.data ?? [],
+        totalPedidos: (pedidosQuery.data ?? []).length,
         totalReceita,
-        totalMotoqueiros: (motoqueirosQuery.data || []).length,
-        totalUsuarios: (usuariosQuery.data || []).length,
+        totalMotoqueiros: (motoqueirosQuery.data ?? []).length,
+        totalUsuarios: (usuariosQuery.data ?? []).length,
         pedidosRecentes,
-        isFetching: pedidosQuery.isFetching || motoqueirosQuery.isFetching || usuariosQuery.isFetching || subscricoesQuery.isFetching,
+        isFetching: pedidosQuery.isFetching ?? motoqueirosQuery.isFetching ?? usuariosQuery.isFetching ?? subscricoesQuery.isFetching,
         receitaPorMes: (pedidos) => receitaPorMes(pedidos),
         entregasPorMes: (pedidos) => entregasPorMes(pedidos),
       }}

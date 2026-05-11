@@ -1,10 +1,14 @@
-import { Flex, Input } from "@chakra-ui/react"
-// import { Metadata } from "next";
+import { Login } from "@/components/UI/Login";
+import { LoginProvider } from "@/contexts/LoginContext";
+import { Metadata } from "next";
 
-// export const metadata: Metadata = { title: "Tuendi | Login" }
+export const metadata: Metadata = { title: "Baza | Admin Login" }
 
-export default function Admin(){
+export default function LoginPage(){
     return(
-        <></>
+      
+      <LoginProvider>
+        <Login />
+      </LoginProvider>  
     );
 }

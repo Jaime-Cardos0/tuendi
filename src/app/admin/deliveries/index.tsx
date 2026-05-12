@@ -1,5 +1,5 @@
 "use client";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex } from "@chakra-ui/react";
 import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
 import BarChart, { ClockIcon } from "@/components/Icons/icons";
 import { gradients } from "@/styles/gradients";
@@ -8,6 +8,10 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { api } from "@/services/api";
 import { IPedido } from "@/services/mirage/types";
 import { DeliveriesContext } from "@/contexts/DeliveriesContext";
+import { MdDeliveryDining, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+import { FaRoad } from "react-icons/fa";
+import { RiCloseCircleFill, RiProgress3Fill } from "react-icons/ri";
+import { LuHandPlatter } from "react-icons/lu";
 
 export function MainDelivery() {
   const { pedidos, total, emTransito, entregues, cancelados } = useContext(DeliveriesContext);
@@ -19,18 +23,30 @@ export function MainDelivery() {
 
   return (
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
+
+      <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
+        <BreadcrumbItem>
+          <BreadcrumbLink fontSize={"xs"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"wide"} textTransform={"uppercase"} href='#'>Main Admin</BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem>
+          <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/deliveries'>Entregas</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
+
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
-          icon={<BarChart data={chartData ?? [0, 0, 0, 0]} max={chartData.length ?? 0} />}
+          icon={<MdDeliveryDining />}
           title="Total de Pedidos"
           value={total}
         />
         <ResumeCard
-          title="Em Trânsito"
+          icon={<RiProgress3Fill />}
+          title="Em andamento"
           value={emTransito}
         />
-        <ResumeCard title="Entregues" value={entregues} />
-        <ResumeCard title="Cancelados" value={cancelados} bgVariant="gradient" />
+        <ResumeCard icon={<LuHandPlatter />} title="Entregues" value={entregues} />
+        <ResumeCard icon={<RiCloseCircleFill />} title="Cancelados" value={cancelados} bgVariant="gradient" />
       </Flex>
 
       <DeliveriesTable />

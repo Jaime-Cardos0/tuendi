@@ -147,13 +147,14 @@ export function RidersTable() {
 
           <Flex justify="space-between" align="center" gap={4} wrap="wrap">
             {/* Barra de pesquisa */}
-            <InputGroup maxW="280px" size="sm">
+            <InputGroup maxW="280px" size="sm" bg={"navy.900"}>
               <InputLeftElement pointerEvents="none">
                 <RiSearchLine color="gray" />
               </InputLeftElement>
               <Input
                 placeholder="Pesquisar por nome ou email..."
                 rounded="md"
+                bg={"navy.900"}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -162,6 +163,7 @@ export function RidersTable() {
             <Flex gap={3} align="center" wrap="wrap">
               {/* Filtro por status */}
               <Select
+                bg={"navy.900"}
                 w="fit-content" size="sm" rounded="md"
                 value={filter}
                 onChange={(e) => setFilter(e.target.value as MotoqueiroStatus | "TODOS")}
@@ -174,6 +176,7 @@ export function RidersTable() {
 
               {/* Filtro por disponibilidade */}
               <Select
+                bg={"navy.900"}
                 w="fit-content" size="sm" rounded="md"
                 value={dispFilter}
                 onChange={(e) => setDispFilter(e.target.value as typeof dispFilter)}
@@ -186,6 +189,7 @@ export function RidersTable() {
 
               {/* Ordenação */}
               <Select
+                bg={"navy.900"}
                 w="fit-content" size="sm" rounded="md"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as typeof sortBy)}

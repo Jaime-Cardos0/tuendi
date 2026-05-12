@@ -1,11 +1,13 @@
 "use client";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Text } from "@chakra-ui/react";
 import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
 import { EarningsTable } from "./Table";
 import { useContext } from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import { EarningsContext } from "@/contexts/EarningsContext";
+import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+import { RiMoneyDollarCircleFill, RiProgress3Fill, RiProgress2Fill, RiCheckFill } from "react-icons/ri";
 
 export function MainEarnings() {
 
@@ -40,21 +42,35 @@ export function MainEarnings() {
   return (
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
 
+      <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
+        <BreadcrumbItem>
+          <BreadcrumbLink fontSize={"xs"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"wide"} textTransform={"uppercase"} href='#'>Main Admin</BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem>
+          <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/earnings'>Ganhos</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
+
       {/* Cards */}
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
+          icon={<RiMoneyDollarCircleFill />}
           title="Receita Total"
           value={`${receitaTotal.toLocaleString("pt-AO")} Kz`}
         />
         <ResumeCard
+          icon={<RiProgress3Fill />}
           title="Planos Semanais"
           value={`${receitaSemanal.toLocaleString("pt-AO")} Kz`}
         />
         <ResumeCard
+          icon={<RiProgress2Fill />}
           title="Planos Mensais"
           value={`${receitaMensal.toLocaleString("pt-AO")} Kz`}
         />
         <ResumeCard
+          icon={<RiCheckFill />}
           title="Subscrições Activas"
           value={activasCount}
           bgVariant="gradient"

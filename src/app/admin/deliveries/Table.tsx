@@ -167,12 +167,13 @@ export function DeliveriesTable() {
           <TableHeader title="Pedidos" />
 
           <Flex justify="space-between" align="center" gap={4} wrap="wrap">
-            <InputGroup maxW="280px" size="sm">
+            <InputGroup maxW="280px" size="sm" bg={"navy.900"} >
               <InputLeftElement pointerEvents="none">
                 <RiSearchLine color="gray" />
               </InputLeftElement>
               <Input
                 placeholder="Nº pedido, cliente ou destino..."
+                bg={"navy.900"}
                 rounded="md"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -181,6 +182,7 @@ export function DeliveriesTable() {
 
             <Flex gap={3} wrap="wrap">
               <Select
+                bg={"navy.900"}
                 w="fit-content" size="sm" rounded="md"
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value as PedidoStatus | "TODOS")}
@@ -197,6 +199,7 @@ export function DeliveriesTable() {
               </Select>
 
               <Select
+                bg={"navy.900"}
                 w="fit-content" size="sm" rounded="md"
                 value={metodoPagamento}
                 onChange={(e) => setMetodoPagamento(e.target.value as typeof metodoPagamento)}
@@ -207,6 +210,7 @@ export function DeliveriesTable() {
               </Select>
 
               <Select
+                bg={"navy.900"}
                 w="fit-content" size="sm" rounded="md"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as typeof sortBy)}

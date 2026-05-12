@@ -1,5 +1,5 @@
 "use client";
-import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Grid, GridItem } from "@chakra-ui/react";
 import Chart from "react-apexcharts";
 import { DashboardTable } from "./Table";
 import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
@@ -11,6 +11,10 @@ import { IPedido, IUser } from "@/services/mirage/types";
 import { ApexOptions } from "apexcharts";
 import { barOptions, areaOptions, radialBarOptions } from "./chartsConfig";
 import { DashboardContext } from "@/contexts/DashboardContext";
+import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+import { BsBox, BsBoxFill } from "react-icons/bs";
+import { FaFileInvoice, FaFileInvoiceDollar } from "react-icons/fa";
+import { RiProgress3Fill, RiMoneyDollarCircleFill } from "react-icons/ri";
 
 export function MainDashboard() {
 
@@ -73,22 +77,37 @@ export function MainDashboard() {
   return (
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={6} ml={52} mt={20}>
 
+      <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
+        <BreadcrumbItem>
+          <BreadcrumbLink fontSize={"xs"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"wide"} textTransform={"uppercase"} href='#'>Main Admin</BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem>
+          <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/dashboard'>Dashboard</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
+
       {/* Cards de resumo */}
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
-          icon={<BarChart data={dadosEntregas} max={Math.max(...dadosEntregas, 1)} />}
+          icon={<BsBoxFill/>}
           title="Entregas hoje"
           value={totalPedidos}
+          percentage={10}
         />
         <ResumeCard
+          icon={<RiProgress3Fill />}
           title="Em andamento"
           value={emAndamento}
+          percentage={-5}
         />
         <ResumeCard
+          icon={<RiMoneyDollarCircleFill />}
           title="Receita"
           value={`${receita.toLocaleString("pt-AO")} Kz`}
         />
         <ResumeCard
+          icon={<FaFileInvoiceDollar />}
           title="Fatura"
           value={`${fatura.toLocaleString("pt-AO")} Kz`}
           bgVariant="gradient"
@@ -99,10 +118,10 @@ export function MainDashboard() {
       <Grid
         templateColumns="repeat(3, 1fr)"
         gap={6}
-        templateRows="repeat(4, minmax(150px, 180px))"
+        templateRows="repeat(2, minmax(300px, 360px))"
       >
         {/* Gráfico de barras — Fatura anual */}
-        <GridItem colSpan={2} rowSpan={2}>
+        <GridItem colSpan={2}>
           <DashboardCard title="Total de Fatura" value={fatura}>
             <Chart
               options={barOptions}
@@ -115,7 +134,7 @@ export function MainDashboard() {
         </GridItem>
 
         {/* Semicírculo — estados das entregas */}
-        <GridItem rowSpan={2}>
+        <GridItem>
         <DashboardCard title="Estados das Entregas">
             <Chart
             options={radialBarOptions}
@@ -132,7 +151,7 @@ export function MainDashboard() {
         </GridItem>
 
         {/* Gráfico de area — segunda linha */}
-        <GridItem rowSpan={2}>
+        <GridItem>
           <DashboardCard title="Entregas" value={totalPedidos}>
             <Chart
               options={areaOptions}
@@ -145,14 +164,14 @@ export function MainDashboard() {
         </GridItem>
 
         {/* Top motoqueiros */}
-        <GridItem rowSpan={2}>
+        <GridItem>
           <DashboardCard title="Melhores Avaliados">
             <TopRatedList data={topMotoqueiros} />
           </DashboardCard>
         </GridItem>
 
         {/* Top clientes */}
-        <GridItem rowSpan={2}>
+        <GridItem>
           <DashboardCard title="Parceiros Activos">
             <TopRatedList data={topClientes} />
           </DashboardCard>

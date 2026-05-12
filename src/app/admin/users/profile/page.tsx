@@ -9,12 +9,16 @@ import {
   Tabs, TabList, Tab, TabPanels, TabPanel,
   Table, Thead, Tbody, Tr, Th, Td,
   Badge,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { RiCircleFill } from "react-icons/ri";
 import { Header } from "@/components/UI/Header";
 import { Sidebar } from "@/components/UI/Sidebar";
+import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 const statusColor: Record<UserStatus, string> = {
   activo: "cyan",
@@ -77,6 +81,20 @@ export default function UserProfilePage() {
   return (
     <Flex direction="column" h="100vh">
       <Header />
+
+      <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
+        <BreadcrumbItem>
+          <BreadcrumbLink fontSize={"xs"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"wide"} textTransform={"uppercase"} href='#'>Main Admin</BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem>
+          <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/users'>Usuários</BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem>
+          <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/users/profile'>Perfil</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
 
       <Flex w="100%" maxW="1440px" my={6} mx="auto" px={8}>
         <Sidebar />

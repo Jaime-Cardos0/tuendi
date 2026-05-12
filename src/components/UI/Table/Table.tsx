@@ -17,7 +17,7 @@ type TableComponentProps<T> = {
 export function TableComponent<T>({ data, columns }: TableComponentProps<T>) {
   // console.log(data)
   return (
-    <Table variant={"striped"} colorScheme={"navy.900"} fontFamily={"heading"} fontSize={"xs"} fontWeight={"light"} color={"text.secondary"}>
+    <Table variant={"striped"} fontFamily={"heading"} fontSize={"xs"} fontWeight={"light"} color={"text.secondary"}>
       <Thead>
         <Tr>
           {columns.map((col, i) => (
@@ -39,8 +39,6 @@ export function TableComponent<T>({ data, columns }: TableComponentProps<T>) {
 
         <Tr>
                     <Td px={3} py={2}>1</Td>
-                    <Td px={3} py={2}>#1234</Td>
-                    <Td px={3} py={2}>Dec 13, 2026</Td>
                     <Td px={3} py={2}>Josemar Miguel</Td>
                     <Td px={3} py={2}>Vila Alice</Td>
                     <Td px={3} py={2}>2000 Kz</Td>
@@ -77,8 +75,6 @@ export function TableComponent<T>({ data, columns }: TableComponentProps<T>) {
 
                 <Tr>
                     <Td px={3} py={2}>3</Td>
-                    <Td px={3} py={2}>#1234</Td>
-                    <Td px={3} py={2}>Dec 19, 2026</Td>
                     <Td px={3} py={2}>Josemar Miguel</Td>
                     <Td px={3} py={2}>Vila Alice</Td>
                     <Td px={3} py={2}>2000 Kz</Td>
@@ -96,8 +92,6 @@ export function TableComponent<T>({ data, columns }: TableComponentProps<T>) {
 
                 <Tr>
                     <Td px={3} py={2}>4</Td>
-                    <Td px={3} py={2}>#1234</Td>
-                    <Td px={3} py={2}>Dec 25, 2026</Td>
                     <Td px={3} py={2}>Josemar Miguel</Td>
                     <Td px={3} py={2}>Vila Alice</Td>
                     <Td px={3} py={2}>2000 Kz</Td>
@@ -115,8 +109,6 @@ export function TableComponent<T>({ data, columns }: TableComponentProps<T>) {
 
                 <Tr>
                     <Td px={3} py={2}>5</Td>
-                    <Td px={3} py={2}>#1234</Td>
-                    <Td px={3} py={2}>Dec 25, 2026</Td>
                     <Td px={3} py={2}>Josemar Miguel</Td>
                     <Td px={3} py={2}>Vila Alice</Td>
                     <Td px={3} py={2}>2000 Kz</Td>
@@ -134,8 +126,6 @@ export function TableComponent<T>({ data, columns }: TableComponentProps<T>) {
 
                 <Tr>
                     <Td px={3} py={2}>6</Td>
-                    <Td px={3} py={2}>#1234</Td>
-                    <Td px={3} py={2}>Dec 25, 2026</Td>
                     <Td px={3} py={2}>Josemar Miguel</Td>
                     <Td px={3} py={2}>Vila Alice</Td>
                     <Td px={3} py={2}>2000 Kz</Td>

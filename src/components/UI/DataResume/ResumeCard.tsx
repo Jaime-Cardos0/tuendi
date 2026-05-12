@@ -31,9 +31,12 @@ export function ResumeCard({title, value="0", bgVariant = "primary", icon, pathC
                     <IconButton aria-label={"date filters"} size={"xs"} icon={<FaChevronDown/>} />
                 </Flex>
                 
-                <Text as={"span"} letterSpacing={"wide"} fontFamily={"heading"} fontWeight={"bold"} fontSize={"2xl"}>{value}</Text>
+                <Flex direction={"row"} justify={"space-between"} w={"100%"} align={"center"}>
+                    <Text as={"span"} letterSpacing={"wide"} fontFamily={"heading"} fontWeight={"bold"} fontSize={"2xl"}>{value}</Text>
+                    {icon}
+                </Flex>
             </Stack>
-            {icon}
+            {/* {icon} */}
             {/* <svg viewBox="0 0 300 200">
                 <path d="M0, 150 C50, 100 100, 200 150, 150 C200, 100 250, 180 300, 120" fill="none" stroke="#4facfe" strokeWidth={10} />
             </svg> */}

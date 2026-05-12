@@ -23,7 +23,7 @@ export function DashboardCard( {title, children, value} : DashboardCardProps){
                     <Text as={"span"} fontWeight={"semibold"} lineHeight={"1"} fontFamily={"body"} letterSpacing={"tight"} fontSize={"4xl"}>{ value ? value.toLocaleString("pt-AO").concat(" Kz") : " "}</Text>
                 </Stack>
 
-                <FloatingMenu placement="bottom" menuIcon={<FaChevronDown fontSize={"xs"}/>}>
+                <FloatingMenu placement="bottom" menuIcon={<FaChevronDown fontSize={"8px"}/>}>
                     <MenuItem>Diário</MenuItem>
                     <MenuItem>Semanal</MenuItem>
                     <MenuItem>Mensal</MenuItem>

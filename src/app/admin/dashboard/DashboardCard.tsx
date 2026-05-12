@@ -18,9 +18,9 @@ export function DashboardCard( {title, children, value} : DashboardCardProps){
                 
                 <Stack flex={1}>
 
-                    <Heading size={"sm"} color={"text.secondary"} lineHeight={"relaxed"} letterSpacing={"wide"} fontWeight={"light"}>{title}</Heading>
+                    <Heading size={"xs"} color={"text.secondary"} lineHeight={"relaxed"} letterSpacing={"wide"} fontWeight={"light"}>{title}</Heading>
                     
-                    <Text as={"span"} fontWeight={"semibold"} lineHeight={"1"} fontFamily={"body"} letterSpacing={"tight"} fontSize={"4xl"}>{ value ? value.toLocaleString("pt-AO").concat(" Kz") : " "}</Text>
+                    <Text as={"span"} fontWeight={"semibold"} lineHeight={"1"} fontFamily={"body"} letterSpacing={"tight"} fontSize={"2xl"}>{ value ? value.toLocaleString("pt-AO").concat(" Kz") : " "}</Text>
                 </Stack>
 
                 <FloatingMenu placement="bottom" menuIcon={<FaChevronDown fontSize={"12px"}/>}>

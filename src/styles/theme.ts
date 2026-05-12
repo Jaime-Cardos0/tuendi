@@ -56,7 +56,8 @@ export const theme = extendTheme({
       200: "#D4BBFF",
       300: "#B794F4",
       400: "#9F7AEA",
-      500: "#7C3AED", // roxo principal
+      500: "#C026D3",
+      // 500: "#7C3AED", // roxo principal
       600: "#6D28D9",
       700: "#5B21B6",
       800: "#4C1D95",

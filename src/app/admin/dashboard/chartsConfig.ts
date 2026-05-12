@@ -47,7 +47,7 @@ export const areaOptions: ApexOptions = {
       id: "entregas-area",
       type: "area",
     },
-    fill: { type: "gradient", gradient: { shade: "dark", type: "vertical", opacityFrom: 0.4, opacityTo: 0 } },
+    fill: { type: "gradient", gradient: { shade: "dark", type: "vertical", opacityFrom: 0.7, opacityTo: 0 } },
 };
 
 export const radialBarOptions: ApexOptions = {
@@ -61,19 +61,22 @@ export const radialBarOptions: ApexOptions = {
     radialBar: {
         startAngle: -90,
         endAngle: 90,
-        hollow: { size: "40%" },
-        track: { background: "#333f55" },
+        hollow: { size: "30%" },
+        track: { background: "transparent" },
         dataLabels: {
-        name: { fontSize: "12px", color: "#718096" },
-        value: { fontSize: "16px", fontWeight: "bold", color: "#fff" },
+        name: { fontSize: "12px", color: theme.colors.text.muted },
+        value: { fontSize: "14px", fontWeight: "normal", color: theme.colors.text.primary },
         },
     },
     },
     labels: ["Concluídas", "Em andamento", "Canceladas"],
-    colors: ["#00B5D8", "#ECC94B", "#FC8181"],
+    colors: ["#00d5ff", "#FACC15", "#eb1d1d"],
     legend: {
     show: true,
     position: "bottom",
-    labels: { colors: "#718096" },
+    labels: { colors: theme.colors.text.secondary, },
+    width: 2,
+    height: 2,
+    floating: true,
     },
 }

@@ -115,7 +115,7 @@ export function MainDashboard() {
         </GridItem>
 
         {/* Semicírculo — estados das entregas */}
-        <GridItem rowSpan={3}>
+        <GridItem rowSpan={2}>
         <DashboardCard title="Estados das Entregas">
             <Chart
             options={radialBarOptions}

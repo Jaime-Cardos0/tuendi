@@ -75,7 +75,7 @@ export const theme = extendTheme({
     gradient: {
       primary: "linear-gradient(135deg, #7C3AED 0%, #D946EF 100%)",
       secondary: "linear-gradient(135deg, #3B82F6 0%, #7C3AED 100%)",
-      card: "linear-gradient(135deg, #1A1D35 0%, #12152B 100%)",
+      card: "linear-gradient(135deg, #1e213a 0%, #12152B 100%)",
     },
 
     navy: {

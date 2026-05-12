@@ -24,9 +24,9 @@ export const baseChartOptions = (cor: string): ApexOptions => ({
 });
 
 export const barOptions: ApexOptions = {
-    ...baseChartOptions(theme.colors.gradient["primary"]),
+    ...baseChartOptions(theme.colors.brand[500]),
     chart: {
-      ...baseChartOptions(theme.colors.gradient["primary"]).chart,
+      ...baseChartOptions(theme.colors.brand[500]).chart,
       id: "receita-bar",
       type: "bar",
     },
@@ -61,7 +61,7 @@ export const radialBarOptions: ApexOptions = {
     radialBar: {
         startAngle: -90,
         endAngle: 90,
-        hollow: { size: "30%" },
+        hollow: { size: "60%" },
         track: { background: "transparent" },
         dataLabels: {
         name: { fontSize: "12px", color: "text.muted" },
@@ -75,6 +75,6 @@ export const radialBarOptions: ApexOptions = {
     show: true,
     position: "bottom",
     labels: { colors: "text.secondary", },
-    markers: { size: 6, shape: "circle", strokeWidth: 0, fillColors: ["#00d5ff", "#FACC15", "#eb1d1d"] },
+    markers: { size: 6, shape: "circle", strokeWidth: 0, fillColors: ["#C026D3", "#3B82F6", "#00d5ff"] },
     },
 }

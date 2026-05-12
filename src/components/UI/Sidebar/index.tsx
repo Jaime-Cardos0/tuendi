@@ -7,7 +7,7 @@ import { ConfigurationIcon, DeliveryManIcon, HelpIcon, LineChartIcon, Notificati
 
 export function Sidebar(){
     return(
-        <Box as="aside" w={48} h={"100vh"} position={"fixed"} top={24} left={0} pl={8} zIndex={1000} bgColor={"bg.default"} borderRightWidth={1} borderColor={"border.default"} boxShadow={"md"}>
+        <Box as="aside" w={48} h={"100vh"} position={"fixed"} top={24} left={0} pl={8} zIndex={1000} bgColor={"bg.default"} borderRightWidth={1} borderColor={"border.default"} boxShadow={"lg"}>
             <Stack spacing={8} align={"flex-start"}>
 
                 <NavSection title="main admin">

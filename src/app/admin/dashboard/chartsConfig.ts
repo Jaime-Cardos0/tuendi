@@ -49,3 +49,31 @@ export const areaOptions: ApexOptions = {
     },
     fill: { type: "gradient", gradient: { shade: "dark", type: "vertical", opacityFrom: 0.4, opacityTo: 0 } },
 };
+
+export const radialBarOptions: ApexOptions = {
+    chart: {
+    type: "radialBar",
+    background: "transparent",
+    toolbar: { show: false },
+    },
+    theme: { mode: "dark" },
+    plotOptions: {
+    radialBar: {
+        startAngle: -90,
+        endAngle: 90,
+        hollow: { size: "40%" },
+        track: { background: "#333f55" },
+        dataLabels: {
+        name: { fontSize: "12px", color: "#718096" },
+        value: { fontSize: "16px", fontWeight: "bold", color: "#fff" },
+        },
+    },
+    },
+    labels: ["Concluídas", "Em andamento", "Canceladas"],
+    colors: ["#00B5D8", "#ECC94B", "#FC8181"],
+    legend: {
+    show: true,
+    position: "bottom",
+    labels: { colors: "#718096" },
+    },
+}

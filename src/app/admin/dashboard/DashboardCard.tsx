@@ -1,5 +1,6 @@
 import { FloatingMenu } from "@/components/UI/FloatingMenu";
 import { Box, Flex, Heading, MenuItem, Stack, Text } from "@chakra-ui/react";
+import { FaChevronDown } from "react-icons/fa";
 import { RiFilter3Line } from "react-icons/ri";
 
 interface DashboardCardProps {
@@ -22,7 +23,7 @@ export function DashboardCard( {title, children, value} : DashboardCardProps){
                     <Text as={"span"} fontWeight={"semibold"} lineHeight={"1"} fontFamily={"body"} letterSpacing={"tight"} fontSize={"4xl"}>{ value ? value.toLocaleString("pt-AO").concat(" Kz") : " "}</Text>
                 </Stack>
 
-                <FloatingMenu placement="bottom" menuIcon={<RiFilter3Line/>}>
+                <FloatingMenu placement="bottom" menuIcon={<FaChevronDown size={"sm"}/>}>
                     <MenuItem>Diário</MenuItem>
                     <MenuItem>Semanal</MenuItem>
                     <MenuItem>Mensal</MenuItem>

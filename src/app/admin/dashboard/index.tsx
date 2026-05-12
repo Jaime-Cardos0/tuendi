@@ -9,7 +9,7 @@ import { TopRatedList } from "./TopRatedList";
 import { useContext, useMemo } from "react";
 import { IPedido, IUser } from "@/services/mirage/types";
 import { ApexOptions } from "apexcharts";
-import { barOptions, areaOptions } from "./chartsConfig";
+import { barOptions, areaOptions, radialBarOptions } from "./chartsConfig";
 import { DashboardContext } from "@/contexts/DashboardContext";
 
 export function MainDashboard() {
@@ -118,33 +118,7 @@ export function MainDashboard() {
         <GridItem>
         <DashboardCard title="Estados das Entregas">
             <Chart
-            options={{
-                chart: {
-                type: "radialBar",
-                background: "transparent",
-                toolbar: { show: false },
-                },
-                theme: { mode: "dark" },
-                plotOptions: {
-                radialBar: {
-                    startAngle: -90,
-                    endAngle: 90,
-                    hollow: { size: "40%" },
-                    track: { background: "#333f55" },
-                    dataLabels: {
-                    name: { fontSize: "12px", color: "#718096" },
-                    value: { fontSize: "16px", fontWeight: "bold", color: "#fff" },
-                    },
-                },
-                },
-                labels: ["Concluídas", "Em andamento", "Canceladas"],
-                colors: ["#00B5D8", "#ECC94B", "#FC8181"],
-                legend: {
-                show: true,
-                position: "bottom",
-                labels: { colors: "#718096" },
-                },
-            }}
+            options={radialBarOptions}
             series={[
                 Math.round((pedidos.filter((p) => p.status === "entregue").length / Math.max(pedidos.length, 1)) * 100),
                 Math.round((pedidos.filter((p) => p.status === "em_transito").length / Math.max(pedidos.length, 1)) * 100),

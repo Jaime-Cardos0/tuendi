@@ -17,7 +17,7 @@ type TableComponentProps<T> = {
 export function TableComponent<T>({ data, columns }: TableComponentProps<T>) {
   // console.log(data)
   return (
-    <Table variant={"striped"} colorScheme={"blackAlpha"} fontFamily={"heading"} fontSize={"xs"} fontWeight={"light"} color={"text.secondary"}>
+    <Table variant={"striped"} colorScheme={"navy.900"} fontFamily={"heading"} fontSize={"xs"} fontWeight={"light"} color={"text.secondary"}>
       <Thead>
         <Tr>
           {columns.map((col, i) => (

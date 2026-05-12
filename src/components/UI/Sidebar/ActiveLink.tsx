@@ -27,7 +27,9 @@ export function ActiveLink({children, ...rest}: ActiveLinkProps){
             {isValidElement(children)
                 ? cloneElement(children as ReactElement<any>, {
                     color: isActive ? "text.primary" : "text.muted",
-                    borderLeft: isActive ? "1px solid brand.500" : "none",
+                    borderLeftWidth: "1px",
+                    borderLeftStyle: "solid",
+                    borderLeftColor: isActive ? "brand.500" : "none",
                     backgroundColor: isActive ? "navy.600" : "transparent",
                     padding: isActive ? "0.5rem 1rem" : "0.5rem 1rem",
                 })

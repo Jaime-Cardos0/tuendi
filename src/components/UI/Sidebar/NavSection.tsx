@@ -9,7 +9,7 @@ export function NavSection({title, children}: NavSectionProps){
     return(
         <Box>
             <Text as={"h4"} fontSize={"xs"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"wide"} textTransform={"uppercase"}>{title}</Text>
-            <Stack spacing={4} mt={6}>
+            <Stack spacing={2} mt={6}>
                 {children}
             </Stack>
         </Box>

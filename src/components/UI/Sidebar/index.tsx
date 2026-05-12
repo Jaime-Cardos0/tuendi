@@ -7,8 +7,8 @@ import { ConfigurationIcon, DeliveryManIcon, HelpIcon, LineChartIcon, Notificati
 
 export function Sidebar(){
     return(
-        <Box as="aside" w={48} h={"100vh"} position={"fixed"} top={24} left={0} pl={6} pr={4} zIndex={1000} bgColor={"bg.default"} borderRightWidth={1} borderColor={"border.default"} boxShadow={"4px 0 2px 2px black"}>
-            <Stack spacing={8} align={"flex-start"}>
+        <Box as="aside" w={48} h={"100vh"} position={"fixed"} top={24} left={0} pl={6} pr={2} zIndex={1000} bgColor={"bg.default"} borderRightWidth={1} borderColor={"border.default"} boxShadow={"dark-lg"}>
+            <Stack spacing={8} align={"flex-start"} w={"100%"}>
 
                 <NavSection title="main admin">
                     <NavLink href="/admin/dashboard" icon={<RiDashboardLine size={20}/>}>Dashboard</NavLink>

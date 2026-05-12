@@ -106,7 +106,7 @@ export const theme = extendTheme({
   semanticTokens: {
     colors: {
       bg: {
-        default:   "navy.900",
+        default:   "navy.950",
         secondary: "navy.800",
         card:      "navy.700",
         hover:     "navy.600",

@@ -64,8 +64,8 @@ export const radialBarOptions: ApexOptions = {
         hollow: { size: "30%" },
         track: { background: "transparent" },
         dataLabels: {
-        name: { fontSize: "12px", color: theme.text.muted },
-        value: { fontSize: "14px", fontWeight: "normal", color: theme.text.primary },
+        name: { fontSize: "12px", color: "text.muted" },
+        value: { fontSize: "14px", fontWeight: "normal", color: "text.primary" },
         },
     },
     },
@@ -74,7 +74,7 @@ export const radialBarOptions: ApexOptions = {
     legend: {
     show: true,
     position: "bottom",
-    labels: { colors: theme.text.secondary, },
+    labels: { colors: "text.secondary", },
     width: 2,
     height: 2,
     floating: true,

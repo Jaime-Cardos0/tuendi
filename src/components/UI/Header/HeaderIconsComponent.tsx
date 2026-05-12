@@ -15,7 +15,7 @@ export function HeaderIconsComponent(){
             />
             
             <IconButton
-                aria-label="Switch light/dark mode"
+                aria-label="Notifications"
                 fontSize={"xl"}
                 w={"auto"}
                 icon={<NotificationIcon strokeWidth={2}/>}

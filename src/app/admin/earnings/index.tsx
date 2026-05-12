@@ -62,7 +62,8 @@ export function MainEarnings() {
       </Flex>
 
       {/* Gráfico */}
-      <Box bg="grayDark.700" border="2px" borderColor="grayDark.500" rounded="xl" p={6}>
+      <Box bg="bg.card" border="2px" borderColor="border.default" rounded="lg" p={6}>
+        
         <Text fontWeight="bold" fontSize="lg" mb={6}>Receita por Mês</Text>
         <ReactApexChart
           type="bar"

@@ -12,7 +12,7 @@ export function InputSearch(){
             <Input
             variant={"unstyled"}
             w={"280px"}
-            bgColor={"grayDark.600"}
+            bgColor={"bg.card"}
             rounded={"lg"}
             fontSize={"sm"}
             fontFamily={"body"}

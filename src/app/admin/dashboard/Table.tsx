@@ -95,7 +95,7 @@ export function DashboardTable() {
   return (
     <Box
       p={6} display="flex" gap={6} flexDirection="column" mb={8}
-      bg="grayDark.700" border="2px" borderColor="border.default" rounded="lg"
+      bg="bg.card" border="2px" borderColor="border.default" rounded="lg"
     >
       <TableHeader title="Últimas Entregas" />
       <TableComponent data={pedidos} columns={columns} />

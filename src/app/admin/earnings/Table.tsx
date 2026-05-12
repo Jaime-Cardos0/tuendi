@@ -147,8 +147,8 @@ export function EarningsTable() {
   return (
     <>
       <Box
-        p={8} display="flex" gap={8} flexDirection="column" mb={8}
-        bg="grayDark.700" border="2px" borderColor="grayDark.500" rounded="xl"
+        p={6} display="flex" gap={6} flexDirection="column" mb={8}
+        bg="bg.card" border="2px" borderColor="border.default" rounded="lg"
       >
         <Stack gap={4}>
           <TableHeader title="Histórico de Subscrições" />

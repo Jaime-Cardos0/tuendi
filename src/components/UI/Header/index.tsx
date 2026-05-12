@@ -22,7 +22,7 @@ export function Header(){
             top={0}
             left={0}
             bg={"bg.default"}
-            zIndex={"1000"}
+            zIndex={"1001"}
         >
             <Image src={logo} alt="Baza Logo"/>
 

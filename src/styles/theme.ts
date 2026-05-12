@@ -119,8 +119,8 @@ export const theme = extendTheme({
       },
 
       border: {
-        default: "navy.500",
-        subtle:  "navy.400",
+        default: "navy.600",
+        subtle:  "navy.500",
       },
     },
   },

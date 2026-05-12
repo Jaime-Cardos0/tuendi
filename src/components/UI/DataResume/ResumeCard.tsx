@@ -1,4 +1,4 @@
-import { Flex, HStack, Icon, ResponsiveValue, Stack, Text } from "@chakra-ui/react";
+import { Flex, HStack, Icon, IconButton, ResponsiveValue, Stack, Text } from "@chakra-ui/react";
 import { FaChevronDown } from "react-icons/fa";
 import { RiRectangleLine } from "react-icons/ri";
 
@@ -21,14 +21,14 @@ export function ResumeCard({title, value="0", bgVariant = "primary", icon, pathC
 
             <Stack align={"flex-start"} spacing={1}>
 
-                <HStack>
-                    <HStack>
+                <HStack justifyContent={"space-between"}>
+                    <HStack gap={1}>
                         <Icon><RiRectangleLine/></Icon>
 
                         <Text as={"h4"} color={bgVariant == "primary" ? "text.secondary" : "text.primary"} letterSpacing={"wide"} fontSize={"sm"} fontWeight={"normal"} >{title}</Text>
                     </HStack>
 
-                    <Icon><FaChevronDown/></Icon>
+                    <IconButton aria-label={"date filters"} icon={<FaChevronDown/>} />
                 </HStack>
                 
                 <Text as={"span"} letterSpacing={"wide"} fontFamily={"heading"} fontWeight={"bold"} fontSize={"2xl"}>{value}</Text>

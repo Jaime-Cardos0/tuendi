@@ -78,7 +78,7 @@ export const theme = extendTheme({
     },
 
     navy: {
-      950: "#081028", // body bg
+      950: "#070f24", // body bg
       900: "#0A1330", // background principal
       800: "#12152B", // sidebar / secundário
       700: "#0B1739", // cards

@@ -1,3 +1,4 @@
+import { gradients } from "@/styles/gradients";
 import { Flex, HStack, Icon, IconButton, ResponsiveValue, Stack, Text } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaChevronDown } from "react-icons/fa";
@@ -5,7 +6,8 @@ import { RiRectangleLine } from "react-icons/ri";
 
 const bgVariants = {
     primary: "linear(bg.card, bg.card)", 
-    gradient: "linear(155deg, #4FABFF, #4318FF)"
+    // gradient: "linear(155deg, #4FABFF, #4318FF)"
+    gradient: "linear-gradient(135deg, #1A1D35 0%, #12152B 100%)"
 }
 
 interface ResumeCardProps {

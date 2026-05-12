@@ -99,10 +99,10 @@ export function MainDashboard() {
       <Grid
         templateColumns="repeat(3, 1fr)"
         gap={6}
-        templateRows="repeat(6, minmax(100px, 120px))"
+        templateRows="repeat(4, minmax(150px, 180px))"
       >
         {/* Gráfico de barras — Fatura anual */}
-        <GridItem colSpan={2} rowSpan={3}>
+        <GridItem colSpan={2} rowSpan={2}>
           <DashboardCard title="Total de Fatura" value={fatura}>
             <Chart
               options={barOptions}
@@ -115,7 +115,7 @@ export function MainDashboard() {
         </GridItem>
 
         {/* Semicírculo — estados das entregas */}
-        <GridItem rowSpan={4}>
+        <GridItem rowSpan={3}>
         <DashboardCard title="Estados das Entregas">
             <Chart
             options={radialBarOptions}
@@ -132,7 +132,7 @@ export function MainDashboard() {
         </GridItem>
 
         {/* Gráfico de area — segunda linha */}
-        <GridItem rowSpan={3}>
+        <GridItem rowSpan={2}>
           <DashboardCard title="Entregas" value={totalPedidos}>
             <Chart
               options={areaOptions}
@@ -145,14 +145,14 @@ export function MainDashboard() {
         </GridItem>
 
         {/* Top motoqueiros */}
-        <GridItem rowSpan={3}>
+        <GridItem rowSpan={2}>
           <DashboardCard title="Melhores Avaliados">
             <TopRatedList data={topMotoqueiros} />
           </DashboardCard>
         </GridItem>
 
         {/* Top clientes */}
-        <GridItem rowSpan={3}>
+        <GridItem rowSpan={2}>
           <DashboardCard title="Parceiros Activos">
             <TopRatedList data={topClientes} />
           </DashboardCard>

@@ -24,9 +24,9 @@ export const baseChartOptions = (cor: string): ApexOptions => ({
 });
 
 export const barOptions: ApexOptions = {
-    ...baseChartOptions(theme.colors.brand[500]),
+    ...baseChartOptions(theme.colors.gradient["primary"]),
     chart: {
-      ...baseChartOptions(theme.colors.brand[500]).chart,
+      ...baseChartOptions(theme.colors.gradient["primary"]).chart,
       id: "receita-bar",
       type: "bar",
     },
@@ -47,7 +47,7 @@ export const areaOptions: ApexOptions = {
       id: "entregas-area",
       type: "area",
     },
-    fill: { type: "gradient", gradient: { shade: "dark", type: "vertical", opacityFrom: 0.7, opacityTo: 0 } },
+    fill: { type: "gradient", gradient: { shade: "dark", type: "vertical", opacityFrom: 0.6, opacityTo: 0 } },
 };
 
 export const radialBarOptions: ApexOptions = {
@@ -70,13 +70,11 @@ export const radialBarOptions: ApexOptions = {
     },
     },
     labels: ["Concluídas", "Em andamento", "Canceladas"],
-    colors: ["#00d5ff", "#FACC15", "#eb1d1d"],
+    colors: ["#C026D3", "#3B82F6", "#00d5ff"],
     legend: {
     show: true,
     position: "bottom",
     labels: { colors: "text.secondary", },
-    width: 2,
-    height: 2,
-    floating: true,
+    markers: { size: 6, shape: "circle", strokeWidth: 0, fillColors: ["#00d5ff", "#FACC15", "#eb1d1d"] },
     },
 }

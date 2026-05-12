@@ -27,7 +27,7 @@ export function Pagination({
             </Box>
             
             <HStack spacing={2}>
-                <IconButton aria-label="go back" icon={<FaChevronLeft />} onClick={() => onPageChange?.(currentPage - 1)} disabled={currentPage === 1}></IconButton>
+                <IconButton aria-label="go back" icon={<FaChevronLeft />} size={"sm"} onClick={() => onPageChange?.(currentPage - 1)} disabled={currentPage === 1}></IconButton>
                 {
                     currentPage < 2 ? "" :
                     <Button
@@ -35,8 +35,8 @@ export function Pagination({
                         size={"sm"}
                         fontSize={"xs"}
                         width={4}
-                        bg={"gray.700"}
-                        _hover={{ bg: "gray.500" }}
+                        bg={"navy.800"}
+                        _hover={{ bg: "navy.700" }}
                         onClick={() => onPageChange?.(currentPage - 1)}
                     >
                         {currentPage - 1}
@@ -48,9 +48,9 @@ export function Pagination({
                         key={currentPage}
                         size={"sm"}
                         fontSize={"xs"}
-                        width={4}
-                        bg={ "purple.500"}
-                        _hover={{ bg: "purple.400"}}
+                        width={"12px"}
+                        bg={ "brand.500"}
+                        _hover={{ bg: "brand.400"}}
                         onClick={() => onPageChange?.(currentPage)}
                     >
                         {currentPage}
@@ -73,7 +73,7 @@ export function Pagination({
                 
                 }
 
-                <IconButton aria-label="go forward" icon={<FaChevronRight />} onClick={() => onPageChange?.(currentPage + 1)} disabled={currentPage === totalPages}></IconButton>
+                <IconButton aria-label="go forward" icon={<FaChevronRight />} size={"sm"} onClick={() => onPageChange?.(currentPage + 1)} disabled={currentPage === totalPages}></IconButton>
             </HStack>
         </HStack>
     );

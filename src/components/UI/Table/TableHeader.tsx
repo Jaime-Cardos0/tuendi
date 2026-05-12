@@ -7,7 +7,7 @@ interface TableHeaderProps {
 export function TableHeader({ title }: TableHeaderProps) {
     return (
         <Flex justify={"space-between"}>
-            <Heading size={"xl"} fontWeight={"medium"} fontFamily={"mono"}>
+            <Heading size={"lg"} fontWeight={"medium"} fontFamily={"heading"}>
                 {title}
             </Heading>
         </Flex>

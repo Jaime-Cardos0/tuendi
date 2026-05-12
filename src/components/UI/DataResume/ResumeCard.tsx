@@ -21,15 +21,15 @@ export function ResumeCard({title, value="0", bgVariant = "primary", icon, pathC
 
             <Stack align={"flex-start"} spacing={1}>
 
-                <HStack display={"flex"} justifyContent={"space-between"}>
-                    <HStack gap={1}>
+                <Flex direction={"row"} justify={"space-between"} w={"100%"} align={"center"}>
+                    <HStack gap={1} align={"center"}>
                         <Icon><RiRectangleLine/></Icon>
 
                         <Text as={"h4"} color={bgVariant == "primary" ? "text.secondary" : "text.primary"} letterSpacing={"wide"} fontSize={"sm"} fontWeight={"normal"} >{title}</Text>
                     </HStack>
 
-                    <IconButton aria-label={"date filters"} size={"sm"} icon={<FaChevronDown/>} />
-                </HStack>
+                    <IconButton aria-label={"date filters"} size={"xs"} icon={<FaChevronDown/>} />
+                </Flex>
                 
                 <Text as={"span"} letterSpacing={"wide"} fontFamily={"heading"} fontWeight={"bold"} fontSize={"2xl"}>{value}</Text>
             </Stack>

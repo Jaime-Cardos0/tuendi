@@ -12,7 +12,7 @@ interface DashboardCardProps {
 export function DashboardCard( {title, children, value} : DashboardCardProps){
     return(
 
-        <Flex h={"100%"} direction={"column"} gap={5} rounded={"2xl"} p={6} bg={"bg.card"} align={"center"}>
+        <Flex h={"100%"} direction={"column"} gap={5} rounded={"xl"} p={6} bg={"bg.card"} align={"center"} borderWidth={"1px"} borderColor={"border.default"}>
             
             <Flex w={"100%"} h={"fit-content"} justify={"space-between"}>
                 
@@ -23,7 +23,7 @@ export function DashboardCard( {title, children, value} : DashboardCardProps){
                     <Text as={"span"} fontWeight={"semibold"} lineHeight={"1"} fontFamily={"body"} letterSpacing={"tight"} fontSize={"4xl"}>{ value ? value.toLocaleString("pt-AO").concat(" Kz") : " "}</Text>
                 </Stack>
 
-                <FloatingMenu placement="bottom" menuIcon={<FaChevronDown fontSize={"8px"}/>}>
+                <FloatingMenu placement="bottom" menuIcon={<FaChevronDown fontSize={"12px"}/>}>
                     <MenuItem>Diário</MenuItem>
                     <MenuItem>Semanal</MenuItem>
                     <MenuItem>Mensal</MenuItem>

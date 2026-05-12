@@ -30,7 +30,7 @@ export function ActiveLink({children, ...rest}: ActiveLinkProps){
                     borderLeftWidth: isActive ? "4px" : "0",
                     borderLeftStyle: isActive ? "solid" : "none",
                     borderLeftColor: isActive ? "brand.500" : "none",
-                    backgroundColor: isActive ? "navy.600" : "transparent",
+                    backgroundColor: isActive ? "rgba(255, 255, 255, 0.2)" : "transparent",
                     padding: isActive ? "0.5rem 1rem" : "0.5rem 1rem",
                 })
                 : children}

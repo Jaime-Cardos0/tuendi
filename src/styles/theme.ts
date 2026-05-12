@@ -78,12 +78,12 @@ export const theme = extendTheme({
     },
 
     navy: {
-      950: "#080A14", // body bg
-      900: "#0D0F1C", // background principal
+      950: "#081028", // body bg
+      900: "#0A1330", // background principal
       800: "#12152B", // sidebar / secundário
-      700: "#171B35", // cards
+      700: "#0B1739", // cards
       600: "#1E2340", // cards hover / inputs
-      500: "#252A4A", // bordas
+      500: "#343B4F", // bordas
       400: "#2E3560", // bordas hover
     },
 
@@ -115,7 +115,7 @@ export const theme = extendTheme({
       text: {
         primary:   "#E8EAFF",
         secondary: "#8B90B8",
-        muted:     "#555A7A",
+        muted:     "#AEB9E1",
       },
 
       border: {

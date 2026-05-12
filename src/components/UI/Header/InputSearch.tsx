@@ -13,7 +13,7 @@ export function InputSearch(){
             variant={"unstyled"}
             w={"280px"}
             bgColor={"grayDark.600"}
-            rounded={"xl"}
+            rounded={"lg"}
             fontSize={"sm"}
             fontFamily={"body"}
             letterSpacing={"tight"}
@@ -22,7 +22,7 @@ export function InputSearch(){
             name="search" 
             type="search" 
             placeholder={"Pesquisar..."}
-            _placeholder={{color: "text.secondary", fontSize: "sm"}}
+            _placeholder={{color: "text.muted", fontSize: "sm"}}
             px={6}
             pl={10}
             py={3}

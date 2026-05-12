@@ -71,7 +71,7 @@ export function MainDashboard() {
   );
 
   return (
-    <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
+    <Box as="main" w="100%" display="flex" flexDirection="column" gap={8} ml={52} mt={20}>
 
       {/* Cards de resumo */}
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>

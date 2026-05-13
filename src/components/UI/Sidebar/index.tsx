@@ -13,8 +13,8 @@ export function Sidebar(){
                 <NavSection title="main admin">
                     <NavLink href="/admin/dashboard" icon={<RiDashboardLine size={20}/>}>Dashboard</NavLink>
                     <NavLink href="/admin/users" icon={<UserIcon strokeWidth={2} fontSize={20}/>}>Usuário</NavLink>
-                    <NavLink href="/admin/deliveries" icon={<FaRoute size={20}/>}>Pedido</NavLink>
-                    <NavLink href="/admin/riders" icon={<DeliveryManIcon strokeWidth={3} fontSize={20}/>}>Entregador</NavLink>
+                    <NavLink href="/admin/deliveries" icon={<FaRoute size={20}/>}>Entregas</NavLink>
+                    <NavLink href="/admin/riders" icon={<DeliveryManIcon strokeWidth={3} fontSize={20}/>}>Entregadores</NavLink>
                     <NavLink href="/admin/earnings" icon={<LineChartIcon strokeWidth={2} fontSize={20}/>}>Ganhos</NavLink>
                 </NavSection>
 

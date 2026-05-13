@@ -19,7 +19,7 @@ export function MainRider() {
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
 
       <Stack alignSelf={"flex-start"}>
-        <Text fontSize={"3xl"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"normal"}>Riders</Text>
+        <Text lineHeight={0} fontSize={"3xl"} fontWeight={"thin"} color={"text.primary"} letterSpacing={"normal"}>Entregadores</Text>
 
         <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
           <BreadcrumbItem>
@@ -27,7 +27,7 @@ export function MainRider() {
           </BreadcrumbItem>
 
           <BreadcrumbItem>
-            <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/riders'>Riders</BreadcrumbLink>
+            <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/riders'>Entregadores</BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
       </Stack>
@@ -38,7 +38,7 @@ export function MainRider() {
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
           icon={<FaUserTag size={"sm"} color="text.secondary"/> }
-          title="Total de Riders"
+          title="Total de Entregadores"
           value={total}
         />
         <ResumeCard

@@ -22,7 +22,7 @@ export function MainUser() {
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
 
       <Stack alignSelf={"flex-start"}>
-        <Text fontSize={"3xl"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"normal"}>Usuários</Text>
+        <Text lineHeight={0} fontSize={"3xl"} fontWeight={"thin"} color={"text.primary"} letterSpacing={"normal"}>Usuários</Text>
 
         <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
           <BreadcrumbItem>
@@ -30,7 +30,7 @@ export function MainUser() {
           </BreadcrumbItem>
 
           <BreadcrumbItem>
-            <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/users'>Dashboard</BreadcrumbLink>
+            <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/users'>Usuários</BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
       </Stack>

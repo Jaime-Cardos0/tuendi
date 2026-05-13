@@ -25,7 +25,7 @@ export function MainDelivery() {
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
 
       <Stack alignSelf={"flex-start"}>
-        <Text fontSize={"3xl"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"normal"}>Entregas</Text>
+        <Text lineHeight={0} fontSize={"3xl"} fontWeight={"thin"} color={"text.primary"} letterSpacing={"normal"}>Entregas</Text>
 
         <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
           <BreadcrumbItem>

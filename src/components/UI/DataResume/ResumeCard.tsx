@@ -38,7 +38,7 @@ export function ResumeCard({title, value="0", bgVariant = "primary", icon, perce
                 <Flex direction={"row"} gap={4} w={"100%"} align={"center"}>
                     <Text as={"span"} letterSpacing={"wide"} fontFamily={"heading"} fontWeight={"bold"} fontSize={"2xl"}>{value}</Text>
                     {percentage !== undefined && (
-                        <Tag variant={"subtle"} size={"sm"} colorScheme={percentage >= 0 ? "green" : "red"} borderColor={percentage >= 0 ? "green.200" : "red.200"} borderWidth={"1px"} rounded={"md"}>
+                        <Tag variant={"subtle"} size={"sm"} colorScheme={percentage >= 0 ? "green" : "red"} borderColor={percentage >= 0 ? "green.100" : "red.100"} borderWidth={"1px"} rounded={"sm"}>
                             {percentage.toFixed(1)}%
                         </Tag>
                     )}

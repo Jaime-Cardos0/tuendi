@@ -1,5 +1,5 @@
 "use client";
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Text } from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Stack, Text } from "@chakra-ui/react";
 import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
 import { EarningsTable } from "./Table";
 import { useContext } from "react";
@@ -42,15 +42,19 @@ export function MainEarnings() {
   return (
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
 
-      <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
-        <BreadcrumbItem>
-          <BreadcrumbLink fontSize={"xs"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"wide"} textTransform={"uppercase"} href='#'>Main Admin</BreadcrumbLink>
-        </BreadcrumbItem>
+      <Stack alignSelf={"flex-start"}>
+        <Text fontSize={"3xl"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"normal"}>Ganhos</Text>
 
-        <BreadcrumbItem>
-          <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/earnings'>Ganhos</BreadcrumbLink>
-        </BreadcrumbItem>
-      </Breadcrumb>
+        <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
+          <BreadcrumbItem>
+            <BreadcrumbLink fontSize={"xs"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"wide"} textTransform={"uppercase"} href='#'>Main Admin</BreadcrumbLink>
+          </BreadcrumbItem>
+
+          <BreadcrumbItem>
+            <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/earnings'>Ganhos</BreadcrumbLink>
+          </BreadcrumbItem>
+        </Breadcrumb>
+      </Stack>
 
       {/* Cards */}
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>

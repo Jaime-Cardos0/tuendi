@@ -1,5 +1,5 @@
 "use client";
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Grid, GridItem, Stack, Text } from "@chakra-ui/react";
 import Chart from "react-apexcharts";
 import { DashboardTable } from "./Table";
 import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
@@ -77,15 +77,19 @@ export function MainDashboard() {
   return (
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={6} ml={52} mt={20}>
 
-      <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
-        <BreadcrumbItem>
-          <BreadcrumbLink fontSize={"xs"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"wide"} textTransform={"uppercase"} href='#'>Main Admin</BreadcrumbLink>
-        </BreadcrumbItem>
+      <Stack alignSelf={"flex-start"}>
+        <Text fontSize={"3xl"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"normal"}>Dashboard</Text>
 
-        <BreadcrumbItem>
-          <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/dashboard'>Dashboard</BreadcrumbLink>
-        </BreadcrumbItem>
-      </Breadcrumb>
+        <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
+          <BreadcrumbItem>
+            <BreadcrumbLink fontSize={"xs"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"wide"} textTransform={"uppercase"} href='#'>Main Admin</BreadcrumbLink>
+          </BreadcrumbItem>
+
+          <BreadcrumbItem>
+            <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/dashboard'>Dashboard</BreadcrumbLink>
+          </BreadcrumbItem>
+        </Breadcrumb>
+      </Stack>
 
       {/* Cards de resumo */}
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>

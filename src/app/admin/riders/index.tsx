@@ -1,5 +1,5 @@
 "use client";
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex } from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Stack, Text } from "@chakra-ui/react";
 import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
 import BarChart, { ClockIcon } from "@/components/Icons/icons";
 import { gradients } from "@/styles/gradients";
@@ -18,15 +18,21 @@ export function MainRider() {
   return (
     <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
 
-      <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
-        <BreadcrumbItem>
-          <BreadcrumbLink fontSize={"xs"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"wide"} textTransform={"uppercase"} href='#'>Main Admin</BreadcrumbLink>
-        </BreadcrumbItem>
+      <Stack alignSelf={"flex-start"}>
+        <Text fontSize={"3xl"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"normal"}>Riders</Text>
 
-        <BreadcrumbItem>
-          <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/riders'>Riders</BreadcrumbLink>
-        </BreadcrumbItem>
-      </Breadcrumb>
+        <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
+          <BreadcrumbItem>
+            <BreadcrumbLink fontSize={"xs"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"wide"} textTransform={"uppercase"} href='#'>Main Admin</BreadcrumbLink>
+          </BreadcrumbItem>
+
+          <BreadcrumbItem>
+            <BreadcrumbLink fontWeight={"normal"} letterSpacing={"spaced"} textAlign={"end"} href='/admin/riders'>Riders</BreadcrumbLink>
+          </BreadcrumbItem>
+        </Breadcrumb>
+      </Stack>
+
+
 
 
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>

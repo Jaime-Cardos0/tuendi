@@ -35,10 +35,10 @@ export function ResumeCard({title, value="0", bgVariant = "primary", icon, perce
                     <IconButton aria-label={"date filters"} variant={"ghost"} size={"xs"} icon={<BsThreeDots/>} />
                 </Flex>
                 
-                <Flex direction={"row"} gap={2} w={"100%"} align={"center"}>
+                <Flex direction={"row"} gap={4} w={"100%"} align={"center"}>
                     <Text as={"span"} letterSpacing={"wide"} fontFamily={"heading"} fontWeight={"bold"} fontSize={"2xl"}>{value}</Text>
                     {percentage !== undefined && (
-                        <Tag variant={"subtle"} colorScheme={percentage >= 0 ? "green" : "red"}>
+                        <Tag variant={"subtle"} size={"md"} colorScheme={percentage >= 0 ? "green" : "red"} borderColor={percentage >= 0 ? "green.500" : "red.500"} borderWidth={"1px"} rounded={"sm"}>
                             {percentage.toFixed(1)}%
                         </Tag>
                     )}

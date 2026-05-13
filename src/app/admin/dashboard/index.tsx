@@ -90,24 +90,24 @@ export function MainDashboard() {
       {/* Cards de resumo */}
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
-          icon={<BsBoxFill/>}
+          icon={<BsBoxFill size={"sm"} color="text.secondary"/>}
           title="Entregas hoje"
           value={totalPedidos}
           percentage={10}
         />
         <ResumeCard
-          icon={<RiProgress3Fill />}
+          icon={<RiProgress3Fill size={"sm"} color="text.secondary"/>}
           title="Em andamento"
           value={emAndamento}
           percentage={-5}
         />
         <ResumeCard
-          icon={<RiMoneyDollarCircleFill />}
+          icon={<RiMoneyDollarCircleFill size={"sm"} color="text.secondary"/>}
           title="Receita"
           value={`${receita.toLocaleString("pt-AO")} Kz`}
         />
         <ResumeCard
-          icon={<FaFileInvoiceDollar />}
+          icon={<FaFileInvoiceDollar size={"sm"} />}
           title="Fatura"
           value={`${fatura.toLocaleString("pt-AO")} Kz`}
           bgVariant="gradient"

@@ -31,17 +31,17 @@ export function MainRider() {
 
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
-          icon={<FaUserTag />}
+          icon={<FaUserTag size={"sm"} color="text.secondary"/> }
           title="Total de Riders"
           value={total}
         />
         <ResumeCard
-          icon={<RiProgress3Fill />}
+          icon={<RiProgress3Fill size={"sm"} color="text.secondary"/> }
           title="Pendentes"
           value={pendentes}
         />
-        <ResumeCard icon={<FaCheckSquare />} title="Activos" value={ativos} />
-        <ResumeCard icon={<RiCloseCircleFill />} title="Suspensos" value={suspensos} />
+        <ResumeCard icon={<FaCheckSquare size={"sm"} color="text.secondary"/> } title="Activos" value={ativos} />
+        <ResumeCard icon={<RiCloseCircleFill size={"sm"}/> } title="Suspensos" value={suspensos} bgVariant="gradient" />
       </Flex>
 
       <RidersTable />

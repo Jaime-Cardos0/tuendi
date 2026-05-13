@@ -36,17 +36,17 @@ export function MainDelivery() {
 
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
-          icon={<MdDeliveryDining />}
+          icon={<MdDeliveryDining size={"sm"} color="text.secondary"/>}
           title="Total de Pedidos"
           value={total}
         />
         <ResumeCard
-          icon={<RiProgress3Fill />}
+          icon={<RiProgress3Fill size={"sm"} color="text.secondary"/>}
           title="Em andamento"
           value={emTransito}
         />
-        <ResumeCard icon={<LuHandPlatter />} title="Entregues" value={entregues} />
-        <ResumeCard icon={<RiCloseCircleFill />} title="Cancelados" value={cancelados} bgVariant="gradient" />
+        <ResumeCard icon={<LuHandPlatter size={"sm"} color="text.secondary"/> } title="Entregues" value={entregues} />
+        <ResumeCard icon={<RiCloseCircleFill size={"sm"} /> } title="Cancelados" value={cancelados} bgVariant="gradient" />
       </Flex>
 
       <DeliveriesTable />

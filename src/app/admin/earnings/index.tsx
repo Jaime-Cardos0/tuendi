@@ -55,22 +55,22 @@ export function MainEarnings() {
       {/* Cards */}
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
-          icon={<RiMoneyDollarCircleFill />}
+          icon={<RiMoneyDollarCircleFill size={"sm"} color="text.secondary"/> }
           title="Receita Total"
           value={`${receitaTotal.toLocaleString("pt-AO")} Kz`}
         />
         <ResumeCard
-          icon={<RiProgress3Fill />}
+          icon={<RiProgress3Fill size={"sm"} color="text.secondary"/> }
           title="Planos Semanais"
           value={`${receitaSemanal.toLocaleString("pt-AO")} Kz`}
         />
         <ResumeCard
-          icon={<RiProgress2Fill />}
+          icon={<RiProgress2Fill size={"sm"}/> }
           title="Planos Mensais"
           value={`${receitaMensal.toLocaleString("pt-AO")} Kz`}
         />
         <ResumeCard
-          icon={<RiCheckFill />}
+          icon={<RiCheckFill size={"sm"}/> }
           title="Subscrições Activas"
           value={activasCount}
           bgVariant="gradient"

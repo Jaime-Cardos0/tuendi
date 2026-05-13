@@ -33,17 +33,17 @@ export function MainUser() {
 
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
-          icon={<FaUser />}
+          icon={<FaUser size={"sm"} color="text.secondary"/> }
           title="Total de Usuários"
           value={total}
         />
         <ResumeCard
-          icon={<FaUserFriends />}
+          icon={<FaUserFriends size={"sm"} color="text.secondary"/> }
           title="Clientes"
           value={clientes}
         />
-        <ResumeCard icon={<RiEBike2Fill />} title="Motoqueiros" value={motoqueiroCount} />
-        <ResumeCard icon={<FaUserSlash />} title="Suspensos" value={suspensos} bgVariant="gradient" />
+        <ResumeCard icon={<RiEBike2Fill size={"sm"} color="text.secondary"/> } title="Motoqueiros" value={motoqueiroCount} />
+        <ResumeCard icon={<FaUserSlash size={"sm"}/> } title="Suspensos" value={suspensos} bgVariant="gradient" />
       </Flex>
 
       <UsersTable />

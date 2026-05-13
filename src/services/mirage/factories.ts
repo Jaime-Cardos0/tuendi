@@ -152,3 +152,31 @@ export const subscricaoFactory = Factory.extend({
     return faker.date.recent({ days: 30 }).toISOString();
   },
 });
+
+export const actividadeFactory = Factory.extend({
+  adminId() { return ""; }, // ← será sobrescrito pelas seeds
+  tipo() {
+    return faker.helpers.arrayElement([
+      "aprovacao_motoqueiro",
+      "rejeicao_motoqueiro",
+      "suspensao_usuario",
+      "reactivacao_usuario",
+      "eliminacao_usuario",
+      "resolucao_ticket",
+      "cancelamento_pedido",
+    ]);
+  },
+  descricao() {
+    return faker.helpers.arrayElement([
+      "Motoqueiro aprovado com sucesso",
+      "Motoqueiro rejeitado por documentos inválidos",
+      "Conta de utilizador suspensa por violação de termos",
+      "Conta de utilizador reactivada",
+      "Conta de utilizador eliminada",
+      "Ticket de suporte resolvido",
+      "Pedido cancelado por solicitação do cliente",
+    ]);
+  },
+  entidadeId() { return faker.string.uuid(); },
+  criadoEm() { return faker.date.recent({ days: 30 }).toISOString(); },
+});

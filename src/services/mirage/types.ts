@@ -35,10 +35,22 @@ export type NotificacaoTipo =
   | "pagamento"
   | "nova_mensagem"
   | "sistema";
+
 export type SuporteStatus = "aberto" | "em_analise" | "resolvido";
 
 export type PlanoTipo = "semanal" | "mensal";
+
 export type SubscricaoStatus = "activa" | "expirada" | "cancelada";
+
+export type ActividadeTipo =
+  | "aprovacao_motoqueiro"
+  | "rejeicao_motoqueiro"
+  | "suspensao_usuario"
+  | "reactivacao_usuario"
+  | "eliminacao_usuario"
+  | "resolucao_ticket"
+  | "cancelamento_pedido";
+
 
 export interface ISubscricao {
   id: string;
@@ -185,4 +197,13 @@ export interface ISuporte {
   respondidoPor: string | null;
   criadoEm: string;
   resolvidoEm: string | null;
+}
+
+export interface IActividade {
+  id: string;
+  adminId: string;
+  tipo: ActividadeTipo;
+  descricao: string;
+  entidadeId: string;
+  criadoEm: string;
 }

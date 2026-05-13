@@ -4,12 +4,14 @@ import {
   pedidoModel, avaliacaoModel, carteiraModel, transacaoModel,
   notificacaoModel, suporteModel,
   subscricaoModel,
+  actividadeModel,
 } from "./models";
 import {
   userFactory, motoqueiroFactory, veiculoFactory, uploadFactory,
   pedidoFactory, avaliacaoFactory, carteiraFactory, transacaoFactory,
   notificacaoFactory, suporteFactory,
   subscricaoFactory,
+  actividadeFactory,
 } from "./factories";
 import { seeds } from "./seeds";
 
@@ -27,6 +29,7 @@ export function makeServer(): Server {
       notificacao: notificacaoModel,
       suporte: suporteModel,
       subscricao: subscricaoModel,
+      actividade: actividadeModel,
     },
 
     factories: {
@@ -41,6 +44,7 @@ export function makeServer(): Server {
       notificacao: notificacaoFactory,
       suporte: suporteFactory,
       subscricao: subscricaoFactory,
+      actividade: actividadeFactory,
     },
 
     serializers: {
@@ -213,6 +217,16 @@ export function makeServer(): Server {
         const user = s.motoqueiro?.user?.attrs ?? {};
         return { ...s.attrs, motoqueiro: { ...motoqueiro, user } };
       });
+    });
+
+// rotas
+    this.get("/actividades", (schema, request) => {
+      const adminId = request.queryParams.adminId;
+      const all = schema.all("actividade").models;
+      if (adminId) {
+        return all.filter((a) => a.attrs.adminId === adminId).map((a) => a.attrs);
+      }
+      return all.map((a) => a.attrs);
     });
     },
   });

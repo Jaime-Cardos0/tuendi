@@ -57,3 +57,5 @@ export const suporteModel = Model.extend({
 export const subscricaoModel = Model.extend({
   motoqueiro: belongsTo("motoqueiro"),
 });
+
+export const actividadeModel = Model.extend({});

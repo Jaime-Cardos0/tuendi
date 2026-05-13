@@ -65,4 +65,7 @@ export function seeds(server: Server) {
     valor: plano === "semanal" ? 6000 : 30000,
   } as any);
 });
+// Criar admin
+const admin = server.create("user", { role: "admin" as const } as any);
+server.createList("actividade", 20, { adminId: admin.id } as any);
 }

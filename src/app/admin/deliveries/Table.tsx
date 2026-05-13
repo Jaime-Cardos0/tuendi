@@ -106,7 +106,7 @@ export function DeliveriesTable() {
       ),
     },
     {
-      header: "Motoqueiro",
+      header: "Entregador",
       render: (p: IPedido) =>
         p.motoqueiro ? (
           <Flex align="center" gap={2}>

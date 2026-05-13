@@ -16,7 +16,7 @@ export function MainRider() {
   const chartData = useMemo(() => [total, ativos, suspensos], [total, ativos, suspensos]);
 
   return (
-    <Box as="main" w="100%" display="flex" flexDirection="column" gap={12} ml={52} mt={20}>
+    <Box as="main" w="100%" display="flex" flexDirection="column" gap={6} ml={52} mt={20}>
 
       <Stack alignSelf={"flex-start"}>
         <Text lineHeight={1} fontSize={"3xl"} fontWeight={"thin"} color={"text.primary"} letterSpacing={"normal"}>Entregadores</Text>

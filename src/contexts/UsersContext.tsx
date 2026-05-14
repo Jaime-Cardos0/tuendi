@@ -4,6 +4,7 @@ import { api } from "@/services/api";
 import { IUser, UserStatus } from "@/services/mirage/types";
 import { useMutation, UseMutationResult, useQuery } from "@tanstack/react-query";
 import { ReactNode, createContext, useEffect, useState } from "react";
+import { isDevelopment, sampleClientes } from "./DashboardContext";
 
 interface UsersContextData {
     page: number;
@@ -33,6 +34,10 @@ export function UsersProvider({children}: UsersProviderProps){
         return { data, filteredData: { total, clientes, motoqueiroCount, suspensos } };
     }});
 
+    const usersData = isDevelopment ? data?.data ?? sampleClientes : sampleClientes;
+
+    const usersDataTotal = isDevelopment ? data?.filteredData.total ?? sampleClientes.length : sampleClientes.length;
+
     const usersUpdateStatusMutation = useMutation({ mutationFn: async ({ id, status }: { id: string; status: UserStatus }) => {
         await api.patch(`/users/${id}`, { status });
         refetch();
@@ -46,11 +51,11 @@ export function UsersProvider({children}: UsersProviderProps){
     return (
         <UsersContext.Provider value={{ 
             page,
-            total: data?.filteredData.total || 0,
+            total: usersDataTotal || 0,
             clientes: data?.filteredData.clientes || 0,
             motoqueiroCount: data?.filteredData.motoqueiroCount || 0,
             suspensos: data?.filteredData.suspensos || 0,
-            users: data?.data || [],
+            users: usersData || [],
             updateStatus: usersUpdateStatusMutation.mutate,
             deleteUser: usersDeleteMutation.mutate,
             setPage,

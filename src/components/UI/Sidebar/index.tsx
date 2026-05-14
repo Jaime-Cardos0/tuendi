@@ -19,9 +19,9 @@ export function Sidebar(){
                 </NavSection>
 
                 <NavSection title="support admin">
-                    <NavLink href="#" icon={<HelpIcon strokeWidth={2} fontSize={20}/>}>Suporte</NavLink>
-                    <NavLink href="#" icon={<NotificationIcon strokeWidth={2} fontSize={20}/>}>Notificações</NavLink>
-                    <NavLink href="#" icon={<ConfigurationIcon strokeWidth={2} fontSize={20}/>}>Definições</NavLink>
+                    <NavLink href="/admin/help" icon={<HelpIcon strokeWidth={2} fontSize={20}/>}>Suporte</NavLink>
+                    <NavLink href="/admin/notifications" icon={<NotificationIcon strokeWidth={2} fontSize={20}/>}>Notificações</NavLink>
+                    <NavLink href="/admin/settings" icon={<ConfigurationIcon strokeWidth={2} fontSize={20}/>}>Definições</NavLink>
                 </NavSection>
 
             </Stack>

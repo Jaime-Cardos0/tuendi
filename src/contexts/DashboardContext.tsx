@@ -24,9 +24,9 @@ interface DashboardProviderProps {
 
 export const DashboardContext = createContext<DashboardContextData>({} as DashboardContextData);
 
-const isDevelopment = process.env.NODE_ENV === "development";
+export const isDevelopment = process.env.NODE_ENV === "development";
 
-const sampleClientes: IUser[] = [
+export const sampleClientes: IUser[] = [
   {
     id: "cliente-1",
     firebaseUid: "uid-cliente-1",
@@ -131,7 +131,7 @@ const sampleClientes: IUser[] = [
   },
 ];
 
-const sampleMotoqueiros: IMotoqueiro[] = [
+export const sampleMotoqueiros: IMotoqueiro[] = [
   {
     id: "moto-1",
     userId: "uid-moto-1",
@@ -380,7 +380,7 @@ const sampleMotoqueiros: IMotoqueiro[] = [
   },
 ];
 
-const sampleSubscricoes: ISubscricao[] = [
+export const sampleSubscricoes: ISubscricao[] = [
   {
     id: "sub-1",
     motoqueiroId: "moto-1",
@@ -449,7 +449,7 @@ const sampleSubscricoes: ISubscricao[] = [
   },
 ];
 
-const samplePedidos: IPedido[] = [
+export const samplePedidos: IPedido[] = [
   {
     id: "pedido-1",
     numeroPedido: "PED-001",

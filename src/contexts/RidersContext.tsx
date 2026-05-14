@@ -4,6 +4,7 @@ import { IMotoqueiro, MotoqueiroStatus } from "@/services/mirage/types";
 import { useMutation, UseMutationResult, useQuery, UseQueryResult } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { isDevelopment, sampleMotoqueiros } from "./DashboardContext";
 
 interface RidersProviderProps {
   children: ReactNode;
@@ -30,7 +31,10 @@ export function RidersProvider({ children }: RidersProviderProps) {
     return {data, filteredData: {total, pendentes, ativos, suspensos}};
   }});
 
-console.log("ridersquerydata", data)
+  const ridersData = isDevelopment ? data?.data ?? sampleMotoqueiros : sampleMotoqueiros;
+
+  const ridersDataTotal = isDevelopment ? data?.filteredData.total ?? sampleMotoqueiros.length : sampleMotoqueiros.length; 
+
   const ridersUpdateStatusMutation = useMutation<void, Error, { id: string; status: MotoqueiroStatus }, unknown>({mutationFn: async ({ id, status }) => {
     await api.patch(`/motoqueiros/${id}`, { status });
     refetch();
@@ -38,8 +42,8 @@ console.log("ridersquerydata", data)
 
   return (
     <RidersContext.Provider value={{ 
-      riders: data?.data || [],
-      total: data?.filteredData.total || 0,
+      riders: ridersData || [],
+      total: ridersDataTotal || 0,
       pendentes: data?.filteredData.pendentes || 0,
       ativos: data?.filteredData.ativos || 0,
       suspensos: data?.filteredData.suspensos || 0,

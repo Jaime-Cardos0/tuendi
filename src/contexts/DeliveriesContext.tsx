@@ -3,6 +3,7 @@ import { api } from "@/services/api";
 import { IPedido, PedidoStatus } from "@/services/mirage/types";
 import { useMutation, UseMutationResult, useQuery } from "@tanstack/react-query";
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { isDevelopment, samplePedidos } from "./DashboardContext";
 
 interface DeliveriesContextData {
   pedidos: IPedido[];
@@ -44,8 +45,11 @@ export function DeliveriesProvider({ children }: DeliveriesProviderProps) {
       console.error("Error fetching deliveries:", err);
       throw err;
     }
-
   }});
+
+  const deliveryData = isDevelopment ? data?.data ?? samplePedidos : samplePedidos;
+
+  const deliveryDataTotal = isDevelopment ? data?.filteredData.total ?? samplePedidos.length : samplePedidos.length; 
 
   const updateStatus = useMutation({ mutationFn: async ({ id, status }: { id: string; status: PedidoStatus }) => {
     try {
@@ -68,14 +72,14 @@ export function DeliveriesProvider({ children }: DeliveriesProviderProps) {
   }});
 
   function getDeliveriesByStatus(status: PedidoStatus) {
-    return (data?.data || []).filter((d) => d.status === status);
+    return (deliveryData || []).filter((d) => d.status === status);
   }
 
   return (
     <DeliveriesContext.Provider
       value={{
-        pedidos: data?.data || [],
-        total: data?.filteredData.total || 0,
+        pedidos: deliveryData || [],
+        total: deliveryDataTotal || 0,
         emTransito: data?.filteredData.emTransito || 0,
         entregues: data?.filteredData.entregues || 0,
         cancelados: data?.filteredData.cancelados || 0,

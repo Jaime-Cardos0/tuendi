@@ -3,6 +3,7 @@ import { api } from "@/services/api";
 import { ISubscricao } from "@/services/mirage/types";
 import { useQuery } from "@tanstack/react-query";
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { isDevelopment, sampleSubscricoes } from "./DashboardContext";
 
 interface EarningsContextData {
   subscricoes: ISubscricao[];
@@ -27,6 +28,8 @@ export function EarningsProvider({ children }: EarningsProviderProps) {
     return res.data;
   }});
 
+  const earningsData = isDevelopment ? data ?? sampleSubscricoes : sampleSubscricoes;
+
   function gerarReceitaMensal(subs: ISubscricao[]): number[] {
     const meses = Array.from({ length: 12 }, (_, i) => ({
       mes: i,
@@ -41,20 +44,20 @@ export function EarningsProvider({ children }: EarningsProviderProps) {
     return meses.map((m) => m.total);
   }
 
-  const receitaTotal = ( data || []).reduce((acc, s) => acc + s.valor, 0);
-  const receitaSemanal = ( data || [])
+  const receitaTotal = ( earningsData || []).reduce((acc, s) => acc + s.valor, 0);
+  const receitaSemanal = ( earningsData || [])
     .filter((s) => s.plano === "semanal")
     .reduce((acc, s) => acc + s.valor, 0);
-  const receitaMensal = ( data || [])
+  const receitaMensal = ( earningsData || [])
     .filter((s) => s.plano === "mensal")
     .reduce((acc, s) => acc + s.valor, 0);
-  const activasCount = ( data || []).filter((s) => s.status === "activa").length;
-  const receitaPorMes = gerarReceitaMensal(data || []);
+  const activasCount = ( earningsData || []).filter((s) => s.status === "activa").length;
+  const receitaPorMes = gerarReceitaMensal(earningsData || []);
 
   return (
     <EarningsContext.Provider
       value={{
-        subscricoes: data || [],
+        subscricoes: earningsData || [],
         receitaTotal,
         receitaSemanal,
         receitaMensal,

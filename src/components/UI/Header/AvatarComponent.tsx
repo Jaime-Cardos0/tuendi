@@ -1,4 +1,4 @@
-import { Flex, Avatar, AvatarBadge, HStack, IconButton, Text, MenuItem } from "@chakra-ui/react";
+import { Flex, Avatar, AvatarBadge, HStack, IconButton, Text, MenuItem, Link as ChakraLink } from "@chakra-ui/react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { FloatingMenu } from "../FloatingMenu";
 import Link from "next/link";
@@ -25,7 +25,7 @@ export function AvatarComponent(){
                 <Text as={"span"} isTruncated maxW={"110px"} color={"text.primary"} fontSize={"sm"} fontWeight={"medium"} letterSpacing={"normal"} fontFamily={"heading"}>Jaime Cardoso</Text>
 
                 <FloatingMenu placement="bottom" menuIcon={<RiArrowDownSLine/>}>
-                    <MenuItem><Link href="admin/profile">Perfil</Link></MenuItem>
+                    <MenuItem><ChakraLink href="/admin/profile">Perfil</ChakraLink></MenuItem>
                     <MenuItem>Definições</MenuItem>
                     <MenuItem>Ajuda</MenuItem>
                 </FloatingMenu>

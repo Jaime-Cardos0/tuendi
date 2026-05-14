@@ -95,7 +95,7 @@ export default function AdminProfilePage() {
             </Text>
             <Breadcrumb spacing="8px" separator={<MdOutlineKeyboardDoubleArrowRight color="gray.500" />}>
               <BreadcrumbItem>
-                <BreadcrumbLink fontSize="xs" color="text.primary" textTransform="uppercase" href="#">
+                <BreadcrumbLink fontSize="xs" color="text.primary" textTransform="uppercase" href="/admin/dashboard">
                   Main Admin
                 </BreadcrumbLink>
               </BreadcrumbItem>

@@ -36,7 +36,7 @@ const actividadeColor: Record<ActividadeTipo, string> = {
 };
 
 export default function AdminProfilePage() {
-  const [admin, setAdmin] = useState<IUser>({} as IUser);
+  const [admin, setAdmin] = useState<IUser | null>(null);
   const [actividades, setActividades] = useState<IActividade[]>([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
@@ -46,7 +46,7 @@ export default function AdminProfilePage() {
     api.get("/users")
       .then((res) => {
         const admins: IUser[] = res.data.filter((u: IUser) => u.role === "admin");
-        const found = admins[0] || {} as IUser;
+        const found = admins[0] ?? null;
         setAdmin(found);
         setForm({
           nome: found?.nome ?? "",
@@ -75,9 +75,9 @@ export default function AdminProfilePage() {
     <Center h="100vh"><Spinner size="xl" /></Center>
   );
 
-  // if (!admin) return (
-  //   <Center h="100vh"><Text>Perfil não encontrado.</Text></Center>
-  // );
+  if (!admin) return (
+    <Center h="100vh"><Text>Perfil não encontrado.</Text></Center>
+  );
 
   return (
     <Flex direction="column" h="100vh">

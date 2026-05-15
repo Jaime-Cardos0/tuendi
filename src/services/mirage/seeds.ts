@@ -4,10 +4,10 @@ import { faker } from "@faker-js/faker";
 
 export function seeds(server: Server) {
   // Criar clientes
-  const clientes = server.createList("user", 150, { role: "cliente"} as any);
+  const clientes = server.createList("user", 15, { role: "cliente"} as any);
 
   // Criar users que serão motoqueiros
-  const usersMoto = server.createList("user", 100, { role: "motoqueiro"} as any);
+  const usersMoto = server.createList("user", 10, { role: "motoqueiro"} as any);
 
   // Criar motoqueiros com user, veiculo e uploads associados
   const motoqueiros = usersMoto.map((user) => {
@@ -34,13 +34,13 @@ export function seeds(server: Server) {
   [...clientes, ...usersMoto].forEach((user) => {
     const carteira = server.create("carteira", { user } as any);
 
-    server.createList("transacao", 60, { carteira } as any);
+    server.createList("transacao", 10, { carteira } as any);
   });
 
   // Criar pedidos
 // para — cada cliente cria 3 pedidos
   clientes.forEach((cliente) => {
-    Array.from({ length: 20 }).forEach(() => {
+    Array.from({ length: 5 }).forEach(() => {
       const motoqueiro = motoqueiros[Math.floor(Math.random() * motoqueiros.length)];
       const pedido = server.create("pedido", { cliente, motoqueiro } as any);
       server.create("avaliacao", { pedido } as any);
@@ -49,7 +49,7 @@ export function seeds(server: Server) {
 
   // Criar notificações
   [...clientes, ...usersMoto].forEach((user) => {
-    server.createList("notificacao", 4, { user } as any);
+    server.createList("notificacao", 3, { user } as any);
   });
 
   // Criar suportes
@@ -67,5 +67,5 @@ export function seeds(server: Server) {
 });
 // Criar admin
 const admin = server.create("user", { role: "admin" as const } as any);
-server.createList("actividade", 20, { adminId: admin.id } as any);
+server.createList("actividade", 10, { adminId: admin.id } as any);
 }

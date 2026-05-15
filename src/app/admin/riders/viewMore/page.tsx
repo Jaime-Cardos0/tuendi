@@ -39,13 +39,13 @@ export default function ViewMorePage() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
-  const [rider, setRider] = useState<IMotoqueiro>({} as IMotoqueiro);
+  const [rider, setRider] = useState<IMotoqueiro | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!id) return;
     api.get(`/motoqueiros/${id}`)        
-      .then((res) => res ? setRider(res.data) : setRider({} as IMotoqueiro))
+      .then((res) => setRider(res.data)) 
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, [id]);
@@ -60,9 +60,9 @@ export default function ViewMorePage() {
     <Center h="100vh"><Spinner size="xl" /></Center>
   );
 
-  // if (!rider) return (
-  //   <Center h="100vh"><Text>Motoqueiro não encontrado.</Text></Center>
-  // );
+  if (!rider) return (
+    <Center h="100vh"><Text>Motoqueiro não encontrado.</Text></Center>
+  );
 
   // uploads extraídos
   const biFrente   = getUpload(rider.uploads, "documento_bi_frente");

@@ -47,13 +47,13 @@ export default function UserProfilePage() {
   const router = useRouter();
   const id = searchParams.get("id");
 
-  const [user, setUser] = useState<IUser>({} as IUser);
+  const [user, setUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!id) return;
     api.get(`/users/${id}`)
-      .then((res) => res ? setUser(res.data) : setUser({} as IUser))
+      .then((res) => setUser(res.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, [id]);
@@ -74,9 +74,9 @@ export default function UserProfilePage() {
     <Center h="100vh"><Spinner size="xl" /></Center>
   );
 
-  // if (!user) return (
-  //   <Center h="100vh"><Text>Utilizador não encontrado.</Text></Center>
-  // );
+  if (!user) return (
+    <Center h="100vh"><Text>Utilizador não encontrado.</Text></Center>
+  );
 
   return (
     <Flex direction="column" h="100vh">
@@ -84,7 +84,7 @@ export default function UserProfilePage() {
 
       <Breadcrumb spacing='8px' separator={<MdOutlineKeyboardDoubleArrowRight color='gray.500' />}>
         <BreadcrumbItem>
-          <BreadcrumbLink fontSize={"xs"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"wide"} textTransform={"uppercase"} href='/admin/users'>Main Admin</BreadcrumbLink>
+          <BreadcrumbLink fontSize={"xs"} fontWeight={"hairline"} color={"text.primary"} letterSpacing={"wide"} textTransform={"uppercase"} href='#'>Main Admin</BreadcrumbLink>
         </BreadcrumbItem>
 
         <BreadcrumbItem>

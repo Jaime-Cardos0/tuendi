@@ -197,9 +197,9 @@ export function UsersTable() {
 
       {/* Modal */}
       {selected && (
-        <Modal isOpen={isOpen} onClose={onClose} size="lg">
+        <Modal isOpen={isOpen} onClose={onClose} size="xl">
           <ModalOverlay />
-          <ModalContent bg="grayDark.700">
+          <ModalContent bg="bg.card" borderColor={"border.subtle"}>
 
             <ModalHeader display="flex" justifyContent="space-between" alignItems="center">
               <HStack gap={3}>
@@ -212,6 +212,7 @@ export function UsersTable() {
               <Button
                 size="sm"
                 variant="outline"
+                bg={"bg.secondary"}
                 onClick={() => {
                   onClose();
                   router.push(`/admin/users/profile?id=${selected.id}`);

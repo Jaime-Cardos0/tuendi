@@ -23,11 +23,11 @@ export function Pagination({
         <HStack spacing={6} justify={"space-between"} align={"center"}>
 
             <Box>
-                <strong style={{fontSize: theme.fontSizes.sm}}>{`${ (currentPage - 1) * registersPerPage + 1 } - ${Math.min(Number.isInteger(currentPage / registersPerPage) ? currentPage * registersPerPage : registersPerPage, totalCountRegister ?? 0)} de ${totalCountRegister}`}</strong>
+                <strong style={{fontSize: theme.fontSizes.sm}}>{`${ (currentPage - 1) * registersPerPage + 1 } - ${Math.min(currentPage * registersPerPage, totalCountRegister ?? 0)} de ${totalCountRegister}`}</strong>
             </Box>
             
             <HStack spacing={2}>
-                <IconButton aria-label="go back" icon={<FaChevronLeft />} size={"sm"} onClick={() => onPageChange?.(currentPage - 1)} disabled={currentPage === 1}></IconButton>
+                <IconButton aria-label="go back" icon={<FaChevronLeft />} size={"sm"} onClick={() => onPageChange?.(currentPage - 1)} disabled={currentPage === 1} onDoubleClick={() => currentPage = 1}></IconButton>
                 {
                     currentPage < 2 ? "" :
                     <Button
@@ -73,7 +73,7 @@ export function Pagination({
                 
                 }
 
-                <IconButton aria-label="go forward" icon={<FaChevronRight />} size={"sm"} onClick={() => onPageChange?.(currentPage + 1)} disabled={currentPage === totalPages}></IconButton>
+                <IconButton aria-label="go forward" icon={<FaChevronRight />} size={"sm"} onClick={() => onPageChange?.(currentPage + 1)} disabled={currentPage === totalPages} onDoubleClick={() => currentPage = Math.ceil(totalCountRegister/registersPerPage)}></IconButton>
             </HStack>
         </HStack>
     );

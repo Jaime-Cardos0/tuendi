@@ -30,6 +30,7 @@ export const barOptions: ApexOptions = {
       id: "receita-bar",
       type: "bar",
     },
+    stroke: { width: 0},
     plotOptions: { bar: { borderRadius: 4, columnWidth: "70%" } },
     yaxis: {
       show: true,
@@ -38,6 +39,7 @@ export const barOptions: ApexOptions = {
         formatter: (v) => `${(v / 1000).toFixed(0)}k`,
       },
     },
+    fill: { type: "gradient", gradient: { shade: "dark", type: "vertical"} },
 };
 
 export const areaOptions: ApexOptions = {
@@ -65,7 +67,7 @@ export const radialBarOptions: ApexOptions = {
         track: { background: "transparent" },
         dataLabels: {
         name: { fontSize: "12px", color: "#AEB9E1" },
-        value: { fontSize: "14px", fontWeight: "normal", color: "#E8EAFF" },
+        value: { fontSize: "14px", fontWeight: "bold", color: "#E8EAFF" },
         },
     },
     },

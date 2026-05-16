@@ -5,7 +5,7 @@ import { DashboardTable } from "./Table";
 import { ResumeCard } from "@/components/UI/DataResume/ResumeCard";
 import BarChart from "@/components/Icons/icons";
 import { DashboardCard } from "./DashboardCard";
-import { TopRatedList } from "./TopRatedList";
+import { TopRatedList, User } from "./TopRatedList";
 import { useContext, useMemo } from "react";
 import { IPedido, IUser } from "@/services/mirage/types";
 import { ApexOptions } from "apexcharts";
@@ -34,7 +34,7 @@ export function MainDashboard() {
   const topMotoqueiros = useMemo(() =>
     [...motoqueiros]
       .sort((a, b) => b.classificacaoMedia - a.classificacaoMedia)
-      .slice(0, 4)
+      .slice(0, 5)
       .map((m) => ({
         id: Number(m.id),
         name: `${m.user.nome} ${m.user.sobrenome}`,
@@ -54,9 +54,10 @@ export function MainDashboard() {
       }
       contagem[p.clienteId].total += 1;
     });
+
     return Object.values(contagem)
       .sort((a, b) => b.total - a.total)
-      .slice(0, 4)
+      .slice(0, 5)
       .map((c) => ({
         id: Number(c.user.id),
         name: `${c.user.nome} ${c.user.sobrenome}`,
@@ -124,6 +125,7 @@ export function MainDashboard() {
         gap={6}
         templateRows="repeat(2, minmax(300px, 360px))"
       >
+        
         {/* Gráfico de barras — Fatura anual */}
         <GridItem colSpan={2}>
           <DashboardCard title="Total de Fatura" value={fatura}>
@@ -156,7 +158,7 @@ export function MainDashboard() {
 
         {/* Gráfico de area — segunda linha */}
         <GridItem>
-          <DashboardCard title="Entregas" value={totalPedidos}>
+          <DashboardCard title="Entregas" value={totalPedidos} isBalance={false} >
             <Chart
               options={areaOptions}
               series={[{ name: "Entregas", data: dadosEntregas }]}

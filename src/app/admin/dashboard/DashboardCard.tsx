@@ -7,9 +7,10 @@ interface DashboardCardProps {
     title: string,
     children: React.ReactNode,
     value?: number,
+    isBalance?: boolean, 
 }
 
-export function DashboardCard( {title, children, value} : DashboardCardProps){
+export function DashboardCard( {title, children, value, isBalance = true} : DashboardCardProps){
     return(
 
         <Flex h={"100%"} direction={"column"} gap={5} rounded={"xl"} p={6} bg={"bg.card"} align={"center"} borderWidth={"1px"} borderColor={"border.default"}>
@@ -20,7 +21,7 @@ export function DashboardCard( {title, children, value} : DashboardCardProps){
 
                     <Heading size={"xs"} color={"text.secondary"} lineHeight={"relaxed"} letterSpacing={"wide"} fontWeight={"light"}>{title}</Heading>
                     
-                    <Text as={"span"} fontWeight={"semibold"} lineHeight={"1"} fontFamily={"body"} letterSpacing={"tight"} fontSize={"2xl"}>{ value ? value.toLocaleString("pt-AO").concat(" Kz") : " "}</Text>
+                    <Text as={"span"} fontWeight={"semibold"} lineHeight={"1"} fontFamily={"body"} letterSpacing={"tight"} fontSize={"2xl"}>{ !value ? " " : isBalance ? value?.toLocaleString("pt-AO").concat(" Kz") : value > 1 ? value.toLocaleString("pt-AO").concat(" Entregas") : value.toLocaleString("pt-AO").concat(" Entrega")}</Text>
                 </Stack>
 
                 <FloatingMenu placement="bottom" menuIcon={<FaChevronDown fontSize={"12px"}/>}>

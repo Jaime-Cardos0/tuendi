@@ -1,6 +1,6 @@
 import { Flex, HStack, VStack, Text, Avatar, Tag, TagLabel } from "@chakra-ui/react";
 
-interface User {
+export interface User {
     id: number,
     name: string,
     role: string,

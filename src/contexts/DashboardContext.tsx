@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 interface DashboardContextData {
-  pedidos: IPedido[];
+  pedidos: IPedido[] | [];
   totalPedidos: number;
   totalReceita: number;
   totalMotoqueiros: number;
@@ -14,8 +14,8 @@ interface DashboardContextData {
   isFetching: boolean;
   receitaPorMes: (pedidos: IPedido[]) => number[];
   entregasPorMes: (pedidos: IPedido[]) => number[];
-  motoqueiros: IMotoqueiro[];
-  clientes: IUser[];
+  motoqueiros: IMotoqueiro[] | [];
+  clientes: IUser[] | [];
 }
 
 interface DashboardProviderProps {
@@ -28,7 +28,7 @@ export const isDevelopment = process.env.NODE_ENV === "development";
 
 export const sampleClientes: IUser[] = [
   {
-    id: "cliente-1",
+    id: "1",
     firebaseUid: "uid-cliente-1",
     nome: "Ana",
     sobrenome: "Sousa",
@@ -45,7 +45,7 @@ export const sampleClientes: IUser[] = [
     atualizadoEm: "2025-11-10T08:15:00.000Z",
   },
   {
-    id: "cliente-2",
+    id: "2",
     firebaseUid: "uid-cliente-2",
     nome: "Luís",
     sobrenome: "Mendes",
@@ -62,7 +62,7 @@ export const sampleClientes: IUser[] = [
     atualizadoEm: "2025-10-25T11:30:00.000Z",
   },
   {
-    id: "cliente-3",
+    id: "3",
     firebaseUid: "uid-cliente-1",
     nome: "Ana",
     sobrenome: "Sousa",
@@ -79,7 +79,7 @@ export const sampleClientes: IUser[] = [
     atualizadoEm: "2025-11-10T08:15:00.000Z",
   },
   {
-    id: "cliente-4",
+    id: "4",
     firebaseUid: "uid-cliente-2",
     nome: "Luís",
     sobrenome: "Mendes",
@@ -96,7 +96,7 @@ export const sampleClientes: IUser[] = [
     atualizadoEm: "2025-10-25T11:30:00.000Z",
   },
   {
-    id: "cliente-5",
+    id: "5",
     firebaseUid: "uid-cliente-1",
     nome: "Ana",
     sobrenome: "Sousa",
@@ -113,7 +113,7 @@ export const sampleClientes: IUser[] = [
     atualizadoEm: "2025-11-10T08:15:00.000Z",
   },
   {
-    id: "cliente-6",
+    id: "6",
     firebaseUid: "uid-cliente-2",
     nome: "Luís",
     sobrenome: "Mendes",
@@ -133,8 +133,8 @@ export const sampleClientes: IUser[] = [
 
 export const sampleMotoqueiros: IMotoqueiro[] = [
   {
-    id: "moto-1",
-    userId: "uid-moto-1",
+    id: "1",
+    userId: "1",
     classificacaoMedia: 4.9,
     totalAvaliacoes: 124,
     statusDisponibilidade: "online",
@@ -144,7 +144,7 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
     motivoRejeicao: null,
     criadoEm: "2025-09-30T15:20:00.000Z",
     user: {
-      id: "moto-user-1",
+      id: "1",
       firebaseUid: "uid-moto-1",
       nome: "Miguel",
       sobrenome: "Oliveira",
@@ -161,8 +161,8 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
       atualizadoEm: "2025-09-30T15:20:00.000Z",
     },
     veiculo: {
-      id: "veiculo-1",
-      motoqueiroId: "moto-1",
+      id: "1",
+      motoqueiroId: "1",
       marca: "Yamaha",
       modelo: "YBR 125",
       placa: "AGT-001",
@@ -174,8 +174,8 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
     uploads: [],
   },
   {
-    id: "moto-2",
-    userId: "uid-moto-2",
+    id: "2",
+    userId: "2",
     classificacaoMedia: 4.5,
     totalAvaliacoes: 89,
     statusDisponibilidade: "ocupado",
@@ -185,7 +185,7 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
     motivoRejeicao: null,
     criadoEm: "2025-10-14T13:10:00.000Z",
     user: {
-      id: "moto-user-2",
+      id: "2",
       firebaseUid: "uid-moto-2",
       nome: "Sara",
       sobrenome: "Pinto",
@@ -202,8 +202,8 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
       atualizadoEm: "2025-10-14T13:10:00.000Z",
     },
     veiculo: {
-      id: "veiculo-2",
-      motoqueiroId: "moto-2",
+      id: "2",
+      motoqueiroId: "2",
       marca: "Honda",
       modelo: "CG 160",
       placa: "AGT-002",
@@ -215,8 +215,8 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
     uploads: [],
   },
   {
-    id: "moto-3",
-    userId: "uid-moto-3",
+    id: "3",
+    userId: "3",
     classificacaoMedia: 4.9,
     totalAvaliacoes: 124,
     statusDisponibilidade: "online",
@@ -226,7 +226,7 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
     motivoRejeicao: null,
     criadoEm: "2025-09-30T15:20:00.000Z",
     user: {
-      id: "moto-user-3",
+      id: "3",
       firebaseUid: "uid-moto-3",
       nome: "Miguel",
       sobrenome: "Oliveira",
@@ -243,8 +243,8 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
       atualizadoEm: "2025-09-30T15:20:00.000Z",
     },
     veiculo: {
-      id: "veiculo-3",
-      motoqueiroId: "moto-3",
+      id: "3",
+      motoqueiroId: "3",
       marca: "Yamaha",
       modelo: "YBR 125",
       placa: "AGT-001",
@@ -256,8 +256,8 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
     uploads: [],
   },
   {
-    id: "moto-4",
-    userId: "uid-moto-4",
+    id: "4",
+    userId: "4",
     classificacaoMedia: 4.5,
     totalAvaliacoes: 89,
     statusDisponibilidade: "ocupado",
@@ -267,7 +267,7 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
     motivoRejeicao: null,
     criadoEm: "2025-10-14T13:10:00.000Z",
     user: {
-      id: "moto-user-4",
+      id: "4",
       firebaseUid: "uid-moto-4",
       nome: "Sara",
       sobrenome: "Pinto",
@@ -284,8 +284,8 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
       atualizadoEm: "2025-10-14T13:10:00.000Z",
     },
     veiculo: {
-      id: "veiculo-4",
-      motoqueiroId: "moto-4",
+      id: "4",
+      motoqueiroId: "4",
       marca: "Honda",
       modelo: "CG 160",
       placa: "AGT-002",
@@ -297,8 +297,8 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
     uploads: [],
   },
   {
-    id: "moto-5",
-    userId: "uid-moto-5",
+    id: "5",
+    userId: "5",
     classificacaoMedia: 4.9,
     totalAvaliacoes: 124,
     statusDisponibilidade: "online",
@@ -308,7 +308,7 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
     motivoRejeicao: null,
     criadoEm: "2025-09-30T15:20:00.000Z",
     user: {
-      id: "moto-user-5",
+      id: "5",
       firebaseUid: "uid-moto-5",
       nome: "Miguel",
       sobrenome: "Oliveira",
@@ -325,8 +325,8 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
       atualizadoEm: "2025-09-30T15:20:00.000Z",
     },
     veiculo: {
-      id: "veiculo-5",
-      motoqueiroId: "moto-5",
+      id: "5",
+      motoqueiroId: "5",
       marca: "Yamaha",
       modelo: "YBR 125",
       placa: "AGT-001",
@@ -338,8 +338,8 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
     uploads: [],
   },
   {
-    id: "moto-6",
-    userId: "uid-moto-6",
+    id: "6",
+    userId: "6",
     classificacaoMedia: 4.5,
     totalAvaliacoes: 89,
     statusDisponibilidade: "ocupado",
@@ -349,7 +349,7 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
     motivoRejeicao: null,
     criadoEm: "2025-10-14T13:10:00.000Z",
     user: {
-      id: "moto-user-6",
+      id: "6",
       firebaseUid: "uid-moto-6",
       nome: "Sara",
       sobrenome: "Pinto",
@@ -366,8 +366,8 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
       atualizadoEm: "2025-10-14T13:10:00.000Z",
     },
     veiculo: {
-      id: "veiculo-6",
-      motoqueiroId: "moto-6",
+      id: "6",
+      motoqueiroId: "6",
       marca: "Honda",
       modelo: "CG 160",
       placa: "AGT-002",
@@ -382,8 +382,8 @@ export const sampleMotoqueiros: IMotoqueiro[] = [
 
 export const sampleSubscricoes: ISubscricao[] = [
   {
-    id: "sub-1",
-    motoqueiroId: "moto-1",
+    id: "1",
+    motoqueiroId: "1",
     plano: "mensal",
     valor: 3600,
     status: "activa",
@@ -393,8 +393,8 @@ export const sampleSubscricoes: ISubscricao[] = [
     motoqueiro: sampleMotoqueiros[0],
   },
   {
-    id: "sub-2",
-    motoqueiroId: "moto-2",
+    id: "2",
+    motoqueiroId: "2",
     plano: "semanal",
     valor: 900,
     status: "activa",
@@ -404,8 +404,8 @@ export const sampleSubscricoes: ISubscricao[] = [
     motoqueiro: sampleMotoqueiros[1],
   },
   {
-    id: "sub-3",
-    motoqueiroId: "moto-3",
+    id: "3",
+    motoqueiroId: "3",
     plano: "mensal",
     valor: 3600,
     status: "activa",
@@ -415,8 +415,8 @@ export const sampleSubscricoes: ISubscricao[] = [
     motoqueiro: sampleMotoqueiros[0],
   },
   {
-    id: "sub-4",
-    motoqueiroId: "moto-4",
+    id: "4",
+    motoqueiroId: "4",
     plano: "semanal",
     valor: 900,
     status: "activa",
@@ -426,8 +426,8 @@ export const sampleSubscricoes: ISubscricao[] = [
     motoqueiro: sampleMotoqueiros[1],
   },
   {
-    id: "sub-5",
-    motoqueiroId: "moto-5",
+    id: "5",
+    motoqueiroId: "5",
     plano: "mensal",
     valor: 3600,
     status: "activa",
@@ -437,8 +437,8 @@ export const sampleSubscricoes: ISubscricao[] = [
     motoqueiro: sampleMotoqueiros[0],
   },
   {
-    id: "sub-6",
-    motoqueiroId: "moto-6",
+    id: "6",
+    motoqueiroId: "6",
     plano: "semanal",
     valor: 900,
     status: "activa",
@@ -451,8 +451,8 @@ export const sampleSubscricoes: ISubscricao[] = [
 
 export const samplePedidos: IPedido[] = [
   {
-    id: "pedido-1",
-    numeroPedido: "PED-001",
+    id: "1",
+    numeroPedido: "P-01",
     clienteId: sampleClientes[0].id,
     motoqueiroId: sampleMotoqueiros[0].id,
     status: "entregue",
@@ -472,8 +472,8 @@ export const samplePedidos: IPedido[] = [
     userDataMotoqueiro: sampleMotoqueiros[0].user,
   },
   {
-    id: "pedido-2",
-    numeroPedido: "PED-002",
+    id: "2",
+    numeroPedido: "P-02",
     clienteId: sampleClientes[1].id,
     motoqueiroId: sampleMotoqueiros[1].id,
     status: "em_transito",
@@ -493,8 +493,8 @@ export const samplePedidos: IPedido[] = [
     userDataMotoqueiro: sampleMotoqueiros[1].user,
   },
   {
-    id: "pedido-3",
-    numeroPedido: "PED-003",
+    id: "3",
+    numeroPedido: "P-03",
     clienteId: sampleClientes[0].id,
     motoqueiroId: null,
     status: "a_procurar_motoqueiro",
@@ -519,8 +519,8 @@ export const samplePedidos: IPedido[] = [
     },
   },
   {
-    id: "pedido-4",
-    numeroPedido: "PED-004",
+    id: "4",
+    numeroPedido: "P-04",
     clienteId: sampleClientes[1].id,
     motoqueiroId: sampleMotoqueiros[0].id,
     status: "cancelado",
@@ -540,8 +540,8 @@ export const samplePedidos: IPedido[] = [
     userDataMotoqueiro: sampleMotoqueiros[0].user,
   },
   {
-    id: "pedido-5",
-    numeroPedido: "PED-005",
+    id: "5",
+    numeroPedido: "P-05",
     clienteId: sampleClientes[0].id,
     motoqueiroId: sampleMotoqueiros[0].id,
     status: "entregue",
@@ -561,8 +561,8 @@ export const samplePedidos: IPedido[] = [
     userDataMotoqueiro: sampleMotoqueiros[0].user,
   },
   {
-    id: "pedido-6",
-    numeroPedido: "PED-006",
+    id: "6",
+    numeroPedido: "P-06",
     clienteId: sampleClientes[1].id,
     motoqueiroId: sampleMotoqueiros[1].id,
     status: "em_transito",
@@ -582,8 +582,8 @@ export const samplePedidos: IPedido[] = [
     userDataMotoqueiro: sampleMotoqueiros[1].user,
   },
   {
-    id: "pedido-7",
-    numeroPedido: "PED-007",
+    id: "7",
+    numeroPedido: "P-07",
     clienteId: sampleClientes[0].id,
     motoqueiroId: null,
     status: "a_procurar_motoqueiro",
@@ -608,8 +608,8 @@ export const samplePedidos: IPedido[] = [
     },
   },
   {
-    id: "pedido-8",
-    numeroPedido: "PED-008",
+    id: "8",
+    numeroPedido: "P-08",
     clienteId: sampleClientes[1].id,
     motoqueiroId: sampleMotoqueiros[0].id,
     status: "cancelado",
@@ -651,9 +651,9 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
     return res.data;
   }, enabled: isDevelopment, retry: false });
 
-  const pedidosData = isDevelopment ? pedidosQuery.data ?? samplePedidos : samplePedidos;
-  const motoqueirosData = isDevelopment ? motoqueirosQuery.data ?? sampleMotoqueiros : sampleMotoqueiros;
-  const usuariosData = isDevelopment ? usuariosQuery.data ?? sampleClientes : sampleClientes;
+  const pedidosData = isDevelopment ? pedidosQuery.data ?? [] : samplePedidos;
+  const motoqueirosData = isDevelopment ? motoqueirosQuery.data ?? [] : sampleMotoqueiros;
+  const usuariosData = isDevelopment ? usuariosQuery.data ?? [] : sampleClientes;
   const subscricoesData = isDevelopment ? subscricoesQuery.data ?? sampleSubscricoes : sampleSubscricoes;
 
   const totalReceita = subscricoesData.reduce((acc, s) => acc + s.valor, 0);

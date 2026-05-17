@@ -9,7 +9,7 @@ import { TopRatedList, User } from "./TopRatedList";
 import { useContext, useMemo } from "react";
 import { IPedido, IUser } from "@/services/mirage/types";
 import { ApexOptions } from "apexcharts";
-import { barOptions, areaOptions, radialBarOptions } from "./chartsConfig";
+import { barOptions, areaOptions, radialBarOptions } from "../../../styles/chartsConfig";
 import { DashboardContext } from "@/contexts/DashboardContext";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import { BsBox, BsBoxFill } from "react-icons/bs";
@@ -134,7 +134,7 @@ export function MainDashboard() {
               series={[{ name: "Receita", data: dadosReceita }]}
               type="bar"
               width="600px"
-              height="240px"
+              height={240}
             />
           </DashboardCard>
         </GridItem>

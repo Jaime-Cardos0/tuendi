@@ -2,7 +2,7 @@
 import { api } from "@/services/api";
 import { ISubscricao } from "@/services/mirage/types";
 import { useQuery } from "@tanstack/react-query";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, SetStateAction, useEffect, useState } from "react";
 import { isDevelopment, sampleSubscricoes } from "./DashboardContext";
 
 interface EarningsContextData {
@@ -13,6 +13,10 @@ interface EarningsContextData {
   activasCount: number;
   receitaPorMes: number[];
   isFetching: boolean;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  total: number;
+  isLoading: boolean;
 }
 
 interface EarningsProviderProps {
@@ -23,12 +27,17 @@ export const EarningsContext = createContext<EarningsContextData>({} as Earnings
 
 export function EarningsProvider({ children }: EarningsProviderProps) {
 
-  const { data, isFetching } = useQuery<ISubscricao[]>({ queryKey: ['earningsQuery'], queryFn: async () => {
-    const res = await api.get("/subscricoes");
-    return res.data;
+  const [page, setPage] = useState(1);
+  
+  const { data, refetch, isFetching, isLoading } = useQuery( {queryKey: ['EarningsQuery', page], queryFn: async () => {
+    const { data, headers}: { data: ISubscricao[]; headers: Record<string, string> } = await api.get("/subscricoes", { params: { page: page, perPage: 10 } });
+
+    const total = JSON.parse(headers['x-total-count'] ?? '0');
+
+    return {data, total};
   }});
 
-  const earningsData = isDevelopment ? data ?? sampleSubscricoes : sampleSubscricoes;
+  const earningsData = isDevelopment ? data?.data ?? [] : sampleSubscricoes;
 
   function gerarReceitaMensal(subs: ISubscricao[]): number[] {
     const meses = Array.from({ length: 12 }, (_, i) => ({
@@ -64,6 +73,10 @@ export function EarningsProvider({ children }: EarningsProviderProps) {
         activasCount,
         receitaPorMes,
         isFetching,
+        page,
+        setPage,
+        total: data?.total,
+        isLoading,
       }}
     >
       {children}

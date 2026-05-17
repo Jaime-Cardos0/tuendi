@@ -33,7 +33,7 @@ const statusLabel: Record<PedidoStatus, string> = {
 
 export function DashboardTable() {
   
-  const { pedidos } = useContext(DashboardContext);
+  const { pedidos, isFetching, isLoading } = useContext(DashboardContext);
 
   const columns = [
     {
@@ -97,7 +97,7 @@ export function DashboardTable() {
       p={6} display="flex" gap={6} flexDirection="column" mb={8}
       bg="bg.card" border="2px" borderColor="border.default" rounded="lg"
     >
-      <TableHeader title="Últimas Entregas" />
+      <TableHeader title="Últimas Entregas" isLoad={isFetching} />
       <TableComponent data={pedidos} columns={columns} />
       <Pagination />
     </Box>

@@ -211,12 +211,25 @@ export function makeServer(): Server {
         return suporte.attrs;
       });
 
-      this.get("/subscricoes", (schema) => {
-        return schema.all("subscricao").models.map((s) => {
-        const motoqueiro = s.motoqueiro?.attrs ?? {};
-        const user = s.motoqueiro?.user?.attrs ?? {};
-        return { ...s.attrs, motoqueiro: { ...motoqueiro, user } };
-      });
+      this.get("/subscricoes", (schema, request) => {
+
+        const total = schema.all("subscricao").length;
+
+        const { page, perPage }: { page?: string; perPage?: string } = request.queryParams;
+        const pageNum = parseInt(page!) || 1;
+        const perPageNum = parseInt(perPage!) || 10;
+        const start = (pageNum - 1) * perPageNum;
+        const end = start + perPageNum;
+
+        const subscricao = schema.all("subscricao").models.map((s) => {
+          const plano = s.plano ?? "";
+          const motoqueiro = s.motoqueiro?.attrs ?? {};
+          const valor = s.valor ?? 0;
+          const userDataSubscricao = s.motoqueiro?.user?.attrs ?? {};
+          return { ...s.attrs, plano, motoqueiro, valor, userDataSubscricao };
+        }).slice(start, end);
+
+        return new Response(200, {"x-total-count": JSON.stringify(total)}, subscricao);
     });
 
 // rotas

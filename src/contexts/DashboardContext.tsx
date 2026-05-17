@@ -16,6 +16,7 @@ interface DashboardContextData {
   entregasPorMes: (pedidos: IPedido[]) => number[];
   motoqueiros: IMotoqueiro[] | [];
   clientes: IUser[] | [];
+  isLoading: boolean;
 }
 
 interface DashboardProviderProps {
@@ -391,6 +392,7 @@ export const sampleSubscricoes: ISubscricao[] = [
     expiraEm: "2025-10-31T23:59:59.000Z",
     criadoEm: "2025-10-01T00:00:00.000Z",
     motoqueiro: sampleMotoqueiros[0],
+    userDataSubscricao: sampleClientes[0],
   },
   {
     id: "2",
@@ -402,6 +404,7 @@ export const sampleSubscricoes: ISubscricao[] = [
     expiraEm: "2025-10-26T23:59:59.000Z",
     criadoEm: "2025-10-20T00:00:00.000Z",
     motoqueiro: sampleMotoqueiros[1],
+    userDataSubscricao: sampleClientes[1],
   },
   {
     id: "3",
@@ -413,6 +416,7 @@ export const sampleSubscricoes: ISubscricao[] = [
     expiraEm: "2025-10-31T23:59:59.000Z",
     criadoEm: "2025-10-01T00:00:00.000Z",
     motoqueiro: sampleMotoqueiros[0],
+    userDataSubscricao: sampleClientes[0],
   },
   {
     id: "4",
@@ -424,6 +428,7 @@ export const sampleSubscricoes: ISubscricao[] = [
     expiraEm: "2025-10-26T23:59:59.000Z",
     criadoEm: "2025-10-20T00:00:00.000Z",
     motoqueiro: sampleMotoqueiros[1],
+    userDataSubscricao: sampleClientes[1],
   },
   {
     id: "5",
@@ -435,6 +440,7 @@ export const sampleSubscricoes: ISubscricao[] = [
     expiraEm: "2025-10-31T23:59:59.000Z",
     criadoEm: "2025-10-01T00:00:00.000Z",
     motoqueiro: sampleMotoqueiros[0],
+    userDataSubscricao: sampleClientes[0],
   },
   {
     id: "6",
@@ -446,6 +452,7 @@ export const sampleSubscricoes: ISubscricao[] = [
     expiraEm: "2025-10-26T23:59:59.000Z",
     criadoEm: "2025-10-20T00:00:00.000Z",
     motoqueiro: sampleMotoqueiros[1],
+    userDataSubscricao: sampleClientes[1],
   },
 ];
 
@@ -695,6 +702,7 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
         totalUsuarios: usuariosData.length,
         pedidosRecentes,
         isFetching: pedidosQuery.isFetching ?? motoqueirosQuery.isFetching ?? usuariosQuery.isFetching ?? subscricoesQuery.isFetching,
+        isLoading: pedidosQuery.isLoading ?? motoqueirosQuery.isLoading ?? usuariosQuery.isLoading ?? subscricoesQuery.isLoading,
         receitaPorMes: (pedidos) => receitaPorMes(pedidos),
         entregasPorMes: (pedidos) => entregasPorMes(pedidos),
       }}

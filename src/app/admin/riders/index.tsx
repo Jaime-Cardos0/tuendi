@@ -38,7 +38,7 @@ export function MainRider() {
       <Flex w="100%" justify="space-between" h="fit-content" gap={4}>
         <ResumeCard
           icon={<FaUserTag size={"sm"} color="text.secondary"/> }
-          title="Total de Entregadores"
+          title="Entregadores"
           value={total}
         />
         <ResumeCard

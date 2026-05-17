@@ -6,6 +6,8 @@ import {
   useDisclosure, Modal, ModalOverlay, ModalContent,
   ModalHeader, ModalBody, ModalFooter, Button,
   Divider, SimpleGrid, Badge,
+  Spinner,
+  Center,
 } from "@chakra-ui/react";
 import { TableComponent } from "@/components/UI/Table/Table";
 import { TableHeader } from "@/components/UI/Table/TableHeader";
@@ -46,7 +48,7 @@ interface Props {
 
 export function DeliveriesTable() {
 
-  const { cancelarPedido, pedidos } = useContext(DeliveriesContext);
+  const { cancelarPedido, pedidos, page, setPage, total, isFetching, isLoading } = useContext(DeliveriesContext);
   
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selected, setSelected] = useState<IPedido | null>(null);
@@ -164,7 +166,7 @@ export function DeliveriesTable() {
         bg="bg.card" border="2px" borderColor="border.default" rounded="lg"
       >
         <Stack gap={4}>
-          <TableHeader title="Pedidos" />
+          <TableHeader title="Pedidos" isLoad={isFetching} />
 
           <Flex justify="space-between" align="center" gap={4} wrap="wrap">
             <InputGroup maxW="280px" size="sm" bg={"navy.900"} >
@@ -222,8 +224,9 @@ export function DeliveriesTable() {
           </Flex>
         </Stack>
 
-        <TableComponent data={filtered} columns={columns} />
-        <Pagination />
+        {isLoading ? <Center><Spinner size={"xl"}/></Center> : <TableComponent data={filtered} columns={columns} onOpenModal={openModal} />}
+
+        <Pagination totalCountRegister={total} currentPage={page} registersPerPage={10} onPageChange={setPage} />
       </Box>
 
       {/* Modal de detalhes */}

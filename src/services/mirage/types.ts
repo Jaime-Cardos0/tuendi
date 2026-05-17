@@ -63,6 +63,7 @@ export interface ISubscricao {
   criadoEm: string;
   // montado
   motoqueiro: IMotoqueiro;
+  userDataSubscricao: IUser;
 }
 
 export interface IUser {

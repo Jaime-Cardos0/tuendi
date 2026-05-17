@@ -16,6 +16,8 @@ interface UsersContextData {
     updateStatus: UseMutationResult<void, Error, { id: string; status: UserStatus }, unknown>["mutate"];
     deleteUser: UseMutationResult<void, Error, string, unknown>["mutate"];
     setPage: React.Dispatch<React.SetStateAction<number>>;
+    isFetching: boolean;
+    isLoading: boolean;
 }
 
 interface UsersProviderProps {
@@ -28,15 +30,15 @@ export const UsersContext = createContext<UsersContextData>({} as UsersContextDa
 export function UsersProvider({children}: UsersProviderProps){
     const [page, setPage] = useState(1);
 
-    const {data, refetch} = useQuery( {queryKey: ['usersQuery', page], queryFn: async () => {
+    const {data, refetch, isFetching, isLoading} = useQuery( {queryKey: ['usersQuery', page], queryFn: async () => {
         const {data, headers}: { data: IUser[]; headers: Record<string, string> } = await api.get("/users", { params: { page: page, perPage: 10 } });
         const {total, clientes, motoqueiroCount, suspensos} = JSON.parse(headers['x-total-count'] || '{}');
         return { data, filteredData: { total, clientes, motoqueiroCount, suspensos } };
     }});
 
-    const usersData = isDevelopment ? data?.data ?? sampleClientes : sampleClientes;
+    const usersData = isDevelopment ? data?.data ?? [] : sampleClientes;
 
-    const usersDataTotal = isDevelopment ? data?.filteredData.total ?? sampleClientes.length : sampleClientes.length;
+    const usersDataTotal = isDevelopment ? data?.filteredData.total ?? 0 : sampleClientes.length;
 
     const usersUpdateStatusMutation = useMutation({ mutationFn: async ({ id, status }: { id: string; status: UserStatus }) => {
         await api.patch(`/users/${id}`, { status });
@@ -59,6 +61,8 @@ export function UsersProvider({children}: UsersProviderProps){
             updateStatus: usersUpdateStatusMutation.mutate,
             deleteUser: usersDeleteMutation.mutate,
             setPage,
+            isFetching,
+            isLoading,
         }}>
           {children}
         </UsersContext.Provider>

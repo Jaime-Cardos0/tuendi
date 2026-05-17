@@ -23,6 +23,9 @@ export const baseChartOptions = (cor: string): ApexOptions => ({
   tooltip: { theme: "dark" },
 });
 
+
+// Dashboard
+
 export const barOptions: ApexOptions = {
     ...baseChartOptions(theme.colors.brand[500]),
     chart: {
@@ -31,12 +34,13 @@ export const barOptions: ApexOptions = {
       type: "bar",
     },
     stroke: { width: 0},
-    plotOptions: { bar: { borderRadius: 4, columnWidth: "70%" } },
+    plotOptions: { bar: { borderRadius: 6, columnWidth: "70%" } },
     yaxis: {
       show: true,
       labels: {
+        show: true,
         style: { colors: "#718096" },
-        formatter: (v) => `${(v / 1000).toFixed(0)}k`,
+        formatter: (v) => `${v.toLocaleString("pt-AO")} Kz`,
       },
     },
     fill: { type: "gradient", gradient: { shade: "dark", type: "vertical"} },
@@ -62,7 +66,7 @@ export const radialBarOptions: ApexOptions = {
     plotOptions: {
     radialBar: {
         startAngle: -90,
-        endAngle: 90,
+        // endAngle: 90,
         hollow: { size: "60%" },
         track: { background: "transparent" },
         dataLabels: {
@@ -80,3 +84,33 @@ export const radialBarOptions: ApexOptions = {
     markers: { size: 6, shape: "circle", strokeWidth: 0, fillColors: ["#C026D3", "#3B82F6", "#00d5ff"] },
     },
 }
+
+// Dashboard****
+
+// Earnings****
+
+export const EarningsBarChartOptions: ApexOptions = {
+  ...baseChartOptions("#00B5D8"),
+    chart: { 
+      ...baseChartOptions("#00B5D8").chart,
+      id: "Receitas-Mensais",
+      type: "bar", 
+    },
+    plotOptions: { bar: { borderRadius: 6, columnWidth: "50%" } },
+    stroke: { curve: "smooth", width: 0},
+    yaxis: {
+      labels: {
+        style: { colors: "#718096" },
+        formatter: (v) => `${v.toLocaleString("pt-AO")} Kz`,
+      },
+    },
+    fill: { type: "gradient", gradient: { shade: "dark", type: "vertical" } },
+    colors: ["#00B5D8"],
+    grid: { borderColor: "#2D3748" },
+    tooltip: {
+      theme: "dark",
+      y: { formatter: (v) => `${v.toLocaleString("pt-AO")} Kz` },
+    },
+  };
+
+  // Earnings****

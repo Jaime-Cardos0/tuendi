@@ -6,6 +6,8 @@ import {
   useDisclosure, Modal, ModalOverlay, ModalContent,
   ModalHeader, ModalBody, ModalFooter, Button,
   Divider, SimpleGrid,
+  Center,
+  Spinner,
 } from "@chakra-ui/react";
 import { TableComponent } from "@/components/UI/Table/Table";
 import { TableHeader } from "@/components/UI/Table/TableHeader";
@@ -41,7 +43,7 @@ const roleColor: Record<Role, string> = {
 
 export function UsersTable() {
 
-  const { users, updateStatus, deleteUser, setPage, total, page } = useContext(UsersContext);
+  const { users, updateStatus, deleteUser, setPage, total, page, isFetching, isLoading } = useContext(UsersContext);
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selected, setSelected] = useState<IUser | null>(null);
@@ -139,7 +141,7 @@ export function UsersTable() {
         bg="bg.card" border="2px" borderColor="border.default" rounded="lg"
       >
         <Stack gap={4}>
-          <TableHeader title="Usuários" />
+          <TableHeader title="Usuários" isLoad={isFetching} />
 
           <Flex justify="space-between" align="center" gap={4} wrap="wrap">
             <InputGroup maxW="280px" size="sm" bg={"navy.900"} >
@@ -191,7 +193,7 @@ export function UsersTable() {
           </Flex>
         </Stack>
 
-        <TableComponent data={filtered} columns={columns} />
+        {isLoading ? <Center><Spinner size={"xl"}/></Center> : <TableComponent data={filtered} columns={columns} onOpenModal={openModal} />}
         <Pagination totalCountRegister={total} registersPerPage={10} currentPage={page} onPageChange={setPage} />
       </Box>
 

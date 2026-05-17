@@ -6,6 +6,8 @@ import {
   useDisclosure, Modal, ModalOverlay, ModalContent,
   ModalHeader, ModalBody, ModalFooter, Button,
   SimpleGrid, Badge,
+  Center,
+  Spinner,
 } from "@chakra-ui/react";
 import { TableComponent } from "@/components/UI/Table/Table";
 import { TableHeader } from "@/components/UI/Table/TableHeader";
@@ -39,7 +41,7 @@ interface Props {
 
 export function EarningsTable() {
 
-  const { subscricoes } = useContext(EarningsContext);
+  const { subscricoes, page, setPage, total, isFetching, isLoading } = useContext(EarningsContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selected, setSelected] = useState<ISubscricao | null>(null);
   const [search, setSearch] = useState("");
@@ -64,7 +66,7 @@ export function EarningsTable() {
     if (search.trim()) {
       const term = search.toLowerCase();
       result = result.filter((s) =>
-        `${s.motoqueiro.user.nome} ${s.motoqueiro.user.sobrenome}`.toLowerCase().includes(term) ||
+        `${s.userDataSubscricao.nome} ${s.userDataSubscricao.sobrenome}`.toLowerCase().includes(term) ||
         s.motoqueiro.user.email.toLowerCase().includes(term)
       );
     }
@@ -87,10 +89,10 @@ export function EarningsTable() {
         <Flex align="center" gap={2}>
           <Avatar
             size="sm"
-            src={s.motoqueiro.user.fotoPerfil}
-            name={`${s.motoqueiro.user.nome} ${s.motoqueiro.user.sobrenome}`}
+            src={s.userDataSubscricao.fotoPerfil}
+            name={`${s.userDataSubscricao.nome} ${s.userDataSubscricao.sobrenome}`}
           />
-          <Text>{s.motoqueiro.user.nome} {s.motoqueiro.user.sobrenome}</Text>
+          <Text>{s.userDataSubscricao.nome} {s.userDataSubscricao.sobrenome}</Text>
         </Flex>
       ),
     },
@@ -151,7 +153,7 @@ export function EarningsTable() {
         bg="bg.card" border="2px" borderColor="border.default" rounded="lg"
       >
         <Stack gap={4}>
-          <TableHeader title="Histórico de Subscrições" />
+          <TableHeader title="Histórico de Subscrições" isLoad={isFetching} />
 
           <Flex justify="space-between" align="center" gap={4} wrap="wrap">
             <InputGroup maxW="280px" size="sm" bg={"navy.900"}>
@@ -204,8 +206,8 @@ export function EarningsTable() {
           </Flex>
         </Stack>
 
-        <TableComponent data={filtered} columns={columns} />
-        <Pagination />
+        {isLoading ? <Center><Spinner size={"xl"}/></Center> : <TableComponent data={filtered} columns={columns} onOpenModal={openModal} />}
+        <Pagination totalCountRegister={total} currentPage={page} registersPerPage={10} onPageChange={setPage} />
       </Box>
 
       {/* Modal */}
@@ -232,15 +234,15 @@ export function EarningsTable() {
               <Flex align="center" gap={3}>
                 <Avatar
                   size="md"
-                  src={selected.motoqueiro.user.fotoPerfil}
-                  name={`${selected.motoqueiro.user.nome} ${selected.motoqueiro.user.sobrenome}`}
+                  src={selected.userDataSubscricao.fotoPerfil}
+                  name={`${selected.userDataSubscricao.nome} ${selected.userDataSubscricao.sobrenome}`}
                 />
                 <Box>
                   <Text fontWeight="bold">
-                    {selected.motoqueiro.user.nome} {selected.motoqueiro.user.sobrenome}
+                    {selected.userDataSubscricao.nome} {selected.userDataSubscricao.sobrenome}
                   </Text>
-                  <Text fontSize="sm" color="gray.400">{selected.motoqueiro.user.email}</Text>
-                  <Text fontSize="sm" color="gray.400">{selected.motoqueiro.user.telefone}</Text>
+                  <Text fontSize="sm" color="gray.400">{selected.userDataSubscricao.email}</Text>
+                  <Text fontSize="sm" color="gray.400">{selected.userDataSubscricao.telefone}</Text>
                 </Box>
               </Flex>
 

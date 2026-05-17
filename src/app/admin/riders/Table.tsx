@@ -10,6 +10,8 @@ import {
   HStack,
   SimpleGrid,
   AvatarBadge,
+  Center,
+  Spinner,
 } from "@chakra-ui/react";
 import { TableComponent } from "@/components/UI/Table/Table";
 import { TableHeader } from "@/components/UI/Table/TableHeader";
@@ -47,7 +49,7 @@ const disponibilidadeLabel: Record<DisponibilidadeStatus, string> = {
 
 export function RidersTable() {
   const router = useRouter();
-  const { riders, updateStatus } = useContext(RidersContext);
+  const { riders, updateStatus, page, setPage, total, isFetching, isLoading } = useContext(RidersContext);
   const [selected, setSelected] = useState<IMotoqueiro | null>(null);
   const [filter, setFilter] = useState<MotoqueiroStatus | "TODOS">("TODOS");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -143,7 +145,7 @@ export function RidersTable() {
         bg="bg.card" border="2px" borderColor="border.default" rounded="lg"
       >
         <Stack gap={4}>
-          <TableHeader title="Motoristas" />
+          <TableHeader title="Motoristas" isLoad={isFetching} />
 
           <Flex justify="space-between" align="center" gap={4} wrap="wrap">
             {/* Barra de pesquisa */}
@@ -201,8 +203,8 @@ export function RidersTable() {
           </Flex>
         </Stack>
 
-        <TableComponent data={filtered} columns={columns} />
-        <Pagination />
+        {isLoading ? <Center><Spinner size={"xl"}/></Center> : <TableComponent data={filtered} columns={columns} onOpenModal={openModal} />}
+        <Pagination totalCountRegister={total} currentPage={page} onPageChange={setPage} registersPerPage={10} />
       </Box>
 
       {selected && (

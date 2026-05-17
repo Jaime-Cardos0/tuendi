@@ -14,7 +14,10 @@ interface DeliveriesContextData {
   updateStatus: UseMutationResult<void, Error, { id: string; status: PedidoStatus }, unknown>["mutate"];
   getDeliveriesByStatus: (status: PedidoStatus) => IPedido[];
   isFetching: boolean;
+  isLoading: boolean;
   cancelarPedido: UseMutationResult<void, Error, string, unknown>["mutate"];
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 interface DeliveriesQueryResult {
@@ -35,9 +38,13 @@ export const DeliveriesContext = createContext<DeliveriesContextData>({} as Deli
 
 export function DeliveriesProvider({ children }: DeliveriesProviderProps) {
 
-  const { data, isFetching, error, refetch } = useQuery<DeliveriesQueryResult>({ queryKey: ['deliveriesQuery'], queryFn: async () => {
+  const [page, setPage] = useState(1);
+
+  const { data, isFetching, error, refetch, isLoading } = useQuery<DeliveriesQueryResult>({ queryKey: ['deliveriesQuery', page], queryFn: async () => {
     try{
-      const {data, headers}: { data: IPedido[]; headers: Record<string, string> } = await api.get("/pedidos");
+      const {data, headers}: { data: IPedido[]; headers: Record<string, string> } = await api.get("/pedidos", {
+        params: {page: page, perPage: 10}
+      });
       const {total, emTransito, entregues, cancelados} = JSON.parse(headers['x-total-count'] || '{}');
       return { data, filteredData: {total, emTransito, entregues, cancelados} };
     }
@@ -47,9 +54,9 @@ export function DeliveriesProvider({ children }: DeliveriesProviderProps) {
     }
   }});
 
-  const deliveryData = isDevelopment ? data?.data ?? samplePedidos : samplePedidos;
+  const deliveryData = isDevelopment ? data?.data ?? [] : samplePedidos;
 
-  const deliveryDataTotal = isDevelopment ? data?.filteredData.total ?? samplePedidos.length : samplePedidos.length; 
+  const deliveryDataTotal = isDevelopment ? data?.filteredData.total ?? 0 : samplePedidos.length; 
 
   const updateStatus = useMutation({ mutationFn: async ({ id, status }: { id: string; status: PedidoStatus }) => {
     try {
@@ -78,6 +85,8 @@ export function DeliveriesProvider({ children }: DeliveriesProviderProps) {
   return (
     <DeliveriesContext.Provider
       value={{
+        page,
+        setPage,
         pedidos: deliveryData || [],
         total: deliveryDataTotal || 0,
         emTransito: data?.filteredData.emTransito || 0,
@@ -87,6 +96,7 @@ export function DeliveriesProvider({ children }: DeliveriesProviderProps) {
         cancelarPedido: cancelarPedido.mutate,
         getDeliveriesByStatus,
         isFetching,
+        isLoading
       }}
     >
       {children}

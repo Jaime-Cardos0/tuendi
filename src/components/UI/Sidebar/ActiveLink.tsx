@@ -14,10 +14,6 @@ export function ActiveLink({children, ...rest}: ActiveLinkProps){
 
     let isActive = false;
 
-    // if(asPath == rest.href || asPath == rest.as){
-    //     isActive = true;
-    // }
-
     if(asPath.startsWith(String(rest.href)) || asPath.startsWith(String(rest.as))){
         isActive = true;
     }

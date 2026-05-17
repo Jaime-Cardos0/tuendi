@@ -1,8 +1,10 @@
+// src/components/UI/Sidebar/index.tsx
 import { Box, Stack } from "@chakra-ui/react";
 import { FaRoute } from "react-icons/fa";
 import { RiDashboardLine } from "react-icons/ri";
 import { NavSection } from "./NavSection";
 import { NavLink } from "./NavLink";
+import { NavDropdown } from "./NavDropdown"; // Novo Import
 import { ConfigurationIcon, DeliveryManIcon, HelpIcon, LineChartIcon, NotificationIcon, SupportIcon, UserIcon } from "@/components/Icons/icons";
 
 export function Sidebar(){
@@ -15,7 +17,17 @@ export function Sidebar(){
                     <NavLink href="/admin/users" icon={<UserIcon strokeWidth={2} fontSize={20}/>}>Usuário</NavLink>
                     <NavLink href="/admin/deliveries" icon={<FaRoute size={20}/>}>Entregas</NavLink>
                     <NavLink href="/admin/riders" icon={<DeliveryManIcon strokeWidth={3} fontSize={20}/>}>Entregadores</NavLink>
-                    <NavLink href="/admin/earnings" icon={<LineChartIcon strokeWidth={2} fontSize={20}/>}>Ganhos</NavLink>
+                    
+                    {/* Menu Ganhos Transformado em Dropdown */}
+                    <NavDropdown 
+                        title="Ganhos" 
+                        icon={<LineChartIcon strokeWidth={2} fontSize={20}/>}
+                        activePrefix="/admin/earnings"
+                    >
+                        <NavLink href="/admin/earnings/overview" icon={<Box w={2} h={2} rounded="full" bg="text.muted" />}>Geral</NavLink>
+                        <NavLink href="/admin/earnings/history" icon={<Box w={2} h={2} rounded="full" bg="text.muted" />}>Histórico</NavLink>
+                        <NavLink href="/admin/earnings/payouts" icon={<Box w={2} h={2} rounded="full" bg="text.muted" />}>Pagamentos</NavLink>
+                    </NavDropdown>
                 </NavSection>
 
                 <NavSection title="support admin">

@@ -367,7 +367,7 @@ export const sampleSubscricoes: ISubscricao[] = [
     expiraEm: "2025-10-31T23:59:59.000Z",
     criadoEm: "2025-10-01T00:00:00.000Z",
     motoqueiro: sampleMotoqueiros[0],
-    userDataSubscricao: sampleClientes[0],
+    user: sampleClientes[0],
   },
   {
     id: "2",
@@ -379,7 +379,7 @@ export const sampleSubscricoes: ISubscricao[] = [
     expiraEm: "2025-10-26T23:59:59.000Z",
     criadoEm: "2025-10-20T00:00:00.000Z",
     motoqueiro: sampleMotoqueiros[1],
-    userDataSubscricao: sampleClientes[1],
+    user: sampleClientes[1],
   },
   {
     id: "3",
@@ -391,7 +391,7 @@ export const sampleSubscricoes: ISubscricao[] = [
     expiraEm: "2025-10-31T23:59:59.000Z",
     criadoEm: "2025-10-01T00:00:00.000Z",
     motoqueiro: sampleMotoqueiros[0],
-    userDataSubscricao: sampleClientes[0],
+    user: sampleClientes[0],
   },
   {
     id: "4",
@@ -403,7 +403,7 @@ export const sampleSubscricoes: ISubscricao[] = [
     expiraEm: "2025-10-26T23:59:59.000Z",
     criadoEm: "2025-10-20T00:00:00.000Z",
     motoqueiro: sampleMotoqueiros[1],
-    userDataSubscricao: sampleClientes[1],
+    user: sampleClientes[1],
   },
   {
     id: "5",
@@ -415,7 +415,7 @@ export const sampleSubscricoes: ISubscricao[] = [
     expiraEm: "2025-10-31T23:59:59.000Z",
     criadoEm: "2025-10-01T00:00:00.000Z",
     motoqueiro: sampleMotoqueiros[0],
-    userDataSubscricao: sampleClientes[0],
+    user: sampleClientes[0],
   },
   {
     id: "6",
@@ -427,7 +427,7 @@ export const sampleSubscricoes: ISubscricao[] = [
     expiraEm: "2025-10-26T23:59:59.000Z",
     criadoEm: "2025-10-20T00:00:00.000Z",
     motoqueiro: sampleMotoqueiros[1],
-    userDataSubscricao: sampleClientes[1],
+    user: sampleClientes[1],
   },
 ];
 
@@ -451,7 +451,7 @@ export const samplePedidos: IPedido[] = [
     canceladoEm: null,
     cliente: sampleClientes[0],
     motoqueiro: sampleMotoqueiros[0],
-    userDataMotoqueiro: sampleMotoqueiros[0].user,
+    user: sampleMotoqueiros[0].user,
   },
   {
     id: "2",
@@ -472,7 +472,7 @@ export const samplePedidos: IPedido[] = [
     canceladoEm: null,
     cliente: sampleClientes[1],
     motoqueiro: sampleMotoqueiros[1],
-    userDataMotoqueiro: sampleMotoqueiros[1].user,
+    user: sampleMotoqueiros[1].user,
   },
   {
     id: "3",
@@ -493,7 +493,7 @@ export const samplePedidos: IPedido[] = [
     canceladoEm: null,
     cliente: sampleClientes[0],
     motoqueiro: null,
-    userDataMotoqueiro: {
+    user: {
       ...sampleMotoqueiros[0].user,
       id: "unknown",
       nome: "Não atribuído",
@@ -519,7 +519,7 @@ export const samplePedidos: IPedido[] = [
     canceladoEm: "2025-11-05T16:45:00.000Z",
     cliente: sampleClientes[1],
     motoqueiro: sampleMotoqueiros[0],
-    userDataMotoqueiro: sampleMotoqueiros[0].user,
+    user: sampleMotoqueiros[0].user,
   },
   {
     id: "5",
@@ -540,7 +540,7 @@ export const samplePedidos: IPedido[] = [
     canceladoEm: null,
     cliente: sampleClientes[0],
     motoqueiro: sampleMotoqueiros[0],
-    userDataMotoqueiro: sampleMotoqueiros[0].user,
+    user: sampleMotoqueiros[0].user,
   },
   {
     id: "6",
@@ -561,7 +561,7 @@ export const samplePedidos: IPedido[] = [
     canceladoEm: null,
     cliente: sampleClientes[1],
     motoqueiro: sampleMotoqueiros[1],
-    userDataMotoqueiro: sampleMotoqueiros[1].user,
+    user: sampleMotoqueiros[1].user,
   },
   {
     id: "7",
@@ -582,7 +582,7 @@ export const samplePedidos: IPedido[] = [
     canceladoEm: null,
     cliente: sampleClientes[0],
     motoqueiro: null,
-    userDataMotoqueiro: {
+    user: {
       ...sampleMotoqueiros[0].user,
       id: "unknown",
       nome: "Não atribuído",
@@ -608,6 +608,6 @@ export const samplePedidos: IPedido[] = [
     canceladoEm: "2025-11-05T16:45:00.000Z",
     cliente: sampleClientes[1],
     motoqueiro: sampleMotoqueiros[0],
-    userDataMotoqueiro: sampleMotoqueiros[0].user,
+    user: sampleMotoqueiros[0].user,
   },
 ];

@@ -3,24 +3,36 @@ import { api } from "@/services/api";
 import { IPedido, PedidoStatus } from "@/services/mirage/types";
 import { useMutation, UseMutationResult, useQuery } from "@tanstack/react-query";
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { isDevelopment, samplePedidos } from "./DashboardContext";
+import { isDevelopment, samplePedidos } from "./StacticData";
 
 interface DeliveriesContextData {
+  updateStatus: UseMutationResult<void, Error, { id: string; status: PedidoStatus }, unknown>["mutate"];
+  cancelarPedido: UseMutationResult<void, Error, string, unknown>["mutate"];
+  
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+
   pedidos: IPedido[];
   total: number;
   emTransito: number;
   entregues: number;
   cancelados: number;
-  updateStatus: UseMutationResult<void, Error, { id: string; status: PedidoStatus }, unknown>["mutate"];
   getDeliveriesByStatus: (status: PedidoStatus) => IPedido[];
   isFetching: boolean;
   isLoading: boolean;
-  cancelarPedido: UseMutationResult<void, Error, string, unknown>["mutate"];
-  page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  
+  allDeliveries: IPedido[],
+  loadingAllDeliveries: boolean,
+  isFetchingAllDeliveries: boolean,
+  // refetchAllDelivery,
+
+  oneDeliveryData: IPedido,
+  loadingOneDelivery: boolean,
+  isFetchingOneDelivery: boolean,
+  // refetchOneDelivery
 }
 
-interface DeliveriesQueryResult {
+export interface DeliveriesQueryResult {
   data: IPedido[];
   filteredData: {
     total: number;
@@ -39,8 +51,9 @@ export const DeliveriesContext = createContext<DeliveriesContextData>({} as Deli
 export function DeliveriesProvider({ children }: DeliveriesProviderProps) {
 
   const [page, setPage] = useState(1);
+  const [id, setId] = useState<string | null>(null);
 
-  const { data, isFetching, error, refetch, isLoading } = useQuery<DeliveriesQueryResult>({ queryKey: ['deliveriesQuery', page], queryFn: async () => {
+  const { data, isFetching, error, refetch, isLoading } = useQuery<DeliveriesQueryResult>({ queryKey: ['deliveries', page], queryFn: async () => {
     try{
       const {data, headers}: { data: IPedido[]; headers: Record<string, string> } = await api.get("/pedidos", {
         params: {page: page, perPage: 10}
@@ -53,6 +66,18 @@ export function DeliveriesProvider({ children }: DeliveriesProviderProps) {
       throw err;
     }
   }});
+
+  const { data: allDeliveriesData, isLoading: loadingAllDeliveries, isFetching: isFetchingAllDeliveries, refetch: refetchAllDeliveries } = useQuery({ queryKey: ['allDeliveries'], queryFn: async () => {
+      const { data }: { data: IPedido[] } = await api.get("/allPedidos");
+      return data;
+  }});
+
+  const { data: oneDeliveryData, isLoading: loadingOneDelivery, isFetching: isFetchingOneDelivery, refetch: refetchOneDelivery } = useQuery({queryKey: ['Deliveries', id], queryFn: async () => {
+          const { data } = await api.get<IPedido>(`/pedidos/${id}`);
+          return data;
+      },
+      enabled: !!id, 
+  });
 
   const deliveryData = isDevelopment ? data?.data ?? [] : samplePedidos;
 
@@ -85,18 +110,30 @@ export function DeliveriesProvider({ children }: DeliveriesProviderProps) {
   return (
     <DeliveriesContext.Provider
       value={{
+        updateStatus: updateStatus.mutate,
+        cancelarPedido: cancelarPedido.mutate,
+
         page,
         setPage,
+
         pedidos: deliveryData || [],
         total: deliveryDataTotal || 0,
         emTransito: data?.filteredData.emTransito || 0,
         entregues: data?.filteredData.entregues || 0,
         cancelados: data?.filteredData.cancelados || 0,
-        updateStatus: updateStatus.mutate,
-        cancelarPedido: cancelarPedido.mutate,
         getDeliveriesByStatus,
         isFetching,
-        isLoading
+        isLoading,
+
+        allDeliveries: allDeliveriesData || [],
+        loadingAllDeliveries,
+        isFetchingAllDeliveries,
+        // refetchAllDelivery,
+
+        oneDeliveryData: oneDeliveryData ? oneDeliveryData : {} as IPedido,
+        loadingOneDelivery,
+        isFetchingOneDelivery,
+        // refetchOneDelivery 
       }}
     >
       {children}

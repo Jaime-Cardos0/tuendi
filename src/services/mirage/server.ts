@@ -59,6 +59,10 @@ export function makeServer(): Server {
     routes() {
       this.namespace = "api";
 
+      this.passthrough("http://localhost:3000/**");
+      this.passthrough("/_next/**");
+      this.passthrough("/admin/**");
+
       // Users
       this.get("/users", (schema, request) => {
         const { page, perPage }: { page?: string; perPage?: string } = request.queryParams;
@@ -77,6 +81,8 @@ export function makeServer(): Server {
 
         return new Response(200, { "x-total-count": JSON.stringify({total, clientes, motoqueiroCount, suspensos}) }, users);
       });
+
+      this.get("/allUsers", (schema) => schema.all("user").models.map((u) => u.attrs));
 
       this.get("/users/:id", (schema, request) => {
         const users = schema.find("user", request.params.id)?.attrs;
@@ -122,6 +128,8 @@ export function makeServer(): Server {
         return new Response(200, { "x-total-count": JSON.stringify({total, pendentes, ativos, suspensos}) }, motoqueiros);
       });
 
+      this.get("/allMotoqueiros", (schema) => schema.all("motoqueiro").models.map((m) => m.attrs));
+
       this.get("/motoqueiros/:id", (schema, request) => {
         const m = schema.find("motoqueiro", request.params.id);
         if (!m) return null;
@@ -156,17 +164,19 @@ export function makeServer(): Server {
         const pedidos = schema.all("pedido").models.map((p) => {
           const cliente = p.cliente?.attrs ?? {};
           const motoqueiro = p.motoqueiro?.attrs ?? {};
-          const userDataMotoqueiro = p.motoqueiro?.user?.attrs ?? {};
-          return { ...p.attrs, cliente, motoqueiro, userDataMotoqueiro };
+          const user = p.motoqueiro?.user?.attrs ?? {};
+          return { ...p.attrs, cliente, motoqueiro, user };
         }).slice(start, end);
 
         return new Response(200, { "x-total-count": JSON.stringify({total, emTransito, entregues, cancelados}) }, pedidos);
       });
 
+      this.get("/allPedidos", (schema) => schema.all("pedido").models.map((p) => p.attrs));
+
       this.get("/pedidos/:id", (schema, request) => {
         const p = schema.find("pedido", request.params.id);
         if (!p) return null;
-        return { ...p.attrs, cliente: p.cliente?.attrs, motoqueiro: p.motoqueiro?.attrs, userDataMotoqueiro: p.motoqueiro?.user?.attrs };
+        return { ...p.attrs, cliente: p.cliente?.attrs, motoqueiro: p.motoqueiro?.attrs, user: p.motoqueiro?.user?.attrs };
       });
 
       this.patch("/pedidos/:id", (schema, request) => {
@@ -202,7 +212,13 @@ export function makeServer(): Server {
       });
 
       // Suportes
-      this.get("/suportes", (schema) => schema.all("suporte").models.map((s) => s.attrs));
+      this.get("/suportes", (schema) => {
+        return schema.all("suporte").models.map((s) => {
+          const user = s.user?.attrs ?? {};
+          return { ...s.attrs, user };
+        });
+      });
+
       this.patch("/suportes/:id", (schema, request) => {
         const attrs = JSON.parse(request.requestBody);
         const suporte = schema.find("suporte", request.params.id);
@@ -211,25 +227,57 @@ export function makeServer(): Server {
         return suporte.attrs;
       });
 
-      this.get("/subscricoes", (schema, request) => {
+    //   this.get("/subscricoes", (schema, request) => {
 
-        const total = schema.all("subscricao").length;
+    //     const total = schema.all("subscricao").length;
 
-        const { page, perPage }: { page?: string; perPage?: string } = request.queryParams;
-        const pageNum = parseInt(page!) || 1;
-        const perPageNum = parseInt(perPage!) || 10;
-        const start = (pageNum - 1) * perPageNum;
-        const end = start + perPageNum;
+    //     const { page, perPage }: { page?: string; perPage?: string } = request.queryParams;
+    //     const pageNum = parseInt(page!) || 1;
+    //     const perPageNum = parseInt(perPage!) || 10;
+    //     const start = (pageNum - 1) * perPageNum;
+    //     const end = start + perPageNum;
 
-        const subscricao = schema.all("subscricao").models.map((s) => {
-          const plano = s.plano ?? "";
-          const motoqueiro = s.motoqueiro?.attrs ?? {};
-          const valor = s.valor ?? 0;
-          const userDataSubscricao = s.motoqueiro?.user?.attrs ?? {};
-          return { ...s.attrs, plano, motoqueiro, valor, userDataSubscricao };
-        }).slice(start, end);
+    //     const subscricao = schema.all("subscricao").models.map((s) => {
+    //       const plano = s.plano ?? "";
+    //       const motoqueiro = s.motoqueiro?.attrs ?? {};
+    //       const valor = s.valor ?? 0;
+    //       const userDataSubscricao = s.motoqueiro?.user?.attrs ?? {};
+    //       return { ...s.attrs, plano, motoqueiro, valor, userDataSubscricao };
+    //     }).slice(start, end);
 
-        return new Response(200, {"x-total-count": JSON.stringify(total)}, subscricao);
+    //     return new Response(200, {"x-total-count": JSON.stringify(total)}, subscricao);
+    // });
+
+    // Subscrições — agora monta o comprovativo
+    this.get("/subscricoes", (schema, request) => {
+      const total = schema.all("subscricao").length;
+
+      const { page, perPage }: { page?: string; perPage?: string } = request.queryParams;
+      const pageNum = parseInt(page!) || 1;
+      const perPageNum = parseInt(perPage!) || 10;
+      const start = (pageNum - 1) * perPageNum;
+      const end = start + perPageNum;
+
+      const subscricao = schema.all("subscricao").models.map((s) => {
+        const motoqueiro = s.motoqueiro?.attrs ?? {};
+        const user = s.motoqueiro?.user?.attrs ?? {};
+        const uploads = s.uploads?.models.map((u) => u.attrs) ?? [];
+        const comprovativo = uploads.find((u) => u.tipo === "comprovativo_pagamento") ?? null;
+        return { ...s.attrs, motoqueiro, user, comprovativo };
+      }).slice(start, end);
+
+      return new Response(200, {"x-total-count": JSON.stringify(total)}, subscricao);
+    });
+
+    this.get("/allSubscricoes", (schema) => schema.all("subscricao").models.map((s) => s.attrs))
+
+    // Upload — aprovar ou rejeitar comprovativo
+    this.patch("/uploads/:id", (schema, request) => {
+      const attrs = JSON.parse(request.requestBody);
+      const upload = schema.find("upload", request.params.id);
+      if (!upload) return new Response(404, {}, { error: "Upload not found" });
+      upload.update(attrs);
+      return upload.attrs;
     });
 
 // rotas
@@ -241,6 +289,7 @@ export function makeServer(): Server {
       }
       return all.map((a) => a.attrs);
     });
+    
     },
   });
 }

@@ -21,9 +21,6 @@ export const veiculoModel = Model.extend({
   motoqueiro: belongsTo("motoqueiro"),
 });
 
-export const uploadModel = Model.extend({
-  user: belongsTo("user"),
-});
 
 export const pedidoModel = Model.extend({
   cliente: belongsTo("user"),
@@ -54,8 +51,14 @@ export const suporteModel = Model.extend({
   user: belongsTo("user"),
 });
 
+export const uploadModel = Model.extend({
+  user: belongsTo("user"),
+  subscricao: belongsTo("subscricao"), // ← novo
+});
+
 export const subscricaoModel = Model.extend({
   motoqueiro: belongsTo("motoqueiro"),
+  uploads: hasMany("upload"), // ← novo
 });
 
 export const actividadeModel = Model.extend({});

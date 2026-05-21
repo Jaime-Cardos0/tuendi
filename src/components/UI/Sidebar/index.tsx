@@ -25,13 +25,12 @@ export function Sidebar(){
                         activePrefix="/admin/earnings"
                     >
                         <NavLink href="/admin/earnings/overview" icon={<Box w={2} h={2} rounded="full" bg="text.muted" />}>Geral</NavLink>
-                        <NavLink href="/admin/earnings/history" icon={<Box w={2} h={2} rounded="full" bg="text.muted" />}>Histórico</NavLink>
                         <NavLink href="/admin/earnings/payouts" icon={<Box w={2} h={2} rounded="full" bg="text.muted" />}>Pagamentos</NavLink>
                     </NavDropdown>
                 </NavSection>
 
                 <NavSection title="support admin">
-                    <NavLink href="/admin/help" icon={<HelpIcon strokeWidth={2} fontSize={20}/>}>Suporte</NavLink>
+                    <NavLink href="/admin/support" icon={<HelpIcon strokeWidth={2} fontSize={20}/>}>Suporte</NavLink>
                     <NavLink href="/admin/notifications" icon={<NotificationIcon strokeWidth={2} fontSize={20}/>}>Notificações</NavLink>
                     <NavLink href="/admin/settings" icon={<ConfigurationIcon strokeWidth={2} fontSize={20}/>}>Definições</NavLink>
                 </NavSection>

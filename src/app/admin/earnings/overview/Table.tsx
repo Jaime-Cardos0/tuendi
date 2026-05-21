@@ -8,6 +8,7 @@ import {
   SimpleGrid, Badge,
   Center,
   Spinner,
+  MenuItem,
 } from "@chakra-ui/react";
 import { TableComponent } from "@/components/UI/Table/Table";
 import { TableHeader } from "@/components/UI/Table/TableHeader";
@@ -17,6 +18,8 @@ import { RiCircleFill, RiSearchLine } from "react-icons/ri";
 import { useContext, useMemo, useState } from "react";
 import { ISubscricao, PlanoTipo, SubscricaoStatus } from "@/services/mirage/types";
 import { EarningsContext } from "@/contexts/EarningsContext";
+import { FloatingMenu } from "@/components/UI/FloatingMenu";
+import router from "next/router";
 
 const statusColor: Record<SubscricaoStatus, string> = {
   activa:    "cyan",
@@ -66,8 +69,8 @@ export function EarningsTable() {
     if (search.trim()) {
       const term = search.toLowerCase();
       result = result.filter((s) =>
-        `${s.userDataSubscricao.nome} ${s.userDataSubscricao.sobrenome}`.toLowerCase().includes(term) ||
-        s.motoqueiro.user.email.toLowerCase().includes(term)
+        `${s.user.nome} ${s.user.sobrenome}`.toLowerCase().includes(term) ||
+        s.user.email.toLowerCase().includes(term)
       );
     }
 
@@ -89,10 +92,10 @@ export function EarningsTable() {
         <Flex align="center" gap={2}>
           <Avatar
             size="sm"
-            src={s.userDataSubscricao.fotoPerfil}
-            name={`${s.userDataSubscricao.nome} ${s.userDataSubscricao.sobrenome}`}
+            src={s.user.fotoPerfil}
+            name={`${s.user.nome} ${s.user.sobrenome}`}
           />
-          <Text>{s.userDataSubscricao.nome} {s.userDataSubscricao.sobrenome}</Text>
+          <Text>{s.user.nome} {s.user.sobrenome}</Text>
         </Flex>
       ),
     },
@@ -136,12 +139,11 @@ export function EarningsTable() {
     {
       header: "",
       render: (s: ISubscricao) => (
-        <IconButton
-          variant="ghost"
-          aria-label="Ver detalhes"
-          icon={<BsThreeDots />}
-          onClick={() => openModal(s)}
-        />
+        <FloatingMenu placement="bottom" menuIcon={<BsThreeDots size={"12px"} />}>
+          <MenuItem onClick={() => router.push(`/admin/users/profile?id=${s.id}`)}>Perfil</MenuItem>
+          <MenuItem>Suspender</MenuItem>
+          <MenuItem>Deletar</MenuItem>
+        </FloatingMenu>
       ),
     },
   ];
@@ -234,15 +236,15 @@ export function EarningsTable() {
               <Flex align="center" gap={3}>
                 <Avatar
                   size="md"
-                  src={selected.userDataSubscricao.fotoPerfil}
-                  name={`${selected.userDataSubscricao.nome} ${selected.userDataSubscricao.sobrenome}`}
+                  src={selected.user.fotoPerfil}
+                  name={`${selected.user.nome} ${selected.user.sobrenome}`}
                 />
                 <Box>
                   <Text fontWeight="bold">
-                    {selected.userDataSubscricao.nome} {selected.userDataSubscricao.sobrenome}
+                    {selected.user.nome} {selected.user.sobrenome}
                   </Text>
-                  <Text fontSize="sm" color="gray.400">{selected.userDataSubscricao.email}</Text>
-                  <Text fontSize="sm" color="gray.400">{selected.userDataSubscricao.telefone}</Text>
+                  <Text fontSize="sm" color="gray.400">{selected.user.email}</Text>
+                  <Text fontSize="sm" color="gray.400">{selected.user.telefone}</Text>
                 </Box>
               </Flex>
 

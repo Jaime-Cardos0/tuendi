@@ -12,6 +12,7 @@ import {
   AvatarBadge,
   Center,
   Spinner,
+  MenuItem,
 } from "@chakra-ui/react";
 import { TableComponent } from "@/components/UI/Table/Table";
 import { TableHeader } from "@/components/UI/Table/TableHeader";
@@ -22,6 +23,7 @@ import { useContext, useMemo, useState } from "react";
 import { DisponibilidadeStatus, IMotoqueiro, MotoqueiroStatus } from "@/services/mirage/types";
 import { useRouter } from "next/navigation";
 import { RidersContext } from "@/contexts/RidersContext";
+import { FloatingMenu } from "@/components/UI/FloatingMenu";
 
 const statusColor: Record<MotoqueiroStatus, string> = {
   pendente_aprovacao: "yellow",
@@ -36,9 +38,9 @@ const statusLabel: Record<MotoqueiroStatus, string> = {
 };
 
 const disponibilidadeColor: Record<DisponibilidadeStatus, string> = {
-  online: "green",
-  offline: "gray",
-  ocupado: "purple",
+  online: "#2bff00",
+  offline: "#858585",
+  ocupado: "#b700ff",
 };
 
 const disponibilidadeLabel: Record<DisponibilidadeStatus, string> = {
@@ -128,12 +130,11 @@ export function RidersTable() {
     {
       header: "",
       render: (r: IMotoqueiro) => (
-        <IconButton
-          variant="ghost"
-          aria-label="Ver detalhes"
-          icon={<BsThreeDots />}
-          onClick={() => openModal(r)}
-        />
+        <FloatingMenu placement="bottom" menuIcon={<BsThreeDots size={"12px"} />}>
+          <MenuItem onClick={() => router.push(`/admin/users/profile?id=${r.id}`)}>Perfil</MenuItem>
+          <MenuItem>Suspender</MenuItem>
+          <MenuItem>Deletar</MenuItem>
+        </FloatingMenu>
       ),
     },
   ];

@@ -35,6 +35,7 @@ export const motoqueiroFactory = Factory.extend({
 });
 
 export const veiculoFactory = Factory.extend({
+  
   marca() { return faker.helpers.arrayElement(["Honda", "Yamaha", "Suzuki", "Bajaj"]); },
   modelo() { return faker.vehicle.model(); },
   placa() { return faker.string.alphanumeric(6).toUpperCase(); },
@@ -52,12 +53,13 @@ export const uploadFactory = Factory.extend({
       "documento_carta_frente",
       "documento_carta_verso",
       "foto_veiculo",
+      "comprovativo_pagamento",
     ]);
   },
   nomeOriginal() { return faker.system.fileName(); },
   mimeType() { return "image/jpeg"; },
   tamanho() { return faker.number.int({ min: 100000, max: 5000000 }); },
-  status() { return "pendente"; },
+  status() { return faker.helpers.arrayElement(["pendente", "aprovado", "rejeitado"]); },
   motivoRejeicao() { return null; },
   url() { return faker.image.url(); },
   criadoEm() { return faker.date.recent({ days: 30 }).toISOString(); },

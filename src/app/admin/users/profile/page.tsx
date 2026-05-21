@@ -159,10 +159,10 @@ export default function UserProfilePage() {
             </HStack>
           </Flex>
 
-          <Divider mb={8} />
+          {/* <Divider mb={8} /> */}
 
           {/* Tabs */}
-          <Tabs variant="soft-rounded" colorScheme="cyan">
+          <Tabs variant="line" colorScheme="cyan">
             <TabList mb={6} gap={2}>
               <Tab>Informações Gerais</Tab>
               <Tab>Pedidos</Tab>

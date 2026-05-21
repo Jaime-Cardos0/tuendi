@@ -2,7 +2,7 @@ import { Header } from "@/components/UI/Header";
 import { Sidebar } from "@/components/UI/Sidebar";
 import { Flex } from "@chakra-ui/react";
 import { Metadata } from "next";
-import { MainEarnings } from ".";
+import { MainEarnings } from "./index";
 import { EarningsProvider } from "@/contexts/EarningsContext";
 
 export const metadata: Metadata = { title: "Baza | Ganhos" }

@@ -97,7 +97,7 @@ export const theme = extendTheme({
     },
 
     status: {
-      success: "#22C55E",
+      success: "#00ff5e",
       warning: "#FACC15",
       danger:  "#EF4444",
       info:    "#3B82F6",

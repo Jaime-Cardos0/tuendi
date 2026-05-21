@@ -8,16 +8,18 @@ import {
   Divider, SimpleGrid,
   Center,
   Spinner,
+  MenuItem,
 } from "@chakra-ui/react";
 import { TableComponent } from "@/components/UI/Table/Table";
 import { TableHeader } from "@/components/UI/Table/TableHeader";
 import { Pagination } from "@/components/UI/Table/Pagination";
 import { BsThreeDots } from "react-icons/bs";
-import { RiCircleFill, RiSearchLine } from "react-icons/ri";
+import { RiArrowDownSLine, RiCircleFill, RiSearchLine } from "react-icons/ri";
 import { useContext, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IUser, Role, UserStatus } from "@/services/mirage/types";
 import { UsersContext } from "@/contexts/UsersContext";
+import { FloatingMenu } from "@/components/UI/FloatingMenu";
 
 const statusColor: Record<UserStatus, string> = {
   activo: "cyan",
@@ -124,12 +126,11 @@ export function UsersTable() {
     {
       header: "",
       render: (u: IUser) => (
-        <IconButton
-          variant="ghost"
-          aria-label="Ver detalhes"
-          icon={<BsThreeDots />}
-          onClick={() => openModal(u)}
-        />
+        <FloatingMenu placement="bottom" menuIcon={<BsThreeDots size={"12px"} />}>
+            <MenuItem onClick={() => router.push(`/admin/users/profile?id=${u.id}`)}>Perfil</MenuItem>
+            <MenuItem>Suspender</MenuItem>
+            <MenuItem>Deletar</MenuItem>
+        </FloatingMenu>
       ),
     },
   ];

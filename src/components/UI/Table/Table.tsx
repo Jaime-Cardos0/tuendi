@@ -29,7 +29,7 @@ export function TableComponent<T>({ data, columns, onOpenModal }: TableComponent
 
       <Tbody>
         {data.map((row, i) => (
-          <Tr key={i} onClick={() => onOpenModal!(row)} cursor={"pointer"} >
+          <Tr key={i} onDoubleClick={() => onOpenModal!(row)} cursor={"pointer"} >
             {columns.map((col, j) => (
               <Td key={j} px={3} py={2}>
                 { col.render ? col.render(row) : col.accessor ? (row as any)[col.accessor] : null }

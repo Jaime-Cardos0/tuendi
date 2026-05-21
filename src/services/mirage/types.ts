@@ -23,7 +23,8 @@ export type UploadTipo =
   | "documento_carta_frente"
   | "documento_carta_verso"
   | "foto_veiculo"
-  | "prova_entrega";
+  | "prova_entrega"
+  | "comprovativo_pagamento"; // ← novo
 
 export type UploadStatus = "pendente" | "aprovado" | "rejeitado";
 export type TransacaoTipo = "credito" | "debito";
@@ -63,7 +64,7 @@ export interface ISubscricao {
   criadoEm: string;
   // montado
   motoqueiro: IMotoqueiro;
-  userDataSubscricao: IUser;
+  user: IUser;
 }
 
 export interface IUser {
@@ -146,7 +147,7 @@ export interface IPedido {
   // montado
   cliente: IUser;
   motoqueiro: IMotoqueiro | null;
-  userDataMotoqueiro: IUser; // dados do user do motoqueiro para facilitar acesso sem precisar montar toda a relação
+  user: IUser; // dados do user do motoqueiro para facilitar acesso sem precisar montar toda a relação
 }
 
 export interface IAvaliacao {

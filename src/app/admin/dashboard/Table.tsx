@@ -1,5 +1,8 @@
 "use client";
-import { Box, Flex, Avatar, Text, Tag, TagLeftIcon, TagLabel, IconButton } from "@chakra-ui/react";
+import {
+  Box, Flex, Avatar, Text, Tag, TagLeftIcon,
+  TagLabel, IconButton,
+} from "@chakra-ui/react";
 import { TableComponent } from "@/components/UI/Table/Table";
 import { TableHeader } from "@/components/UI/Table/TableHeader";
 import { Pagination } from "@/components/UI/Table/Pagination";
@@ -32,8 +35,7 @@ const statusLabel: Record<PedidoStatus, string> = {
 };
 
 export function DashboardTable() {
-  
-  const { pedidos, isFetching, isLoading } = useContext(DashboardContext);
+  const { pedidosRecentes, isFetching, pedidos, totalPedidos, page, setPage } = useContext(DashboardContext);
 
   const columns = [
     {
@@ -68,8 +70,12 @@ export function DashboardTable() {
       render: (p: IPedido) =>
         p.motoqueiro ? (
           <Flex align="center" gap={2}>
-            <Avatar size="sm" src={p.userDataMotoqueiro.fotoPerfil} name={`${p.userDataMotoqueiro.nome} ${p.userDataMotoqueiro.sobrenome}`} />
-            <Text>{p.userDataMotoqueiro.nome} {p.userDataMotoqueiro.sobrenome}</Text>
+            <Avatar
+              size="sm"
+              src={p.user.fotoPerfil}
+              name={`${p.user.nome} ${p.user.sobrenome}`}
+            />
+            <Text>{p.user.nome} {p.user.sobrenome}</Text>
           </Flex>
         ) : (
           <Text color="gray.500" fontSize="sm">Não atribuído</Text>
@@ -95,11 +101,11 @@ export function DashboardTable() {
   return (
     <Box
       p={6} display="flex" gap={6} flexDirection="column" mb={8}
-      bg="bg.card" border="2px" borderColor="border.default" rounded="lg"
+      bg="bg.card" border="1px solid" borderColor="border.default" rounded="lg"
     >
       <TableHeader title="Últimas Entregas" isLoad={isFetching} />
-      <TableComponent data={pedidos} columns={columns} />
-      <Pagination />
+      <TableComponent data={pedidosRecentes} columns={columns} />
+      <Pagination totalCountRegister={totalPedidos} registersPerPage={10} onPageChange={setPage} currentPage={page} />
     </Box>
   );
 }

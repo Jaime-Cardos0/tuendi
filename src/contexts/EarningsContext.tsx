@@ -3,7 +3,7 @@ import { api } from "@/services/api";
 import { ISubscricao } from "@/services/mirage/types";
 import { useQuery } from "@tanstack/react-query";
 import { createContext, ReactNode, SetStateAction, useEffect, useState } from "react";
-import { isDevelopment, sampleSubscricoes } from "./DashboardContext";
+import { isDevelopment, sampleSubscricoes } from "./StacticData";
 
 interface EarningsContextData {
   subscricoes: ISubscricao[];

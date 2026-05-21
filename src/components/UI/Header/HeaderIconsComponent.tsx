@@ -1,8 +1,14 @@
+"use client"
+
 import { NotificationIcon } from "@/components/Icons/icons";
 import { IconButton } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { RiSunLine } from "react-icons/ri";
 
 export function HeaderIconsComponent(){
+
+    const router = useRouter();
+
     return(
         <>
             <IconButton
@@ -21,6 +27,7 @@ export function HeaderIconsComponent(){
                 icon={<NotificationIcon strokeWidth={2}/>}
                 variant={"ghost"}
                 color={"text.secondary"}
+                onClick={() => router.push("/admin/notifications")}
             />
         </>
     );

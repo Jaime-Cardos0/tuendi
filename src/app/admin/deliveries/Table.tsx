@@ -8,6 +8,7 @@ import {
   Divider, SimpleGrid, Badge,
   Spinner,
   Center,
+  MenuItem,
 } from "@chakra-ui/react";
 import { TableComponent } from "@/components/UI/Table/Table";
 import { TableHeader } from "@/components/UI/Table/TableHeader";
@@ -18,6 +19,8 @@ import { useContext, useMemo, useState } from "react";
 import { api } from "@/services/api";
 import { IPedido, PedidoStatus } from "@/services/mirage/types";
 import { DeliveriesContext } from "@/contexts/DeliveriesContext";
+import { FloatingMenu } from "@/components/UI/FloatingMenu";
+import router from "next/router";
 
 const statusColor: Record<PedidoStatus, string> = {
   pendente:                "gray",
@@ -112,8 +115,8 @@ export function DeliveriesTable() {
       render: (p: IPedido) =>
         p.motoqueiro ? (
           <Flex align="center" gap={2}>
-            <Avatar size="sm" src={p.userDataMotoqueiro.fotoPerfil} name={`${p.userDataMotoqueiro.nome} ${p.userDataMotoqueiro.sobrenome}`} />
-            <Text>{p.userDataMotoqueiro.nome} {p.userDataMotoqueiro.sobrenome}</Text>
+            <Avatar size="sm" src={p.user.fotoPerfil} name={`${p.user.nome} ${p.user.sobrenome}`} />
+            <Text>{p.user.nome} {p.user.sobrenome}</Text>
           </Flex>
         ) : (
           <Text color="gray.500" fontSize="sm">Não atribuído</Text>
@@ -149,12 +152,11 @@ export function DeliveriesTable() {
     {
       header: "",
       render: (p: IPedido) => (
-        <IconButton
-          variant="ghost"
-          aria-label="Ver detalhes"
-          icon={<BsThreeDots />}
-          onClick={() => openModal(p)}
-        />
+        <FloatingMenu placement="bottom" menuIcon={<BsThreeDots size={"12px"} />}>
+          <MenuItem onClick={() => router.push(`/admin/users/profile?id=${p.id}`)}>Perfil</MenuItem>
+          <MenuItem>Suspender</MenuItem>
+          <MenuItem>Deletar</MenuItem>
+        </FloatingMenu>
       ),
     },
   ];
@@ -340,13 +342,13 @@ export function DeliveriesTable() {
                   <Flex align="center" gap={3}>
                     <Avatar
                       size="md"
-                      src={selected.userDataMotoqueiro.fotoPerfil}
-                      name={`${selected.userDataMotoqueiro.nome} ${selected.userDataMotoqueiro.sobrenome}`}
+                      src={selected.user.fotoPerfil}
+                      name={`${selected.user.nome} ${selected.user.sobrenome}`}
                     />
                     <Box>
-                      <Text>{selected.userDataMotoqueiro.nome} {selected.userDataMotoqueiro.sobrenome}</Text>
-                      <Text fontSize="sm" color="gray.400">{selected.userDataMotoqueiro.email}</Text>
-                      <Text fontSize="sm" color="gray.400">{selected.userDataMotoqueiro.telefone}</Text>
+                      <Text>{selected.user.nome} {selected.user.sobrenome}</Text>
+                      <Text fontSize="sm" color="gray.400">{selected.user.email}</Text>
+                      <Text fontSize="sm" color="gray.400">{selected.user.telefone}</Text>
                       <HStack mt={1}>
                         <Text fontSize="xs" color="gray.400">
                           {selected.motoqueiro.classificacaoMedia} ⭐ · {selected.motoqueiro.totalAvaliacoes} avaliações
